@@ -1,7 +1,23 @@
-\documentclass{beamer}
+% !TeX program = lualatex
+\RequirePackage{iftex}
+\ifLuaTeX\else
+  \GenericError{}{This document must be compiled with LuaLaTeX.}{}{Run `latexmk -lualatex sample.tex` or set your editor's TeX engine to LuaLaTeX.}
+  \expandafter\endinput
+\fi
+\documentclass[10pt]{beamer}
 \usepackage{luatexja}
-\usetheme{metropolis}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{braket}
+\usepackage{bm}
 
+\setbeamertemplate{proof begin}{}
+\setbeamertemplate{proof end}{}
+
+\usetheme[block=fill]{metropolis}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{サンプルプレゼンテーション}
 \author{あなたの名前}
 \date{\today}
@@ -11,9 +27,123 @@
   \titlepage
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ２ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
   \frametitle{Sample Frame}
   This is a sample frame in a Beamer presentation.
+  \begin{enumerate}
+    \item First item
+    \item Second item
+    \item Third item
+  \end{enumerate}
+  \begin{itemize}
+    \item Bullet point one
+    \item Bullet point two
+    \item Bullet point three
+  \end{itemize}
 \end{frame}
-\end{document}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ３ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{block環境のサンプル}
+  \begin{block}{Block Title}
+    これはblock環境のサンプルです。
+  \end{block}
+  \begin{alertblock}{Alert Block Title}
+    これはalertblock環境のサンプルです。
+  \end{alertblock}
+  \begin{exampleblock}{Example Block Title}
+    これはexampleblock環境のサンプルです。
+  \end{exampleblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ４ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{数式のサンプル}
+  $\displaystyle \lim_{n,m \to \infty} |x_n - x_m| = 0$
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ５ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \frametitle{n量子ビットの定義}
+  \begin{block}{n量子ビットの定義}
+    以下の集合$Q_{n}$の要素を\textbf{n量子ビット}と呼ぶ。
+    \[
+    Q_n \coloneq \left\{ \begin{pmatrix}a_1 \\ a_2 \\ \vdots \\ a_{2^n} \end{pmatrix} \in \mathbb{C}^{2^n} \middle| \sum_{i=1}^{2^n} |a_i|^2 = 1 \right\}
+    \]
+  \end{block}
+  \begin{block}{ブラケット表記}
+    \begin{itemize}
+      \item 量子力学において、$Q_n$の要素を$\ket{\varphi}$のように表されることが多い。これを\textbf{ケット・ベクトル}と呼ぶ。
+      \item また、ある$\ket{\psi} \in Q_n$に対して、その共役転置（随伴）を$\bra{\psi}$と表し、これを\textbf{ブラ・ベクトル}と呼ぶ。
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ６ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{内積の定義}
+  \begin{block}{随伴の定義}
+    $\bm{a} \in \mathbb{C}^{n}$ に対して、その随伴（共役転置）を $\bm{a}^\dagger$ と表す。
+  \end{block}
+  \begin{block}{内積の定義}
+    $\bm{a}, \bm{b} \in \mathbb{C}^{n}$ に対して、内積は以下のように定義される。
+    \[(\bm{a}, \bm{b}) \coloneq \bm{a}^\dagger \bm{b} = \sum_{i=1}^{n} a_i^* b_i\]
+    ブラケット表記では以下のように書く。（$\ket{\varphi}, \ket{\psi} \in Q_n$とする。）
+    \[\braket{\varphi | \psi} \coloneq \ket{\varphi}^\dagger \ket{\psi}\]
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ７ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{ユニタリ行列}
+  \begin{block}{ユニタリ行列の定義}
+    $U \in Mat_{n}(\mathbb{C})$がユニタリ行列であるとは、以下の条件を満たすことをいう。
+    \[U^\dagger U = U U^\dagger = I_n\]
+    ここで、$I_n$は$n$次の単位行列である。
+  \end{block}
+  \begin{block}{定理：ユニタリ行列と量子ビットの関係}
+    $$
+    \forall \ket{\varphi} \in Q_n: Uはユニタリ行列 \Rightarrow U\ket{\varphi} \in Q_n
+    $$
+  \end{block}
+  \begin{proof}
+    \textbf{proof.} \\
+    $(U\ket{\varphi})^\dagger (U\ket{\varphi}) = \bra{\varphi} (U^\dagger U) \ket{\varphi} = \braket{\varphi | \varphi} = 1$
+  \end{proof}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ８ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{テンソル積の定義}
+  \begin{block}{テンソル積の定義}
+    \begin{itemize}
+      \item $\begin{pmatrix} a_1 \\ \vdots \\ a_{2^n} \end{pmatrix}, \begin{pmatrix}b_1 \\ \vdots \\ b_{2^n} \end{pmatrix} \in Q_n$に対して、テンソル積は以下のように定義される。
+      \[\ket{a}\otimes \ket{b} = \begin{pmatrix}a_1\\ \vdots \\ a_{2^n} \end{pmatrix} \otimes \begin{pmatrix}b_1\\ \vdots \\ b_{2^n} \end{pmatrix} \coloneq \begin{pmatrix}a_1 \begin{pmatrix}b_1 \\ \vdots \\ b_{2^n} \end{pmatrix} \\ \vdots \\ a_{2^n} \begin{pmatrix}b_1 \\ \vdots \\ b_{2^n} \end{pmatrix} \end{pmatrix} = \begin{pmatrix}a_1 b_1 \\ a_1 b_2 \\ \vdots \\ a_1 b_{2^n} \\ a_2 b_1 \\ \vdots \\ a_{2^n} b_{2^n} \end{pmatrix}\]
+      
+      \item $\ket{a}\otimes \ket{b}$は$\ket{ab}$とも書かれる。
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ９ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{テンソル積の性質}
+  \begin{block}{定理：テンソル積の性質}
+    $\forall \ket{\varphi}, \ket{\psi}, \ket{\chi} \in Q_n, \forall c \in \mathbb{C}$に対して、以下が成り立つ。
+    \begin{enumerate}
+      \item $(c\ket{\varphi}) \otimes \ket{\psi} = c(\ket{\varphi} \otimes \ket{\psi} )$
+      \item $\ket{\varphi} \otimes (c\ket{\psi}) = c(\ket{\varphi} \otimes \ket{\psi} )$
+      \item $(\ket{\varphi} + \ket{\psi}) \otimes \ket{\chi} = \ket{\varphi} \otimes \ket{\chi} + \ket{\psi} \otimes \ket{\chi}$
+    \end{enumerate}
+  \end{block}
+  \begin{proof}
+    \textbf{proof.} \\
+    1,2$\dots$スカラーの積は可換より \\
+    3$\dots$スカラーは分配法則が成り立つため。
+  \end{proof}
+\end{frame}
+
+
+\end{document}  
