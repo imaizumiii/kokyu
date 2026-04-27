@@ -4,13 +4,15 @@
   \GenericError{}{This document must be compiled with LuaLaTeX.}{}{Run `latexmk -lualatex sample.tex` or set your editor's TeX engine to LuaLaTeX.}
   \expandafter\endinput
 \fi
-\documentclass[10pt]{beamer}
+\documentclass[9pt]{beamer}
 \usepackage{luatexja}
 \usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{braket}
 \usepackage{bm}
+\usepackage{booktabs}
+\usepackage{array}
 
 \setbeamertemplate{proof begin}{}
 \setbeamertemplate{proof end}{}
@@ -18,9 +20,9 @@
 \usetheme[block=fill]{metropolis}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{サンプルプレゼンテーション}
-\author{あなたの名前}
-\date{\today}
+\title{数学講究第２回}
+\author{今泉 力}
+\date{2026年4月29日}
 
 \begin{document}
 \begin{frame}
@@ -58,12 +60,6 @@
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ４ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-  \frametitle{数式のサンプル}
-  $\displaystyle \lim_{n,m \to \infty} |x_n - x_m| = 0$
-\end{frame}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ５ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{frame}
   \frametitle{n量子ビットの定義}
@@ -75,8 +71,20 @@
   \end{block}
   \begin{block}{ブラケット表記}
     \begin{itemize}
-      \item 量子力学において、$Q_n$の要素を$\ket{\varphi}$のように表されることが多い。これを\textbf{ケット・ベクトル}と呼ぶ。
-      \item また、ある$\ket{\psi} \in Q_n$に対して、その共役転置（随伴）を$\bra{\psi}$と表し、これを\textbf{ブラ・ベクトル}と呼ぶ。
+      \item 量子力学において、$Q_n$の要素は、$\bm{\ket{\varphi}}$のように表されることが多い。これを\textbf{ケット・ベクトル}と呼ぶ。
+      \item また、ある$\bm{\ket{\psi}} \in Q_n$に対して、その共役転置（随伴）を$\bm{\bra{\psi}}$と表し、これを\textbf{ブラ・ベクトル}と呼ぶ。
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ５ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{量子ビット（$\ket{0}$と$\ket{1}$の定義）}
+  \begin{block}{量子ビット（$\ket{0}$と$\ket{1}$の定義）}
+    \begin{itemize}
+      \item 量子ビット$\ket{\varphi} \in Q_1$は、以下のように表される。
+      \[\ket{\varphi} = \alpha \ket{0} + \beta \ket{1} \quad (\alpha, \beta \in \mathbb{C}, |\alpha|^2 + |\beta|^2 = 1)\]
+      ただし、$\ket{0} \coloneq \begin{pmatrix}1 \\ 0\end{pmatrix}$、$\ket{1} \coloneq \begin{pmatrix}0 \\ 1\end{pmatrix}$と定義する。
     \end{itemize}
   \end{block}
 \end{frame}
@@ -90,8 +98,8 @@
   \begin{block}{内積の定義}
     $\bm{a}, \bm{b} \in \mathbb{C}^{n}$ に対して、内積は以下のように定義される。
     \[(\bm{a}, \bm{b}) \coloneq \bm{a}^\dagger \bm{b} = \sum_{i=1}^{n} a_i^* b_i\]
-    ブラケット表記では以下のように書く。（$\ket{\varphi}, \ket{\psi} \in Q_n$とする。）
-    \[\braket{\varphi | \psi} \coloneq \ket{\varphi}^\dagger \ket{\psi}\]
+    ブラケット表記では以下のように書く。（$\bm{\ket{\varphi}}, \bm{\ket{\psi}} \in Q_n$とする。）
+    \[\braket{\varphi | \psi} \coloneq \bm{\ket{\varphi}}^\dagger \bm{\ket{\psi}}\]
   \end{block}
 \end{frame}
 
@@ -131,19 +139,165 @@
 \begin{frame}
   \frametitle{テンソル積の性質}
   \begin{block}{定理：テンソル積の性質}
-    $\forall \ket{\varphi}, \ket{\psi}, \ket{\chi} \in Q_n, \forall c \in \mathbb{C}$に対して、以下が成り立つ。
+    $\forall \ket{\varphi}, \ket{\psi}, \ket{\chi}, \ket{\omega} \in Q_n, \forall c \in \mathbb{C}$に対して、以下が成り立つ。
     \begin{enumerate}
       \item $(c\ket{\varphi}) \otimes \ket{\psi} = c(\ket{\varphi} \otimes \ket{\psi} )$
       \item $\ket{\varphi} \otimes (c\ket{\psi}) = c(\ket{\varphi} \otimes \ket{\psi} )$
       \item $(\ket{\varphi} + \ket{\psi}) \otimes \ket{\chi} = \ket{\varphi} \otimes \ket{\chi} + \ket{\psi} \otimes \ket{\chi}$
+      \item $\left( \bra{\varphi} \otimes \bra{\psi} \right) \left( \ket{\chi} \otimes \ket{\omega} \right) = \braket{\varphi | \chi} \braket{\psi | \omega}$
     \end{enumerate}
   \end{block}
   \begin{proof}
     \textbf{proof.} \\
     1,2$\dots$スカラーの積は可換より \\
     3$\dots$スカラーは分配法則が成り立つため。
+    4$\dots$左辺と右辺を別々で計算すると成り立つ。
   \end{proof}
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １０ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{量子ゲート（代表的な１量子ビットゲート）}
+  \begin{block}{量子ゲート}
+      量子コンピュータにおいて、n量子ビットに対して作用するユニタリ行列を\textbf{n量子ビットゲート}と呼ぶ。
+  \end{block}
+  \begin{table}[]
+    \centering
+    \footnotesize
+    \begin{tabular}{|c|>{\centering\arraybackslash}p{5em}|c|c|} \hline
+      ゲート & 意味 & 量子回路 & 行列 \\ \hline
+      Xゲート & NOTゲート & \hspace{5em} \rule{0pt}{2em} & $\begin{bmatrix}0 & 1 \\ 1 & 0\end{bmatrix}$ \\ \hline
+      Yゲート & 位相反転ゲート & \hspace{5em} \rule{0pt}{2em} & $\begin{bmatrix}0 & -i \\ i & 0\end{bmatrix}$ \\ \hline
+      Zゲート & 位相反転ゲート & \hspace{5em} \rule{0pt}{2em} & $\begin{bmatrix}1 & 0 \\ 0 & -1\end{bmatrix}$ \\ \hline
+      Hゲート & アダマールゲート & \hspace{5em} \rule{0pt}{2em} & $\frac{1}{\sqrt{2}} \begin{bmatrix}1 & 1 \\ 1 & -1\end{bmatrix}$ \\ \hline
+      Sゲート & 位相ゲート & \hspace{5em} \rule{0pt}{2em} & $\begin{bmatrix}1 & 0 \\ 0 & i\end{bmatrix}$ \\ \hline
+      Tゲート & 位相ゲート & \hspace{5em} \rule{0pt}{2em} & $\begin{bmatrix}1 & 0 \\ 0 & e^{i\pi/4}\end{bmatrix}$ \\ \hline
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １１ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{量子ゲート（特別な記法のある量子ゲート）}
+  \begin{table}[]
+    \centering
+    \scriptsize
+    \begin{tabular}{|c|>{\arraybackslash}p{12em}|c|c|} \hline
+      ゲート & 意味 & 量子回路 & 行列 \\ \hline
+      CNOT & コントロール量子ビットが$\ket{1}$のとき、ターゲット量子ビットを反転する & \hspace{7em} \rule{0pt}{1em} & $\begin{bmatrix}1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1 \\ 0 & 0 & 1 & 0\end{bmatrix}$ \\ \hline
+      SWAP & ２つの量子ビットの交換 & \hspace{7em} \rule{0pt}{1em} & $\begin{bmatrix}1 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 1\end{bmatrix}$ \\ \hline
+      制御Z & コントロール量子ビットが$\ket{1}$のとき、ターゲット量子ビットを位相反転する & \hspace{7em} \rule{0pt}{1em} & $\begin{bmatrix}1 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 \\ 0 & 0 & 1 & 0 \\ 0 & 0 & 0 & -1\end{bmatrix}$ \\ \hline
+      Toffoli & トリプルコントロールNOTゲート & \hspace{7em} \rule{0pt}{1em} & $\begin{bmatrix}1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\ 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1 \\ 0 & 0 & 0 & 0 & 0 & 0 & 1 & 0\end{bmatrix}$ \\ \hline
+    \end{tabular}
+  \end{table}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １２ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{量子回路の書き方}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １３ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+	\frametitle{量子回路の書き方}
+    まず、初期状態に$\ket{000}$にアダマールゲートを作用させる。
+  \begin{align}
+    \ket{000} &\xrightarrow{H_1, H_3} \left(\frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \right) \ket{0} \left(\frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) \right) \\
+    &= \frac{1}{2}(\ket{000} + \ket{001} + \ket{100} + \ket{101})
+  \end{align}
+  次に、第１量子ビットをコントロール量子ビットとするCNOTゲートを第２量子ビットに作用させる。
+  \begin{align}
+    \xrightarrow{CNOT_{1,2}} \frac{1}{2}(\ket{000} + \ket{001} + \ket{110} + \ket{111})
+  \end{align}
+  第２量子ビットをコントロール量子ビットとするCZゲートを第３量子ビットに作用。Z$\ket{0} = \ket{0}$、Z$\ket{1} = -\ket{1}$より、
+  \begin{align}
+    \xrightarrow{CZ_{2,3}} \frac{1}{2}(\ket{000} + \ket{001} + \ket{110} - \ket{111})
+  \end{align}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １４ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{量子回路の書き方}
+  最後に、アダマールゲートを第３量子ビットに作用させる。H$\ket{0} = \frac{1}{\sqrt{2}}(\ket{0} + \ket{1})$、H$\ket{1} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1})$より、
+  \begin{align}
+    &\xrightarrow{H_3} \frac{1}{2} \Bigl( \ket{00}\frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) + \ket{00}\frac{1}{\sqrt{2}}(\ket{0} - \ket{1}) \\
+    &\qquad + \ket{11}\frac{1}{\sqrt{2}}(\ket{0} + \ket{1}) - \ket{11}\frac{1}{\sqrt{2}}(\ket{0} - \ket{1}) \Bigr) \\
+    &= \frac{1}{2\sqrt{2}} \left( \ket{000} +\ket{001} + \ket{000} - \ket{001} + \ket{110} + \ket{111} - \ket{110} + \ket{111} \right) \\
+    &= \frac{1}{\sqrt{2}}(\ket{000} + \ket{111})
+  \end{align}
+\end{frame}
+
+\begin{frame}
+  \frametitle{量子もつれ（エンタングルメント）}
+  \begin{block}{量子もつれ（エンタングルメント）}
+    量子ビット$\ket{\varphi} \in Q_n$が、ある$\ket{\psi} \in Q_{n-1}$と$\ket{\chi} \in Q_1$を用いて$\ket{\varphi} = \ket{\psi} \otimes \ket{\chi}$と表せないとき、$\ket{\varphi}$は\textbf{量子もつれ（エンタングルメント）状態}であるという。
+  \end{block}
+  例 \dots ベル状態$\ket{B_{00}} \coloneq \frac{1}{\sqrt{2}}(\ket{00} + \ket{11})$は量子もつれ状態である。
+  \begin{proof}
+    \textbf{proof.} \\
+    $\ket{B_{00}}$が量子もつれ状態でないと仮定する。すなわち、$\ket{\psi} = a\ket{0} + b\ket{1} \in Q_1$、$\ket{\chi} = c\ket{0} + d\ket{1} \in Q_1$が存在して、$\ket{B_{00}} = \ket{\psi} \otimes \ket{\chi}$であるとする。（$a, b, c, d \in \mathbb{C}$で、$|a|^2 + |b|^2 = 1$、$|c|^2 + |d|^2 = 1$を満たす。）このとき、
+    \begin{align}
+      \frac{1}{\sqrt{2}}(\ket{00} + \ket{11}) &= (a\ket{0} + b\ket{1}) \otimes (c\ket{0} + d\ket{1}) \\
+      &= ac\ket{00} + ad\ket{01} + bc\ket{10} + bd\ket{11}
+    \end{align}
+    ここで、$ad = 0$、$bc = 0$、$ac = bd$を満たす必要がある。これらの条件を満たす$a, b, c, d$は存在しないため、$\ket{B_{00}}$は量子もつれ状態である。
+  \end{proof}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １５ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{量子もつれ（エンタングルメント）}
+  量子ビットAとBがベル状態$\ket{B_{00}}$にある量子ビットの間には、次のような相関がある。
+  \begin{itemize}
+    \item 量子ビットAを測定した結果0が得られたとき、量子ビットBを測定した結果も0になる。
+    \item 量子ビットAを測定した結果1が得られたとき、量子ビットBを測定した結果も1になる。
+    \item 量子ビットBを測定した結果0が得られたとき、量子ビットAを測定した結果も0になる。
+    \item 量子ビットBを測定した結果1が得られたとき、量子ビットAを測定した結果も1になる。
+  \end{itemize}
+  ベル状態は全部で、
+\begin{align}
+  \ket{B_{00}} &\coloneq \frac{1}{\sqrt{2}}(\ket{00} + \ket{11}), \ket{B_{01}} \coloneq \frac{1}{\sqrt{2}}(\ket{00} - \ket{11})\\
+   \ket{B_{10}} &\coloneq \frac{1}{\sqrt{2}}(\ket{01} + \ket{10}), \ket{B_{11}} \coloneq \frac{1}{\sqrt{2}}(\ket{01} - \ket{10})
+\end{align}
+の４つがある。これらはすべて量子もつれ状態である。
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １６ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{量子複製不可能定理}
+  \begin{block}{量子複製不可能定理}
+    任意の量子ビット$\ket{\varphi} \in Q_n$に対して、$\ket{\varphi}$を複製する、つまり
+    \[U\ket{\varphi}\ket{0} = \ket{\varphi}\ket{\varphi}\]
+    となるユニタリ行列Uは存在しない。
+  \end{block}
+  \begin{proof} 
+    \textbf{proof.}
+    $\forall \ket{\varphi}, \ket{\psi} \in Q_n$に対して、
+    \begin{equation}
+      \begin{cases}
+        U\ket{\varphi}\ket{0} = \ket{\varphi}\ket{\varphi} \\
+        U\ket{\psi}\ket{0} = \ket{\psi}\ket{\psi}
+      \end{cases}
+    \end{equation}
+    が成り立つと仮定する。2つの式の右辺の内積をとると、
+    $$\left( \bra{\varphi} \bra{0} \right) U^\dagger U \left( \ket{\psi} \ket{0} \right) = \braket{\varphi | \psi} \quad (\because U^\dagger U = I, \text{テンソル積の性質4})$$ 
+    一方、左辺の内積をとると、
+    $$\left( \bra{\varphi} \bra{\varphi} \right) \left( \ket{\psi} \ket{\psi} \right) = \braket{\varphi | \psi}^2$$
+    $$\therefore \braket{\varphi | \psi} = \braket{\varphi | \psi}^2$$ 
+    $$\iff \braket{\varphi | \psi} = 0 \text{ or } 1$$
+    よって、任意の量子状態を複製することはできない。
+  \end{proof}
+\end{frame}
+
+\begin{frame}
+  \frametitle{量子コンピュータにデータを入力する方法}
+  \古典的なデータを量子コンピュータで処理するためには、古典データを「量子状態」に変換して入力する必要がある。これを\textbf{エンコーディング}と呼ぶ。\\
+  島田義皓著「量子コンピューティング」では、以下のようなエンコーディング方法が紹介されている。
+\begin{itemize}
+  \item \textbf{ディジタル入力（基底エンコーディング）}：古典データのビット列をそのまま量子ビットの計算基底$\ket{0}$と$\ket{1}$に対応させる方法。\\
+  \qquad 例：古典データ「5」を量子状態$\ket{101}$にエンコードする。
+  \item \textbf{アナログ入力（振幅エンコーディング）}：
+  \item \textbf{ハミルトニアンエンコーディング}：
+\end{frame}
 
 \end{document}  
