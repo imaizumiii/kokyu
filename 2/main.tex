@@ -1,0 +1,114 @@
+% !TeX program = lualatex
+\RequirePackage{iftex}
+\ifLuaTeX\else
+  \GenericError{}{This document must be compiled with LuaLaTeX.}{}{Run `latexmk -lualatex sample.tex` or set your editor's TeX engine to LuaLaTeX.}
+  \expandafter\endinput
+\fi
+\documentclass[9pt]{beamer}
+\usepackage{luatexja}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{braket}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc}
+
+\setbeamertemplate{proof begin}{}
+\setbeamertemplate{proof end}{}
+
+\usetheme[block=fill]{metropolis}
+
+\setbeamersize{
+  text margin left=5mm,
+  text margin right=5mm
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{数学講究第３回}
+\author{今泉 力}
+\date{2026年5月13日}
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ２ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{第２回の反省}
+  \begin{itemize}
+    \item テンソル積の性質4
+    \item ベル状態の性質について\dots 測定について
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ３ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{テンソル積の性質4}
+  \begin{block}{テンソル積の性質4}
+    $\forall \ket{\varphi}, \ket{\psi}, \ket{\chi}, \ket{\omega} \in \mathbb{C}^n$に対して、
+    \begin{align}
+      \left( \bra{\varphi} \otimes \bra{\psi} \right) \left( \ket{\chi} \otimes \ket{\omega} \right) = \braket{\varphi | \chi} \braket{\psi | \omega}
+    \end{align}
+  \end{block}
+  \begin{proof}
+    インデックスiとjを用いて, $\bra{\varphi}$の$i$成分を$\varphi_i^*$, $\ket{\chi}$の$i$成分を$\chi_i$, $\bra{\psi}$の$j$成分を$\psi_j^*$, $\ket{\omega}$の$j$成分を$\omega_j$とする.
+    \begin{align}
+      \left( \bra{\varphi} \otimes \bra{\psi} \right)\text{の}(i,j)\text{成分} &= \varphi_i^* \psi_j^* \\
+      \left( \ket{\chi} \otimes \ket{\omega} \right)\text{の}(i,j)\text{成分} &= \chi_i \omega_j \\
+      \therefore \text{(左辺)} &= \sum_{i,j} \varphi_i^* \psi_j^* \chi_i \omega_j \\
+      \text{(右辺)} &= \left( \sum_{i} \varphi_i^* \chi_i \right) \left( \sum_{j} \psi_j^* \omega_j \right) \\
+      &= \sum_{i,j} \varphi_i^* \psi_j^* \chi_i \omega_j
+    \end{align}
+  \end{proof}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ４ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{ブロッホ球}
+  1量子ビット$\ket{\varphi}$について\begin{align}
+    \ket{\varphi} = \alpha \ket{0} + \beta \ket{1}, \quad (|\alpha|^2 + |\beta|^2 = 1)
+  \end{align}
+  であるとする. ここで, $\alpha$と$\beta$は複素数であるので, 極形式で表す.
+  \begin{align}
+    \alpha = r_0 e^{i \gamma_0}, \quad \beta = r_1 e^{i \gamma_1} \quad (r_0, r_1 \in \mathbb{R}_{\geq 0}, \gamma_0, \gamma_1 \in \mathbb{R})
+  \end{align}
+  とする. ($\because$ オイラーの公式)  \\
+  $|\alpha|^2 + |\beta|^2 = 1$より、実数パラメータ$\theta$を用いて$r_0 = \cos \left( \frac{\theta}{2} \right)$, $r_1 = \sin \left( \frac{\theta}{2} \right)$とすると
+  \begin{align}
+    \ket{\varphi} &= \cos \left( \frac{\theta}{2} \right) e^{i \gamma_0} \ket{0} + \sin \left( \frac{\theta}{2} \right) e^{i \gamma_1} \ket{1} \\
+    &= e^{i \gamma_0} \left( \cos \left( \frac{\theta}{2} \right) \ket{0} + e^{i (\gamma_1 - \gamma_0)} \sin \left( \frac{\theta}{2} \right) \ket{1} \right)
+  \end{align}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ５ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{ブロッホ球}
+  \begin{block}{確率振幅}
+    $\ket{\varphi} = \alpha \ket{0} + \beta \ket{1}$に対して, $\alpha$と$\beta$を\textbf{確率振幅}と呼ぶ.
+    量子状態$\ket{\varphi}$を測定したとき、$\ket{0}$が得られる確率は$|\alpha|^2$であり、$\ket{1}$が得られる確率は$|\beta|^2$である.
+  \end{block}
+  \begin{block}{グローバル位相}
+    任意の量子状態$\ket{\varphi}$と$|z| = 1$を満たす複素数$z$に対して, $z \ket{\varphi}$は$\ket{\varphi}$と同じ意味を持つ.
+    $z$を$\ket{\varphi}$の\textbf{グローバル位相}と呼ぶ.
+  \end{block}
+  $\ket{\varphi} = \alpha \ket{0} + \beta \ket{1}$とする. $z$を$|z| = 1$を満たす複素数とすると, 
+  \begin{align}
+    z \ket{\varphi} = z \alpha \ket{0} + z \beta \ket{1}
+  \end{align}
+  なので, $z \ket{\varphi}$が得られる確率は$|z \alpha|^2 = |\alpha|^2$, $\ket{1}$が得られる確率は$|z \beta|^2 = |\beta|^2$であり, $\ket{\varphi}$と同じ確立である.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ６ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{ブロッホ球}
+  (10)について, グローバル位相である$e^{i \gamma_0}$を無視し, $\gamma_1 - \gamma_0 = \phi$とすると
+  \begin{align}
+    \ket{\varphi} = \cos \left( \frac{\theta}{2} \right) \ket{0} + e^{i \phi} \sin \left( \frac{\theta}{2} \right) \ket{1}
+  \end{align}
+\end{frame}
+
+\end{document}
