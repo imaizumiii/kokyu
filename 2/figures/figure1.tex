@@ -4,24 +4,13 @@
   line join=round,
   >=latex
 ]
-  % ===== theta と phi を調整する場所 =====
-  % 状態ベクトル |varphi> の先端です。
-  % theta や phi を大きく変えるときは、この点も一緒に動かします。
-  \coordinate (varphi) at (0.55,0.72);
-
-  % 状態ベクトルを赤道面に下ろした点です。
-  % phi を変えるときは、この点を赤道上で左右に動かします。
-  \coordinate (varphiProjection) at (0.55,-0.16);
-
-  % theta の弧の終点角度です。
-  % 90度が z軸方向で、値を小さくすると |varphi> が右側へ倒れます。
-  \def\ThetaEndAngle{52}
-
-  % phi の弧の始点・終点角度です。
-  % 今は -16度から -37度まで描いています。
-  % phi を大きく見せたいときは \PhiEndAngle をさらに小さくします。
-  \def\PhiStartAngle{-16}
-  \def\PhiEndAngle{-37}
+  % ===== theta と phi だけを変更してください =====
+  % theta: z軸から状態ベクトル |varphi> までの角度です。
+  %        0なら |0> 方向、180なら |1> 方向になります。
+  % phi:   赤道面での回転角です。
+  %        0なら x軸方向、正の値で y軸方向へ回ります。
+  %        どちらも単位は度です。
+  \tikzset{declare function={theta=35; phi=145;}}
 
   % 球体
   \draw[gray!55, thick] (0,0) circle (1);
@@ -39,6 +28,8 @@
   \node[below right] at (0,-1.02) {$\ket{1}$};
 
   % 量子状態
+  \coordinate (varphiProjection) at ({sin(theta)*cos(-16-phi)}, {0.28*sin(theta)*sin(-16-phi)});
+  \coordinate (varphi) at ({sin(theta)*cos(-16-phi)}, {cos(theta) + 0.28*sin(theta)*sin(-16-phi)});
   \draw[very thick, blue!70!black, ->] (0,0) -- (varphi) node[above right] {$\ket{\varphi}$};
 
   % 点線
@@ -46,9 +37,16 @@
   \draw[blue!55, dashed] (0,0) -- (varphiProjection);
 
   % 角度
-  \draw[->, blue!60!black] (0,0.42) arc[start angle=90, end angle=\ThetaEndAngle, radius=0.42];
-  \node[blue!60!black] at (0.23,0.50) {$\theta$};
+  \draw[->, blue!60!black] (0,0.42) arc[
+    start angle=90,
+    end angle={atan2(cos(theta) + 0.28*sin(theta)*sin(-16-phi), sin(theta)*cos(-16-phi))},
+    radius=0.42
+  ];
+  \node[blue!60!black] at
+    ({0.55*cos((90 + atan2(cos(theta) + 0.28*sin(theta)*sin(-16-phi), sin(theta)*cos(-16-phi)))/2)},
+     {0.55*sin((90 + atan2(cos(theta) + 0.28*sin(theta)*sin(-16-phi), sin(theta)*cos(-16-phi)))/2)})
+    {$\theta$};
 
-  \draw[->, blue!60!black] (0.32,-0.09) arc[start angle=\PhiStartAngle, end angle=\PhiEndAngle, x radius=0.32, y radius=0.09];
-  \node[blue!60!black] at (0.42,-0.22) {$\phi$};
+  \draw[->, blue!60!black] (0.32,-0.09) arc[start angle=-16, end angle={-16-phi}, x radius=0.32, y radius=0.09];
+  \node[blue!60!black] at ({0.42*cos(-16 - phi/2)}, {0.22*sin(-16 - phi/2)}) {$\phi$};
 \end{tikzpicture}
