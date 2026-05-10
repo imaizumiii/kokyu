@@ -1,0 +1,26 @@
+\begin{tikzpicture}[
+  scale=1.2,
+  line cap=round,
+  line join=round,
+  >=latex
+]
+  \tikzset{declare function={view=-16; theta=90; phi=180;}}
+
+  \draw[gray!55, thick] (0,0) circle (1);
+  \draw[gray!45, dashed] (-1,0) arc[start angle=180, end angle=360, x radius=1, y radius=0.28];
+  \draw[gray!45] (1,0) arc[start angle=0, end angle=180, x radius=1, y radius=0.28];
+
+  \draw[->, gray!70] (0,0) -- (0,1.25) node[above] {$z$};
+  \draw[->, gray!70] (0,0) -- (0,-1.25) node[below] {$-z$};
+  \draw[->, gray!70] (0,0) -- ({1.25*cos(view)}, {0.28*1.25*sin(view)}) node[right] {$x$};
+  \draw[gray!45, dashed] (0,0) -- ({-1.25*cos(view)}, {-0.28*1.25*sin(view)}) node[left] {$-x$};
+  \draw[->, gray!70] (0,0) -- ({1.25*cos(view-90)}, {0.28*1.25*sin(view-90)}) node[left] {$y$};
+
+  \node[above right] at (0,1.02) {$\ket{0}$};
+  \node[below right] at (0,-1.02) {$\ket{1}$};
+
+  \coordinate (stateProjection) at ({sin(theta)*cos(view-phi)}, {0.28*sin(theta)*sin(view-phi)});
+  \coordinate (state) at ({sin(theta)*cos(view-phi)}, {cos(theta) + 0.28*sin(theta)*sin(view-phi)});
+  \draw[very thick, blue!70!black, ->] (0,0) -- (state) node[above left] {$\ket{-}$};
+  \fill[blue!70!black] (state) circle (0.025);
+\end{tikzpicture}

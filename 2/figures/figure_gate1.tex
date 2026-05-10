@@ -1,0 +1,23 @@
+\begin{tikzpicture}[
+  baseline=(current bounding box.center),
+  x=1.1cm,
+  y=1.1cm,
+  wire/.style={line width=0.45pt},
+  gate/.style={
+    draw,
+    line width=0.55pt,
+    fill=white,
+    minimum width=0.85cm,
+    minimum height=0.85cm,
+    inner sep=0pt
+  },
+  >=Latex
+]
+  \draw[wire] (0,0) -- (5.2,0);
+  \node[left] at (0,0) {$\ket{0}$};
+  \node[gate] at (1,0) {$H$};
+  \node[gate] at (2,0) {$X$};
+  \node[gate] at (3,0) {$Y$};
+  \node[gate] at (4,0) {$Z$};
+  \draw[->, wire] (5.2,0) -- (5.8,0);
+\end{tikzpicture}
