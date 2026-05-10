@@ -199,7 +199,7 @@
 \begin{frame}
   \frametitle{測定}
   \begin{itemize}
-  \item 量子状態は, 測定すると$\ket{0}$と$\ket{1}$のいずれかになってしまう. これは経験的事実であり\textbf{ボルンの確率規則}と呼ばれる.
+  \item 量子状態は, 測定すると$\bf{\ket{0}}$\textbf{と}$\bf{\ket{1}}$\textbf{のいずれかになってしまう.} これは経験的事実であり\textbf{ボルンの確率規則}と呼ばれる.
   \item 例えば$\ket{+}$をZ測定すると$+1$になるときもあれば, $-1$になることもある. その確率は$\dfrac{1}{2}$である.
   \item よって量子コンピュータでは, 測定として\textbf{期待値}を計算する.
   \end{itemize}
@@ -221,7 +221,37 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １１ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
   \frametitle{測定}
-  
+  これらの期待値は,ゲート操作である行列を用いて簡単に表現することができる.
+  \begin{align}
+    \text{（Z測定の期待値）} &= |\alpha|^2 - |\beta|^2\\
+    &= \begin{bmatrix} \alpha^* & \beta^* \end{bmatrix} \begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix} \begin{bmatrix} \alpha \\ \beta \end{bmatrix} = \bra{\varphi}Z\ket{\varphi} \\
+    \text{（X測定の期待値）} &= \alpha \beta^* + \alpha^*\beta \\
+    &= \begin{bmatrix} \alpha^* & \beta^* \end{bmatrix} \begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix} \begin{bmatrix} \alpha \\ \beta \end{bmatrix} = \bra{\varphi}X\ket{\varphi}
+  \end{align}
+  \begin{itemize}
+    \item ブラケットで行列を挟むことで, 期待値を計算することができる.
+    \item 「ゲート操作である行列」と書いたが, ゲートと測定で扱う行列は別物.
+    \item Z測定やX測定のほかにもエルミート行列を用いた測定が存在する.
+    \item 測定で扱うエルミート行列を\textbf{観測量}や\textbf{オブザーバブル}という.
+  \end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １２ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{測定}
+  ＜なぜ$\bra{\varphi}A\ket{\varphi}$が期待値になるのか＞
+  \begin{proof}
+    \textbf{proof.} \\
+    観測量$A \in Mat_{2^n}(\mathbb{C})$はエルミート行列（正規行列）であるので, 実数の固有値$\lambda_i$と, 固有ベクトル$\ket{v_i}$によりスペクトル分解できる. \\
+    任意の$i \in \mathbb{N}_{1\le i \le 2^n}$に対し,
+    \begin{align}
+      A\ket{v_i} = \lambda \ket{v_i}
+    \end{align}
+    また$\ket{v_i}$は直交するので, 任意の量子状態$\ket{\varphi}$に対して$c_i \in \mathbb{C}$が存在し
+    \begin{align}
+      \ket{\varphi} = \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i \ket{v_i}
+    \end{align}
+  \end{proof}
 \end{frame}
 
 \end{document}
