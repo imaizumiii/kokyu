@@ -239,19 +239,37 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １２ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
   \frametitle{測定}
-  ＜なぜ$\bra{\varphi}A\ket{\varphi}$が期待値になるのか＞
-  \begin{proof}
-    \textbf{proof.} \\
-    観測量$A \in Mat_{2^n}(\mathbb{C})$はエルミート行列（正規行列）であるので, 実数の固有値$\lambda_i$と, 固有ベクトル$\ket{v_i}$によりスペクトル分解できる. \\
-    任意の$i \in \mathbb{N}_{1\le i \le 2^n}$に対し,
-    \begin{align}
-      A\ket{v_i} = \lambda \ket{v_i}
-    \end{align}
-    また$\ket{v_i}$は直交するので, 任意の量子状態$\ket{\varphi}$に対して$c_i \in \mathbb{C}$が存在し
-    \begin{align}
-      \ket{\varphi} = \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i \ket{v_i}
-    \end{align}
-  \end{proof}
+  ＜なぜ$\bra{\varphi}A\ket{\varphi}$が期待値になるのか＞\\
+  \textbf{proof.} \\
+  観測量$A \in Mat_{2^n}(\mathbb{C})$はエルミート行列（正規行列）であるので, 実数の固有値$\lambda_i$と, 固有ベクトル$\ket{v_i}$によりスペクトル分解できる. \\
+  任意の$i \in \mathbb{N}_{1\le i \le 2^n}$に対し,
+  \begin{align}
+    A\ket{v_i} = \lambda_i \ket{v_i}
+  \end{align}
+  また$\ket{v_i}$は直交するので, 任意の量子状態$\ket{\varphi}$に対して$c_i \in \mathbb{C}$が存在し
+  \begin{align}
+    \ket{\varphi} = \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i \ket{v_i}
+  \end{align}
+  ボルンの確率規則により, 測定値$\lambda_i$となる確率は$P\left(\lambda_i\right)$は
+  \begin{align}
+    P\left( \lambda_i \right) = |c_i|^2
+  \end{align}
+  よって古典的な定義に従うと, 期待値は$E$は
+  \begin{align}
+    E = \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} \lambda_i |c_i|^2
+  \end{align}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １３ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{測定}
+$\bra{\varphi}A\ket{\varphi}$を計算する.
+\begin{align}
+  A\ket{\varphi} &= A \left( \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i \ket{v_i} \right)\\
+  &= \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i \left( A \ket{v_i} \right) = \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i \left( \lambda_i \ket{v_i} \right)
+\end{align}
+また, $\bra{\varphi} = sum_{j \in \mathbb{N}_{1 \le j \le 2^n}}$なので
+
 \end{frame}
 
 \end{document}
