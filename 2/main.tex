@@ -262,14 +262,31 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １３ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{測定}
-$\bra{\varphi}A\ket{\varphi}$を計算する.
-\begin{align}
-  A\ket{\varphi} &= A \left( \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i \ket{v_i} \right)\\
-  &= \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i \left( A \ket{v_i} \right) = \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i \left( \lambda_i \ket{v_i} \right)
-\end{align}
-また, $\bra{\varphi} = sum_{j \in \mathbb{N}_{1 \le j \le 2^n}}$なので
+  \frametitle{測定}
+  $\bra{\varphi}A\ket{\varphi}$を計算する.
+  \begin{align}
+    A\ket{\varphi} &= A \left( \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i \ket{v_i} \right)\\
+    &= \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i \left( A \ket{v_i} \right) = \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i \left( \lambda_i \ket{v_i} \right)
+  \end{align}
+  また, $\bra{\varphi} = \sum_{j \in \mathbb{N}_{1 \le j \le 2^n}} c_i^* \bra{v_i}$なので
+  \begin{align}
+    \bra{\varphi}A\ket{\varphi} = \left( \sum_{j \in \mathbb{N}_{1 \le j \le 2^n}} c_i^* \bra{v_i} \right) \left( \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i \left( \lambda_i \ket{v_i} \right) \right)
+  \end{align}
+  $\ket{v_i}$はスペクトル分解した固有ベクトルなので正規直交であり, $i=j$のとき$\braket{v_i|v_j}=1$, $i\ne j$のとき$\braket{v_i|v_j}=0$なので
+  \begin{align}
+    \bra{\varphi}A\ket{\varphi} = \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} c_i^* c_i \lambda = \sum_{i \in \mathbb{N}_{1 \le i \le 2^n}} |c_i|^2 \lambda
+  \end{align}
+  よって, 古典的な期待値の定義$E$と一致する.
+\end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １４ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+  \frametitle{測定（スペクトル分解）}
+  \begin{itemize}
+    \item 射影行列
+    \item 正規行列
+    \item ベル状態はなぜ量子もつれ（エンタングル）なのか
+  \end{itemize}
 \end{frame}
 
 \end{document}
