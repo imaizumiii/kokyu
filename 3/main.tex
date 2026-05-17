@@ -1,0 +1,141 @@
+\RequirePackage{iftex}
+\ifLuaTeX\else
+  \GenericError{}{This document must be compiled with LuaLaTeX.}{}{Run `latexmk -lualatex sample.tex` or set your editor's TeX engine to LuaLaTeX.}
+  \expandafter\endinput
+\fi
+\documentclass[9pt]{beamer}
+\usepackage{luatexja}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{braket}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc}
+
+\setbeamertemplate{proof begin}{}
+\setbeamertemplate{proof end}{}
+
+\usetheme[block=fill]{metropolis}
+\usefonttheme{professionalfonts}
+
+\setbeamersize{
+  text margin left=5mm,
+  text margin right=5mm
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{数学講究第4回}
+\author{今泉 力}
+\date{2026年5月20日}
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ２ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{エンコーディング（入力）}
+    \begin{itemize}
+        \item 量子コンピュータにデータを入力することを\textbf{エンコーディング}という.
+        \item 古典データの$n$ビット列をそのまま量子ビットに置き換える手法を\textbf{基底エンコーディング}という.
+    \end{itemize}
+    \begin{align*}
+        \ket{0} \coloneq \ket{0000}, \quad \ket{1} \coloneq \ket{0001}, \quad \ket{2} \coloneq \ket{0010}, \quad \ket{3} \coloneq \ket{0011}, \quad \dots
+    \end{align*}
+    データ列$\bm{x} \coloneq [0.1, 0.2, -0.5, 0.8]$とする.これを基底エンコーディングする場合, 符号を表す1bitを頭につけた計5bitへのエンコードは
+    \begin{align*}
+        0.1 \coloneq 0\,0001, \quad 0.2 \coloneq 0\,0011, \quad -0.5 \coloneq 1\,1000, \quad 0.8 \coloneq 0\,1100
+    \end{align*}
+    のようにあらわすことができるので,
+    \begin{align}
+        \bm{x} \xrightarrow{\text{基底エンコード}} \ket{00001\,00011\,11000\,01100}
+    \end{align}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ３ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{エンコーディング（入力）}
+    古典データを確率振幅にエンコードする手法を\textbf{振幅エンコーディング}という.
+    $\sum_k |x_k|^2 = 1$になるようデータを規格化する.\\
+    同様に$\bm{x} \coloneq [0.1, 0.2, -0.5, 0.8]$をエンコーディングするとき, $\sum_k |x_k|^2 = \sqrt{0.94}$なので\\
+    \begin{align*}
+        \frac{1}{\sqrt{0.94}}[0.1,\, 0.2,\, -0.5,\, 0.8] \approx [0.1031,\, 0.2063,\, -0.5157,\, 0.8251]
+    \end{align*}
+    4個のデータなので2個の量子ビットを用いて
+    \begin{align}
+        \bm{x} \xrightarrow{\text{振幅エンコード}} 0.1031\ket{00} + 0.2063\ket{01} - 0.5157\ket{10} + 0.8511\ket{11}
+    \end{align}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ４ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{量子計算の基本戦略}
+    \textbf{ベルンシュタイン・ヴァジラニのアルゴリズム}を用いて, 古典計算と量子計算の違いを比較する.\\
+    \begin{itemize}
+        \item 問題設定：「ブラックボックスの中に隠れた3桁の暗証番号$\bm{s} \in \{0,1\}^3$を当てる」というゲームを考える.
+        \item ブラックボックス関数$f_s \colon \{0, 1\}^3 \to \{0, 1\} \left( \bm{x} \mapsto s_1x_1 + s_2x_2 + s_3x_3 \pmod{2} \right)$とする.
+        \item 正解の暗証番号$s = 101$とする.
+    \end{itemize}
+    ＜古典計算の場合＞\\
+    １桁目を特定するため, $x = 100$を入力.
+    \begin{align}
+        f_s(100) = s_1\cdot1 + s_2\cdot0 + s_3\cdot0 \pmod{2} = s_1 = 1
+    \end{align}
+    ２桁目を特定するため, $x = 010$を入力.
+    \begin{align}
+        f_s(100) = s_1\cdot0 + s_2\cdot1 + s_3\cdot0 \pmod{2} = s_2 = 0
+    \end{align}
+    ３桁目を特定するため, $x = 001$を入力.
+    \begin{align}
+        f_s(100) = s_1\cdot0 + s_2\cdot0 + s_3\cdot1 \pmod{2} = s_3 = 1
+    \end{align}
+    よって$\bm{s} = 101$ということがわかる.$n$ビット列なら$n$回の計算が必要となる.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ５ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{量子計算の基本戦略}
+    ＜量子計算の場合＞\\
+    \textbf{STEP1.} \, $\ket{0}$に初期化された3つの量子ビットと補助量子ビット$\ket{1}$を準備する.
+    \begin{align}
+        \ket{\varphi} = \ket{000}\ket{1}
+    \end{align}
+    \textbf{STEP2.} \, アダマールゲート$H =\frac{1}{\sqrt{2}} \begin{bmatrix}1 & 1 \\ 1 & -1 \end{bmatrix}$をかけ、重ね合わせの状態を作る.
+    \begin{align}
+        \ket{000}\ket{1} \xrightarrow{H^{\otimes(3+1)}} \frac{1}{\sqrt{8}}(\ket{000} + \ket{001} + \ldots \ket{111}) \ket{-} \quad \left( \ket{-} = \frac{1}{\sqrt{2}}(\ket{0} - \ket{1}) \right)
+    \end{align}
+    \textbf{STEP3.} \, $f_s(x)$に問い合わせ, 補助量子ビットにmod 2で足す.\\
+    \begin{align}
+        \xrightarrow{f_s(x)} &\, \frac{1}{\sqrt{8}} \sum_{x \in \{0,1\}^3} \ket{\bm{x}} \frac{1}{\sqrt{2}} \bigl( \ket{0 \oplus f_s(\bm{x})} - \ket{1 \oplus f_s(\bm{x})} \bigr) \\
+        &= \begin{cases}
+            \frac{1}{\sqrt{8}} \sum_{\bm{x} \in \{0,1\}^3} \ket{\bm{x}} \ket{-} \quad (f_s(\bm{x}) = 0) \\
+            \frac{1}{\sqrt{8}} \sum_{\bm{x} \in \{0,1\}^3} \ket{\bm{x}} (-\ket{-}) \quad (f_s(\bm{x}) = 1)
+        \end{cases} \\
+        &= \frac{1}{\sqrt{8}} \sum_{\bm{x} \in \{0,1\}^3} (-1)^{f_s(\bm{x})} \ket{\bm{x}} \ket{-}
+    \end{align} 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ６ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{量子計算の基本戦略}
+    \begin{align}
+        \frac{1}{\sqrt{8}} \sum_{\bm{x} \in \{0,1\}^3} (-1)^{f_s(\bm{x})} \ket{\bm{x}} \ket{-} &=
+        \frac{1}{\sqrt{8}} \sum_{\bm{x} \in \{0,1\}^3} (-1)^{s_1x_1 + s_2x_2 + s_3x_3} \ket{\bm{x}} \ket{-} \\
+        &= \frac{1}{\sqrt{8}} \sum_{\bm{x} \in \{0,1\}^3} \prod_{i=1}^{3} (-1)^{s_ix_i} \ket{x_i} \ket{-} 
+    \end{align}
+    $(-1)^{s_ix_i}\ket{x_i} = \begin{cases} \ket{0} \quad (\text{if}\: x_i = 0) \\ (-1)^{s_i}\ket{1} \quad (\text{if} \: x_i = 1) \end{cases}$なので
+    \begin{align}
+        \frac{1}{\sqrt{8}} \sum_{\bm{x} \in \{0,1\}^3} \prod_{i=1}^{3} (-1)^{s_ix_i} \ket{x_i} \ket{-} &= \prod_{i=3}^{3} \dfrac{\ket{0} + (-1)^{s_i} \ket{1}}{\sqrt{2}} \ket{-} \\
+        &= \prod_{i=3}^{3} H\ket{s_i} \ket{-} 
+    \end{align}
+    \textbf{STEP4.}\, アダマールゲート$H$を再度施せば, $HH = I$より
+    \begin{align}
+        \prod_{i=3}^{3} H\ket{s_i} \ket{-} \xrightarrow{H^{\otimes(3+1)}} \ket{\bm{s}} \ket{1}
+    \end{align}
+\end{frame}
+
+\end{document}
