@@ -1,0 +1,133 @@
+\RequirePackage{iftex}
+\ifLuaTeX\else
+  \GenericError{}{This document must be compiled with LuaLaTeX.}{}{Run `latexmk -lualatex sample.tex` or set your editor's TeX engine to LuaLaTeX.}
+  \expandafter\endinput
+\fi
+\documentclass[9pt]{beamer}
+\usepackage{luatexja}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{braket}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, calc}
+
+\setbeamertemplate{proof begin}{}
+\setbeamertemplate{proof end}{}
+
+\usetheme[block=fill]{metropolis}
+\usefonttheme{professionalfonts}
+
+\setbeamersize{
+  text margin left=10mm,
+  text margin right=10mm
+}
+
+\let\Re\relax
+\DeclareMathOperator{\Re}{Re}
+\let\Im\relax
+\DeclareMathOperator{\Im}{Im}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% １ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{数学講究前期第9回}
+\author{今泉 力}
+\date{2026年6月17日}
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ２ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{行列の固有値推定（アダマールテスト）}
+    \textbf{アダマールテスト} $\cdots$ ユニタリ行列Uの固有値$e^{i\lambda}$を推定するサブルーチン \\
+    第１量子ビットは$\ket{0}$として初期化し, 第２量子ビット以降に状態$\ket{\psi}$を入力する. まず, $\ket{\psi}$が$U$の固有ベクトルである場合を考える. 初期状態は
+    \begin{align}
+        \ket{0} \otimes \ket{\psi}
+    \end{align}
+    である.第１量子ビットにアダマールゲートをかけ, 重ね合わせの状態を作る.
+    \begin{align}
+        \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) \otimes \ket{\psi}
+    \end{align}
+    次に第１量子ビットをコントロールビットとして, 第２量子ビット以降にユニタリ演算$U$を作用させるCtrl-$U$を作用させる.
+    \begin{align}
+        \begin{bmatrix}
+            1 & 0                 &     \\
+            0 & 1                 &     \\
+              &                   & \text{\huge{$U$}}
+        \end{bmatrix}
+        \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) \otimes \ket{\psi}
+        &=
+        \frac{1}{\sqrt{2}} \left( \ket{0} \otimes \ket{\psi} + \ket{1} \otimes U\ket{\psi} \right) \\
+        &= 
+        \frac{1}{\sqrt{2}} \left( \ket{0} \otimes \ket{\psi} + \ket{1} \otimes e^{i\lambda} \ket{\psi} \right) \\
+        &= 
+        \frac{1}{\sqrt{2}} \left( \ket{0} + e^{i\lambda} \ket{1} \right) \otimes \ket{\psi}
+    \end{align}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ３ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{行列の固有値推定（アダマールテスト）}
+    その後, 第１量子ビットにアダマールゲートをかけると
+    \begin{align}
+        H\left( \frac{1}{\sqrt{2}} \left( \ket{0} + e^{i\lambda} \ket{1} \right) \otimes \ket{\psi} \right) 
+        &= 
+        \left( \dfrac{1+e^{i\lambda}}{2} \ket{0} + \dfrac{1-e^{i\lambda}}{2} \ket{1} \right) \otimes \ket{\psi}
+    \end{align}
+    測定結果が０になる確率$p_0$と１になる確率$p_1$を求めると, ボルンの確率規則により
+    \begin{align}
+        p_0 = \left| \dfrac{1+e^{i\lambda}}{2} \right|^2 = \dfrac{1+\cos{\lambda}}{2} ,\quad p_1 = \left| \dfrac{1-e^{i\lambda}}{2} \right|^2 = \dfrac{1-\cos{\lambda}}{2}
+    \end{align}
+    この手法により, どれだけ大きいユニタリ行列$U$であっても, $\cos^-1$を使って$\lambda$の値をもとめることができる.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% ３ページ目 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{行列の固有値推定（アダマールテスト）}
+    $\ket{\psi}$が$U$の固有ベクトルでない場合も考える. アダマールゲートを通した後は
+    \begin{align}
+        \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) \otimes \ket{\psi}
+    \end{align}
+    であり, Ctrl-$U$を作用させると,
+    \begin{align}
+        \begin{bmatrix}
+            1 & 0                 &     \\
+            0 & 1                 &     \\
+              &                   & \text{\huge{$U$}}
+        \end{bmatrix}
+        \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) \otimes \ket{\psi}
+    \end{align}
+    最後にアダマールゲート$H$を作用させ,
+    \begin{align}
+        H \left( \frac{1}{\sqrt{2}} \left( \ket{0} + \ket{1} \right) \otimes \ket{\psi} \right) =
+         \ket{0} \otimes \left( \dfrac{\ket{\psi} + U\ket{\psi}}{2} \right) + \ket{1} \otimes \left( \dfrac{\ket{\psi} - U\ket{\psi}}{2} \right)
+    \end{align}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%４ぺーじ目%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+    \frametitle{行列の固有値推定（アダマールテスト）}
+    この状態について$p_0$を求めると
+    \begin{align}
+        p_0 &= \left( \dfrac{\ket{\psi} + U\ket{\psi}}{2} \right)^* \left( \dfrac{\ket{\psi} + U\ket{\psi}}{2} \right) 
+        = 
+        \frac{1}{4} (\bra{\psi} + \bra{\psi}U^*)(\ket{\psi} + U\ket{\psi}) \\
+        &=
+        \frac{1}{4} (\braket{\psi}{\psi} + \bra{\psi}U\ket{\psi} + \bra{\psi}U^*\ket{\psi} + \bra{\psi}U^*U\ket{\psi}) \\
+        &=
+        \frac{1}{4} \left( 2 + \bra{\psi}U\ket{\psi} + (\bra{\psi}U\ket{\psi})^* \right) 
+        = 
+        \dfrac{1 + \Re \bra{\psi}U\ket{\psi}}{2}
+    \end{align}
+    同様に$p_1$は
+    \begin{align}
+        p_1 = \dfrac{1 - \Re \bra{\psi}U\ket{\psi}}{2}
+    \end{align}
+\end{frame}
+
+\end{document}
