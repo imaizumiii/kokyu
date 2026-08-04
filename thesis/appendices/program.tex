@@ -1,0 +1,29 @@
+\chapter*{付録A　プログラム}
+\addcontentsline{toc}{chapter}{付録A　プログラム}
+
+\lstset{
+  language = Python,
+  breaklines = true,
+  breakindent = 10pt,
+  basicstyle = \ttfamily\scriptsize,
+  commentstyle = {\itshape \color[cmyk]{1,0.4,1,0}},
+  stringstyle = {\ttfamily \color[rgb]{0,0,1}},
+  frame = tbrl,
+  framesep = 5pt,
+  numbers = left,
+  stepnumber = 1,
+  numberstyle = \tiny,
+  tabsize = 4,
+  captionpos = t
+}
+
+\begin{lstlisting}
+import os
+import cv2
+import numpy as np
+from imutils import contours
+import matplotlib.pyplot as plt
+import glob
+from natsort import natsorted
+from keras.models import load_model
+\end{lstlisting}

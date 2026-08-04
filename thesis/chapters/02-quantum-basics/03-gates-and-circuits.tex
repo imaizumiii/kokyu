@@ -1,0 +1,168 @@
+\section{量子ゲートと量子回路}
+\label{sec:quantum-gates-and-circuits}
+
+\subsection{ユニタリ変換}
+\label{subsec:unitary-transformation}
+
+閉じた量子系の状態変化は，ユニタリ演算子$U$を用いて
+\begin{align*}
+  \ket{\psi'}=U\ket{\psi}
+\end{align*}
+と表される．
+ユニタリ演算子は
+\begin{equation}
+  U^{\dagger}U=UU^{\dagger}=I
+  \label{eq:unitary-condition}
+\end{equation}
+を満たす．
+したがって，状態の内積は
+\begin{align*}
+  \braket{\psi'|\psi'}
+  =
+  \bra{\psi}U^{\dagger}U\ket{\psi}
+  =
+  \braket{\psi|\psi}
+\end{align*}
+となり，ユニタリ変換の前後で規格化が保存される．
+また，$U^{-1}=U^{\dagger}$であるため，量子ゲートによる状態変化は測定を行わない限り可逆である．
+
+量子ビットに作用するユニタリ変換を\textbf{量子ゲート}という．
+複数の量子ゲートを順番に配置し，量子状態を入力から出力へ変換する計算モデルを
+\textbf{量子回路}という．
+
+\subsection{1量子ビットゲート}
+\label{subsec:single-qubit-gates}
+
+代表的な1量子ビットゲートとして，Pauliゲート
+\begin{align*}
+  X&=
+  \begin{pmatrix}
+    0 & 1 \\
+    1 & 0
+  \end{pmatrix},
+  &
+  Y&=
+  \begin{pmatrix}
+    0 & -i \\
+    i & 0
+  \end{pmatrix},
+  &
+  Z&=
+  \begin{pmatrix}
+    1 & 0 \\
+    0 & -1
+  \end{pmatrix}
+\end{align*}
+がある．
+$X$ゲートは
+\begin{align*}
+  X\ket{0}=\ket{1},
+  \qquad
+  X\ket{1}=\ket{0}
+\end{align*}
+と作用するため，古典計算におけるNOTゲートに対応する．
+$Z$ゲートは$\ket{1}$成分の符号を反転させ，
+\begin{align*}
+  Z\ket{+}=\ket{-},
+  \qquad
+  Z\ket{-}=\ket{+}
+\end{align*}
+と作用する．
+
+Hadamardゲートは
+\begin{align*}
+  H
+  =
+  \frac{1}{\sqrt{2}}
+  \begin{pmatrix}
+    1 & 1 \\
+    1 & -1
+  \end{pmatrix}
+\end{align*}
+で定義され，
+\begin{align*}
+  H\ket{0}=\ket{+},
+  \qquad
+  H\ket{1}=\ket{-}
+\end{align*}
+を満たす．
+したがって，Hadamardゲートは計算基底状態から等しい大きさの重ね合わせ状態を生成できる．
+また，$H^2=I$であるため，$H\ket{+}=\ket{0}$および$H\ket{-}=\ket{1}$が成り立つ．
+
+\subsection{回転ゲート}
+\label{subsec:rotation-gates}
+
+Pauli演算子を用いると，各軸まわりの回転ゲートを
+\begin{align*}
+  R_X(\theta)&=\exp\left(-i\frac{\theta}{2}X\right), \\
+  R_Y(\theta)&=\exp\left(-i\frac{\theta}{2}Y\right), \\
+  R_Z(\theta)&=\exp\left(-i\frac{\theta}{2}Z\right)
+\end{align*}
+と定義できる．
+例えば，
+\begin{align*}
+  R_Y(\theta)
+  =
+  \begin{pmatrix}
+    \cos(\theta/2) & -\sin(\theta/2) \\
+    \sin(\theta/2) & \cos(\theta/2)
+  \end{pmatrix}
+\end{align*}
+である．
+これらのゲートは，Bloch球上で量子状態をそれぞれ$x$軸，$y$軸，$z$軸のまわりに回転させる．
+回転角$\theta$を連続的に変えられるため，回転ゲートは古典データの符号化や
+パラメータ付き量子回路で重要な役割を持つ．
+
+\subsection{制御ゲート}
+\label{subsec:controlled-gates}
+
+複数量子ビットへ作用する代表的なゲートとして，制御NOTゲート，すなわちCNOTゲートがある．
+本稿では第1量子ビットを制御量子ビット，第2量子ビットを標的量子ビットとする．
+CNOTゲートは，制御量子ビットが$1$のときに限り，標的量子ビットへ$X$ゲートを作用させる．
+計算基底に対する作用は
+\begin{align*}
+  \ket{00}&\longmapsto\ket{00}, &
+  \ket{01}&\longmapsto\ket{01}, \\
+  \ket{10}&\longmapsto\ket{11}, &
+  \ket{11}&\longmapsto\ket{10}
+\end{align*}
+であり，行列表現は
+\begin{align*}
+  \mathrm{CNOT}
+  =
+  \begin{pmatrix}
+    1 & 0 & 0 & 0 \\
+    0 & 1 & 0 & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & 0 & 1 & 0
+  \end{pmatrix}
+\end{align*}
+となる．
+
+初期状態$\ket{00}$の第1量子ビットへHadamardゲートを作用させた後，CNOTゲートを作用させると，
+\begin{align*}
+  \ket{00}
+  &\xrightarrow{H\otimes I}
+  \frac{\ket{00}+\ket{10}}{\sqrt{2}} \\
+  &\xrightarrow{\mathrm{CNOT}}
+  \frac{\ket{00}+\ket{11}}{\sqrt{2}}
+  =\ket{\Phi^+}
+\end{align*}
+となる．
+この例から，1量子ビットゲートと制御ゲートを組み合わせることで量子もつれを生成できることが分かる．
+
+\subsection{量子回路の読み方}
+\label{subsec:quantum-circuit-notation}
+
+量子回路図では，各量子ビットを横方向の線で表し，時間は左から右へ進む．
+線上の記号は量子ゲートを表し，回路の末端に置かれた測定記号は量子情報を古典情報へ変換する操作を表す．
+同じ量子ビットへ複数のゲート$U_1,U_2,\ldots,U_L$を左から順に作用させる場合，
+状態全体への作用は
+\begin{align*}
+  \ket{\psi_{\mathrm{out}}}
+  =
+  U_L\cdots U_2U_1\ket{\psi_{\mathrm{in}}}
+\end{align*}
+となる．
+したがって，行列積の順序は回路図に現れる順序と逆になることに注意する必要がある．
+

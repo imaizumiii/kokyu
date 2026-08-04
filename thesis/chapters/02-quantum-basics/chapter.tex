@@ -1,0 +1,36 @@
+\newpage
+\chapter{量子計算の基礎}
+\label{chap:quantum-basics}
+
+量子機械学習では，古典データを量子状態として表現し，量子回路によって状態を変化させ，
+測定から得られる値をモデルの出力として利用する．
+そのため，量子機械学習の仕組みを理解するには，量子状態，量子ゲート，複数量子ビット，
+および量子測定についての基礎知識が必要になる．
+
+量子論は，量子系を測定したときに得られる結果とその確率を記述する理論である．
+本章では量子論全体を扱うのではなく，量子計算に必要な有限次元の量子系に対象を限定する．
+さらに，特に断らない限り，量子系の状態について完全な情報が与えられている純粋状態を扱う．
+この範囲では，量子計算の基本的な過程は，次の三つに整理できる．
+
+\begin{enumerate}[(1)]
+  \item 量子系の状態を，複素ベクトル空間の単位ベクトルとして表す．
+  \item 量子系の状態変化を，長さを保存するユニタリ変換として表す．
+  \item 量子系を測定し，確率的な古典情報を取り出す．
+\end{enumerate}
+
+本章では，まず最小の量子情報の単位である量子ビットを導入する．
+続いて複数量子ビット，量子ゲート，量子回路，測定，古典データの符号化を説明し，
+最後にパラメータ付き量子回路を用いた古典・量子ハイブリッド計算へ接続する．
+
+% TODO: 本章で参照した量子計算・量子機械学習の教科書を参考文献に追加し，
+%       定義や説明を参照した箇所に引用を付す．
+
+% 各節の本文は同じフォルダ内のファイルに分割している．
+\input{chapters/02-quantum-basics/01-qubit-state}
+\input{chapters/02-quantum-basics/02-multiple-qubits}
+\input{chapters/02-quantum-basics/03-gates-and-circuits}
+\input{chapters/02-quantum-basics/04-measurement-and-expectation}
+\input{chapters/02-quantum-basics/05-data-encoding}
+\input{chapters/02-quantum-basics/06-variational-algorithms}
+\input{chapters/02-quantum-basics/07-summary}
+

@@ -1,0 +1,108 @@
+\section{量子測定と期待値}
+\label{sec:measurement-and-expectation}
+
+\subsection{計算基底での測定}
+\label{subsec:computational-basis-measurement}
+
+1量子ビット状態$\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$を計算基底で測定すると，
+式\eqref{eq:born-rule-single-qubit}の確率で$0$または$1$が得られる．
+結果$0$を得た場合，測定後の状態は$\ket{0}$となり，結果$1$を得た場合は$\ket{1}$となる．
+したがって，一度の測定だけから$\alpha$と$\beta$を直接求めることはできない．
+同じ状態を繰り返し準備して測定し，結果の頻度から確率を推定する必要がある．
+
+$n$量子ビット状態を計算基底で測定すると，長さ$n$のビット列が一つ得られる．
+式\eqref{eq:n-qubit-state}の状態について，ビット列$j$を得る確率は$|\alpha_j|^2$である．
+
+\subsection{射影測定}
+\label{subsec:projective-measurement}
+
+計算基底測定は，射影演算子
+\begin{align*}
+  P_0=\ket{0}\bra{0},
+  \qquad
+  P_1=\ket{1}\bra{1}
+\end{align*}
+を用いて表すことができる．
+これらは
+\begin{align*}
+  P_k^{\dagger}=P_k,
+  \qquad
+  P_k^2=P_k,
+  \qquad
+  P_0+P_1=I
+\end{align*}
+を満たす．
+状態$\ket{\psi}$に対し，結果$k\in\{0,1\}$が得られる確率は
+\begin{equation}
+  \Pr(k)
+  =
+  \bra{\psi}P_k\ket{\psi}
+  \label{eq:projective-measurement-probability}
+\end{equation}
+である．
+結果$k$が得られた後の状態は
+\begin{align*}
+  \ket{\psi}
+  \longmapsto
+  \frac{P_k\ket{\psi}}
+       {\sqrt{\bra{\psi}P_k\ket{\psi}}}
+\end{align*}
+となる．
+
+\subsection{観測量と期待値}
+\label{subsec:observable-and-expectation}
+
+量子力学では，測定対象となる物理量を\textbf{観測量}という．
+有限次元の状態空間では，観測量はエルミート演算子$M$として表され，
+\begin{align*}
+  M^{\dagger}=M
+\end{align*}
+を満たす．
+エルミート演算子の固有値は実数であり，スペクトル分解
+\begin{align*}
+  M
+  =
+  \sum_m mP_m
+\end{align*}
+を持つ．
+ここで$m$は測定結果として得られる固有値，$P_m$は対応する固有空間への射影演算子である．
+
+状態$\ket{\psi}$における観測量$M$の期待値は
+\begin{equation}
+  \langle M\rangle_{\psi}
+  =
+  \bra{\psi}M\ket{\psi}
+  \label{eq:observable-expectation}
+\end{equation}
+で定義される．
+期待値は一度の測定結果ではなく，同じ状態を多数回準備して測定したときの測定結果の平均に対応する．
+
+量子機械学習でよく用いられる観測量の一つがPauli-$Z$演算子である．
+$Z$の固有値は$+1$と$-1$であるため，
+\begin{align*}
+  \langle Z\rangle_{\psi}
+  =
+  \Pr(0)-\Pr(1)
+\end{align*}
+となる．
+この値は$[-1,1]$の範囲を取り，量子回路学習では回帰値や分類のスコアとして利用できる．
+
+\subsection{有限ショットによる期待値推定}
+\label{subsec:finite-shot-estimation}
+
+実際の量子デバイスでは，同じ回路を有限回実行して期待値を推定する．
+回路の実行回数をショット数といい，$N_{\mathrm{shots}}$回の測定で
+$0$が$n_0$回，$1$が$n_1$回得られたとする．
+このとき，Pauli-$Z$の期待値の推定値は
+\begin{equation}
+  \widehat{\langle Z\rangle}
+  =
+  \frac{n_0-n_1}{N_{\mathrm{shots}}},
+  \qquad
+  N_{\mathrm{shots}}=n_0+n_1
+  \label{eq:finite-shot-z-estimator}
+\end{equation}
+となる．
+有限ショットから得られる値には統計的なばらつきが含まれる．
+一般にショット数を増やすと推定値は理論的な期待値へ近づくが，回路の実行回数と計算時間も増加する．
+

@@ -1,0 +1,130 @@
+\section{複数量子ビットと量子もつれ}
+\label{sec:multiple-qubits}
+
+\subsection{テンソル積}
+\label{subsec:tensor-product}
+
+二つの量子系$A$と$B$の状態空間をそれぞれ$\mathcal{H}_A$と$\mathcal{H}_B$とすると，
+合成系の状態空間はテンソル積
+\begin{align*}
+  \mathcal{H}_{AB}
+  =
+  \mathcal{H}_A\otimes\mathcal{H}_B
+\end{align*}
+で表される．
+二つの量子ビットの状態空間は
+\begin{align*}
+  \mathbb{C}^2\otimes\mathbb{C}^2
+  \simeq
+  \mathbb{C}^4
+\end{align*}
+であり，計算基底は
+\begin{align*}
+  \ket{00},\quad
+  \ket{01},\quad
+  \ket{10},\quad
+  \ket{11}
+\end{align*}
+である．
+本稿では，左側を第1量子ビット，右側を第2量子ビットとして
+\begin{align*}
+  \ket{a}\otimes\ket{b}
+  =
+  \ket{ab}
+\end{align*}
+と略記する．
+例えば，
+\begin{align*}
+  \ket{0}\otimes\ket{1}
+  =
+  \ket{01}
+  =
+  \begin{pmatrix}
+    0 \\
+    1 \\
+    0 \\
+    0
+  \end{pmatrix}
+\end{align*}
+である．
+
+一般の2量子ビット純粋状態は
+\begin{equation}
+  \ket{\psi}
+  =
+  \alpha_{00}\ket{00}
+  +\alpha_{01}\ket{01}
+  +\alpha_{10}\ket{10}
+  +\alpha_{11}\ket{11}
+  \label{eq:two-qubit-state}
+\end{equation}
+と表され，規格化条件
+\begin{align*}
+  |\alpha_{00}|^2
+  +|\alpha_{01}|^2
+  +|\alpha_{10}|^2
+  +|\alpha_{11}|^2
+  =1
+\end{align*}
+を満たす．
+同様に，$n$量子ビット状態は
+\begin{equation}
+  \ket{\psi}
+  =
+  \sum_{j=0}^{2^n-1}\alpha_j\ket{j},
+  \qquad
+  \sum_{j=0}^{2^n-1}|\alpha_j|^2=1
+  \label{eq:n-qubit-state}
+\end{equation}
+と表される．
+ここで$\ket{j}$は，整数$j$を$n$桁の2進数で表した計算基底状態である．
+
+\subsection{積状態}
+\label{subsec:product-state}
+
+二つの1量子ビット状態
+\begin{align*}
+  \ket{\psi_1}
+  &=
+  \alpha_0\ket{0}+\alpha_1\ket{1}, \\
+  \ket{\psi_2}
+  &=
+  \beta_0\ket{0}+\beta_1\ket{1}
+\end{align*}
+のテンソル積は
+\begin{align*}
+  \ket{\psi_1}\otimes\ket{\psi_2}
+  ={}&
+  \alpha_0\beta_0\ket{00}
+  +\alpha_0\beta_1\ket{01} \\
+  &+\alpha_1\beta_0\ket{10}
+  +\alpha_1\beta_1\ket{11}
+\end{align*}
+となる．
+このように，各部分系の状態のテンソル積として表せる状態を\textbf{積状態}または
+\textbf{分離可能状態}という．
+積状態では，各基底状態の振幅が各量子ビットの振幅の積に分解できる．
+
+\subsection{量子もつれ}
+\label{subsec:entanglement}
+
+複数量子ビット状態の中には，各量子ビットの状態のテンソル積として表せないものがある．
+このような状態を\textbf{量子もつれ状態}という．
+代表例として，Bell状態
+\begin{equation}
+  \ket{\Phi^+}
+  =
+  \frac{\ket{00}+\ket{11}}{\sqrt{2}}
+  \label{eq:bell-state}
+\end{equation}
+を考える．
+この状態を計算基底で測定すると，$00$と$11$がそれぞれ確率$1/2$で得られ，
+$01$と$10$は得られない．
+したがって，第1量子ビットの測定結果と第2量子ビットの測定結果には完全な相関がある．
+
+ただし，測定前から各量子ビットが独立に確定した値を持っていると解釈することはできない．
+Bell状態では，合成系全体の状態は定まっている一方で，各量子ビットを個別の純粋状態として
+記述できないためである．
+量子もつれは，古典的な確率相関だけでは表せない複数量子ビット固有の性質であり，
+量子回路の表現能力にも関係する．
+

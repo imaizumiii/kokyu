@@ -1,0 +1,226 @@
+\section{量子ビットと状態ベクトル}
+\label{sec:qubit-state}
+
+\subsection{古典ビットと量子ビット}
+\label{subsec:classical-and-quantum-bit}
+
+古典コンピュータにおける情報の基本単位はビットであり，その値は$0$または$1$の
+いずれか一方である．
+ビットの値が確率的に定まる状況では，$0$となる確率を$p_0$，$1$となる確率を$p_1$として，
+その状態を確率ベクトル
+\begin{align*}
+  \bm{p}
+  =
+  \begin{pmatrix}
+    p_0 \\
+    p_1
+  \end{pmatrix},
+  \qquad
+  p_0+p_1=1
+\end{align*}
+で表すことができる．
+ただし，この表現は古典ビットが$0$と$1$を同時に取ることを意味するのではなく，
+どちらの値であるかについての知識が確率的であることを表している．
+
+これに対して，量子コンピュータにおける情報の基本単位を\textbf{量子ビット}という．
+量子ビットは二つの区別可能な基底状態を持つ量子系であり，それらを
+$\ket{0}$および$\ket{1}$と表す．
+この二つの状態は，古典ビットの$0$および$1$に対応することから，\textbf{計算基底}と呼ばれる．
+一般の1量子ビット状態は，計算基底の線形結合
+\begin{equation}
+  \ket{\psi}
+  =
+  \alpha\ket{0}+\beta\ket{1}
+  \label{eq:single-qubit-state}
+\end{equation}
+として表される．
+ここで，$\alpha,\beta\in\mathbb{C}$は\textbf{確率振幅}であり，
+\begin{equation}
+  |\alpha|^2+|\beta|^2=1
+  \label{eq:single-qubit-normalization}
+\end{equation}
+を満たす．
+
+状態$\ket{\psi}$を計算基底で測定すると，測定結果として得られる値は
+$0$または$1$のいずれか一方である．
+結果$0$および$1$を得る確率は，それぞれ
+\begin{align}
+  \Pr(0)&=|\alpha|^2, &
+  \Pr(1)&=|\beta|^2
+  \label{eq:born-rule-single-qubit}
+\end{align}
+で与えられる．
+確率振幅の絶対値の二乗が測定確率を与えるという規則を\textbf{Born則}という．
+
+式\eqref{eq:single-qubit-state}は，量子ビットが測定前から古典的な意味で
+$0$と$1$の二つの値を同時に持つことを表しているのではない．
+量子状態は複素数の確率振幅によって記述され，その相対的な位相が後の操作と測定結果に影響する．
+この点が，単なる古典的な確率分布と量子状態の重要な違いである．
+
+\subsection{ブラケット記法と内積}
+\label{subsec:dirac-notation}
+
+量子状態を表す際には，\textbf{Diracのブラケット記法}を用いる．
+記号$\ket{\psi}$で表されるベクトルを\textbf{ケット}という．
+1量子ビットの状態空間は2次元複素ベクトル空間$\mathbb{C}^2$であり，計算基底は
+\begin{align*}
+  \ket{0}
+  &\coloneq
+  \begin{pmatrix}
+    1 \\
+    0
+  \end{pmatrix},
+  &
+  \ket{1}
+  &\coloneq
+  \begin{pmatrix}
+    0 \\
+    1
+  \end{pmatrix}
+\end{align*}
+と表される．
+したがって，式\eqref{eq:single-qubit-state}の状態ベクトルは
+\begin{align*}
+  \ket{\psi}
+  =
+  \begin{pmatrix}
+    \alpha \\
+    \beta
+  \end{pmatrix}
+\end{align*}
+となる．
+
+ケット$\ket{\psi}$の複素共役転置
+\begin{align*}
+  \bra{\psi}
+  \coloneq
+  \ket{\psi}^{\dagger}
+  =
+  \begin{pmatrix}
+    \alpha^* & \beta^*
+  \end{pmatrix}
+\end{align*}
+を\textbf{ブラ}という．
+ここで，$\dagger$は複素共役転置，$\alpha^*$は$\alpha$の複素共役を表す．
+
+二つの状態$\ket{\phi}$と$\ket{\psi}$の内積は
+\begin{align*}
+  \braket{\phi|\psi}
+  =
+  \ket{\phi}^{\dagger}\ket{\psi}
+\end{align*}
+と表される．
+計算基底は正規直交基底であるため，
+\begin{align*}
+  \braket{0|0}=\braket{1|1}=1,
+  \qquad
+  \braket{0|1}=\braket{1|0}=0
+\end{align*}
+が成り立つ．
+量子状態は長さが$1$となるように規格化されるので，
+\begin{align*}
+  \braket{\psi|\psi}
+  &=
+  \begin{pmatrix}
+    \alpha^* & \beta^*
+  \end{pmatrix}
+  \begin{pmatrix}
+    \alpha \\
+    \beta
+  \end{pmatrix} \\
+  &=|\alpha|^2+|\beta|^2
+  =1
+\end{align*}
+となり，式\eqref{eq:single-qubit-normalization}が得られる．
+
+一方，ケットとブラの順序を逆にした
+\begin{align*}
+  \ket{\psi}\bra{\phi}
+\end{align*}
+は\textbf{外積}と呼ばれ，行列すなわち線形演算子を表す．
+例えば，計算基底への射影演算子は
+\begin{align*}
+  P_0&=\ket{0}\bra{0}
+  =
+  \begin{pmatrix}
+    1 & 0 \\
+    0 & 0
+  \end{pmatrix},
+  &
+  P_1&=\ket{1}\bra{1}
+  =
+  \begin{pmatrix}
+    0 & 0 \\
+    0 & 1
+  \end{pmatrix}
+\end{align*}
+である．
+
+\subsection{重ね合わせと位相}
+\label{subsec:superposition-and-phase}
+
+式\eqref{eq:single-qubit-state}のように，複数の基底状態の線形結合で表された状態を
+\textbf{重ね合わせ状態}という．
+代表的な重ね合わせ状態として
+\begin{align*}
+  \ket{+}
+  &=
+  \frac{\ket{0}+\ket{1}}{\sqrt{2}},
+  &
+  \ket{-}
+  &=
+  \frac{\ket{0}-\ket{1}}{\sqrt{2}}
+\end{align*}
+がある．
+どちらの状態も計算基底で測定すると，$0$と$1$がそれぞれ確率$1/2$で得られる．
+しかし，$\ket{0}$と$\ket{1}$の係数の相対的な符号が異なるため，二つは異なる量子状態である．
+
+一般に，状態全体へ同じ位相$e^{i\gamma}$を掛けた
+$e^{i\gamma}\ket{\psi}$は，$\ket{\psi}$と同じ測定統計を与える．
+この$e^{i\gamma}$を\textbf{大域位相}という．
+一方，$\ket{0}$成分と$\ket{1}$成分の間の位相差は\textbf{相対位相}と呼ばれ，
+量子ゲートによる干渉の結果に影響する．
+したがって，確率振幅の絶対値だけでは量子状態を完全には記述できない．
+
+例えば，後に導入するHadamardゲート$H$は
+\begin{align*}
+  H\ket{+}=\ket{0},
+  \qquad
+  H\ket{-}=\ket{1}
+\end{align*}
+を満たす．
+このように，計算基底での測定確率が等しい二つの状態でも，適切な量子ゲートを作用させることで
+相対位相の違いを測定結果へ変換できる．
+
+\subsection{Bloch球による表現}
+\label{subsec:bloch-sphere}
+
+大域位相を除けば，任意の1量子ビット純粋状態は二つの実数$\theta$と$\phi$を用いて
+\begin{equation}
+  \ket{\psi}
+  =
+  \cos\frac{\theta}{2}\ket{0}
+  +
+  e^{i\phi}\sin\frac{\theta}{2}\ket{1},
+  \qquad
+  0\leq\theta\leq\pi,
+  \quad
+  0\leq\phi<2\pi
+  \label{eq:bloch-parameterization}
+\end{equation}
+と表される．
+この状態を3次元空間の単位ベクトル
+\begin{align*}
+  \bm{r}
+  =
+  \begin{pmatrix}
+    \sin\theta\cos\phi \\
+    \sin\theta\sin\phi \\
+    \cos\theta
+  \end{pmatrix}
+\end{align*}
+に対応させた球面を\textbf{Bloch球}という．
+$\ket{0}$と$\ket{1}$はそれぞれ北極と南極に位置し，$\ket{+}$と$\ket{-}$は赤道上に位置する．
+Bloch球は1量子ビット状態を幾何学的に理解するために有用であり，
+後に導入する回転ゲートの作用を球面上の回転として捉えることができる．
+
