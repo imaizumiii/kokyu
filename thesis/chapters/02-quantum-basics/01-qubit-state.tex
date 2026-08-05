@@ -25,8 +25,8 @@
 これに対して，量子コンピュータにおける情報の基本単位を\textbf{量子ビット}という．
 量子ビットは二つの区別可能な基底状態を持つ量子系であり，それらを
 $\ket{0}$および$\ket{1}$と表す．
-この二つの状態は，古典ビットの$0$および$1$に対応することから，\textbf{計算基底}と呼ばれる．
-一般の1量子ビット状態は，計算基底の線形結合
+この二つの状態は，古典ビットの$0$および$1$に対応している. 
+一般の1量子ビット状態は，$\ket{0}, \ket{1}$の線形結合
 \begin{equation}
   \ket{\psi}
   =
@@ -34,15 +34,15 @@ $\ket{0}$および$\ket{1}$と表す．
   \label{eq:single-qubit-state}
 \end{equation}
 として表される．
-ここで，$\alpha,\beta\in\mathbb{C}$は\textbf{確率振幅}であり，
+ここで，$\alpha,\beta\in\mathbb{C}$は\textbf{確率振幅}といい, 
 \begin{equation}
   |\alpha|^2+|\beta|^2=1
   \label{eq:single-qubit-normalization}
 \end{equation}
 を満たす．
 
-状態$\ket{\psi}$を計算基底で測定すると，測定結果として得られる値は
-$0$または$1$のいずれか一方である．
+状態$\ket{\psi}$を測定すると，測定結果として得られる値は
+$0$または$1$のいずれか一方である. （測定については2.4で後述する. ）
 結果$0$および$1$を得る確率は，それぞれ
 \begin{align}
   \Pr(0)&=|\alpha|^2, &
@@ -62,7 +62,7 @@ $0$と$1$の二つの値を同時に持つことを表しているのではな�
 
 量子状態を表す際には，\textbf{Diracのブラケット記法}を用いる．
 記号$\ket{\psi}$で表されるベクトルを\textbf{ケット}という．
-1量子ビットの状態空間は2次元複素ベクトル空間$\mathbb{C}^2$であり，計算基底は
+1量子ビットの状態空間は2次元複素ベクトル空間$\mathbb{C}^2$であり，$\ket{0}, \ket{1}$は
 \begin{align*}
   \ket{0}
   &\coloneq
@@ -110,13 +110,14 @@ $0$と$1$の二つの値を同時に持つことを表しているのではな�
   \ket{\phi}^{\dagger}\ket{\psi}
 \end{align*}
 と表される．
-計算基底は正規直交基底であるため，
+$\ket{0}, \ket{1}$は正規直交基底であるため，
 \begin{align*}
   \braket{0|0}=\braket{1|1}=1,
   \qquad
   \braket{0|1}=\braket{1|0}=0
 \end{align*}
 が成り立つ．
+正規直交基底である量子状態を\textbf{計算基底}という.
 量子状態は長さが$1$となるように規格化されるので，
 \begin{align*}
   \braket{\psi|\psi}
@@ -154,7 +155,13 @@ $0$と$1$の二つの値を同時に持つことを表しているのではな�
     0 & 1
   \end{pmatrix}
 \end{align*}
-である．
+である．式\eqref{eq:single-qubit-state}に射影演算子$P_0$を作用させると，
+\begin{align*}
+  P_0\ket{\psi} &= \ket{0}\bra{0} (\alpha\ket{0} + \beta\ket{1}) \\
+  &= \ket{0}(\alpha\braket{0|0} + \beta\braket{0|1}) \\
+  &= \alpha\ket{0}
+\end{align*}
+となり，\eqref{eq:single-qubit-state}の$\ket{0}$への射影が得られる．$P_1$を作用させても，同様に$\ket{1}$への射影が得られる．
 
 \subsection{重ね合わせと位相}
 \label{subsec:superposition-and-phase}
@@ -171,13 +178,19 @@ $0$と$1$の二つの値を同時に持つことを表しているのではな�
   &=
   \frac{\ket{0}-\ket{1}}{\sqrt{2}}
 \end{align*}
-がある．
-どちらの状態も計算基底で測定すると，$0$と$1$がそれぞれ確率$1/2$で得られる．
+がある．これらの内積を計算すると
+\begin{align*}
+  \braket{+|-} &= \left( \dfrac{\bra{0} + \bra{1}}{\sqrt{2}} \right) \left( \dfrac{\ket{0} - \ket{1}}{\sqrt{2}} \right) \\
+  &= \dfrac{1}{2}\left( \braket{0|0} - \braket{0|1} + \braket{1|0} - \braket{1|1} \right) \\
+  &= 0
+\end{align*}
+となり，正規直交であるため，計算基底として扱うことができる．\textbf{アダマール基底}ともいう．\\
+どちらの状態も計算基底${\ket{0}, \ket{1}}$で測定すると，$0$と$1$がそれぞれ確率$1/2$で得られる．
 しかし，$\ket{0}$と$\ket{1}$の係数の相対的な符号が異なるため，二つは異なる量子状態である．
 
 一般に，状態全体へ同じ位相$e^{i\gamma}$を掛けた
 $e^{i\gamma}\ket{\psi}$は，$\ket{\psi}$と同じ測定統計を与える．
-この$e^{i\gamma}$を\textbf{大域位相}という．
+この$e^{i\gamma}$を\textbf{グローバル位相}という．
 一方，$\ket{0}$成分と$\ket{1}$成分の間の位相差は\textbf{相対位相}と呼ばれ，
 量子ゲートによる干渉の結果に影響する．
 したがって，確率振幅の絶対値だけでは量子状態を完全には記述できない．
@@ -195,7 +208,7 @@ $e^{i\gamma}\ket{\psi}$は，$\ket{\psi}$と同じ測定統計を与える．
 \subsection{Bloch球による表現}
 \label{subsec:bloch-sphere}
 
-大域位相を除けば，任意の1量子ビット純粋状態は二つの実数$\theta$と$\phi$を用いて
+グローバル位相を除けば，任意の1量子ビット状態は二つの実数$\theta$と$\phi$を用いて
 \begin{equation}
   \ket{\psi}
   =
@@ -208,7 +221,7 @@ $e^{i\gamma}\ket{\psi}$は，$\ket{\psi}$と同じ測定統計を与える．
   0\leq\phi<2\pi
   \label{eq:bloch-parameterization}
 \end{equation}
-と表される．
+と表される．ここで，$\phi$は相対位相として捉えることができる．
 この状態を3次元空間の単位ベクトル
 \begin{align*}
   \bm{r}
