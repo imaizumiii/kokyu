@@ -1,0 +1,98 @@
+\section{量子フーリエ変換}
+\label{sec:quantum-fourier-transform}
+
+\subsection{定義}
+\label{subsec:qft-definition}
+
+量子コンピュータで離散フーリエ変換を行うサブルーチンを\textbf{量子フーリエ変換}という．\\
+離散フーリエ変換は，絶対値の総和が$1$であるように規格化された$2^n$個の成分を持つ配列$\{ x_j \}(j = 0,\ldots, 2^n -1)$に対して
+\begin{equation}
+  y_k \coloneq \frac{1}{\sqrt{2^n}} \sum_{j=0}^{2^n-1} x_j \exp\left( i\frac{2\pi k j}{2^n} \right) \quad (k = 0, \ldots , 2^n-1)
+\end{equation}
+という変換である．\\
+\begin{align*}
+  \bm{x} \coloneq \begin{bmatrix} x_0 \\ \vdots \\ x_{2^n-1} \end{bmatrix} \quad
+  \bm{y} \coloneq \begin{bmatrix} y_0 \\ \vdots \\ y_{2^n-1} \end{bmatrix} \quad
+  W \coloneq \left\{ \left[ \exp\left( i\frac{2\pi}{2^n} \right) \right] ^{kj} \right\} _{\substack{1\le j\le 2^n-1 \\1\le k\le 2^n-1}}
+\end{align*}
+と定義すれば
+\begin{equation}
+  \bm{y} = \frac{1}{\sqrt{2^n}}W\ket{\bm{x}}
+\end{equation}
+である．量子フーリエ変換は，振幅符号化されたベクトル \\
+$\ket{\bm{x}} \coloneq \sum_{j=0}^{2^n-1}x_j\ket{j}$を$\ket{\bm{y}} \coloneq \sum_{k=0}^{2^n-1}y_k\ket{k}$に変換するサブルーチンである．
+\begin{align*}
+  \ket{\bm{y}} & = \frac{1}{\sqrt{2^n}} W\bm{x} \quad                                                                                            \\
+               & = \frac{1}{\sqrt{2^n}} \sum_{k=0}^{2^n-1} \sum_{j=0}^{2^n-1} x_j \exp\left( i\frac{2\pi kj}{2^n} \right) \ket{k}                \\
+               & = \sum_{j=0}^{2^n-1}x_j \left( \frac{1}{\sqrt{2^n}} \sum_{k=0}^{2^n-1} \exp \left( i\frac{2\pi kj}{2^n} \right) \ket{k} \right)
+\end{align*}
+$\ket{\bm{x}} \coloneq \sum_{j=0}^{2^n-1}x_j\ket{j}$なので，量子フーリエ変換は
+\begin{align*}
+  \ket{j} \longrightarrow{} \frac{1}{\sqrt{2^n}}\sum_{k=0}^{2^n-1}\exp \left( i\frac{2\pi kj}{2^n} \right) %%%%%量子フーリエ変換
+\end{align*}
+という変換を行うユニタリ操作である．$k$を2進数表記で表し，$\ket{k}$をテンソル積に分けると，
+\begin{align*}
+  (k)_{10} = (k_1 k_2 \cdots k_n) _{2}, \quad \ket{k} = \ket{k_1}\ket{k_2}\cdots\ket{k_n} \quad (k_i \in \{0, 1\}),
+\end{align*}
+であるので
+\begin{align*}
+  \ket{\bm{y}} & = \sum_{j=0}^{2^n-1}x_j \left( \frac{1}{\sqrt{2^n}} \sum_{k=0}^{2^n-1} \exp \left( i\frac{2\pi kj}{2^n} \right) \ket{k} \right)                                                                               \\
+               & = \frac{1}{\sqrt{2^n}} \sum_{k_1=0}^{1} \sum_{k_2=0}^{1} \cdots \sum_{k_n=0}^{1} \exp \left( i \dfrac{2\pi (k_1 2^{n-1} + k_2 2^{n-2} + \cdots + k_n 2^{0}) j}{2^n} \right) \ket{k_1}\ket{k_2}\cdots\ket{k_n} \\
+               & = \frac{1}{\sqrt{2^n}} \sum_{k_1=0}^{1} \sum_{k_2=0}^{1} \cdots \sum_{k_n=0}^{1} \exp \left( i 2\pi j (k_1 2^{-1} + k_2 2^{-2} + \cdots + k_n 2^{-n}) \right) \ket{k_1}\ket{k_2}\cdots\ket{k_n} \\
+               & = \frac{1}{\sqrt{2^n}} \left( \sum_{k_1=0}^{1} \exp \left( i 2 \pi j k_1 2^{-1} \ket{k_1} \right) \right) \otimes \left( \sum_{k_2=0}^{1} \exp \left( i 2 \pi j k_2 2^{-2} \ket{k_2} \right) \right) \\
+               & \quad \otimes \cdots \otimes \left( \sum_{k_n=0}^{1} \exp \left( i 2 \pi j k_n 2^{-n} \ket{k_n} \right) \right) \\
+               & = \frac{1}{\sqrt{2^n}} \Bigl( \ket{0} + \exp \left( i2\pi (0.j_n)_2 \ket{1} \right) \Bigr)
+\end{align*}
+量子位相推定では，補助量子ビットの相対位相に書き込まれた情報を読み出すために，
+主として逆量子フーリエ変換を用いる．
+
+\subsection{量子ビットごとの分解}
+\label{subsec:qft-qubit-decomposition}
+
+整数$k$の$t$ビットの2進表現を
+\begin{align*}
+  k
+  \coloneq
+  k_1 2^{t-1}+k_2 2^{t-2}+\cdots+k_t,
+  \qquad
+  k_r\in\{0,1\}
+\end{align*}
+とする．
+また，2進小数を
+\begin{equation}
+  0.k_rk_{r+1}\cdots k_t
+  \coloneq
+  \frac{k_r}{2}+\frac{k_{r+1}}{2^2}+\cdots+
+  \frac{k_t}{2^{t-r+1}}
+  \label{eq:binary-fraction-definition}
+\end{equation}
+と定義する．
+このとき，式\eqref{eq:qft-definition}は，量子ビットの順序を除いて
+\begin{equation}
+  F_M\ket{k_1k_2\cdots k_t}
+  =
+  \frac{1}{2^{t/2}}
+  \bigotimes_{r=1}^{t}
+  \left(
+  \ket{0}
+  +e^{2\pi\mathrm{i}(0.k_{t-r+1}\cdots k_t)}\ket{1}
+  \right)
+  \label{eq:qft-product-form}
+\end{equation}
+と表される．
+この積の形から，量子フーリエ変換はHadamardゲートと制御位相ゲートを順に作用させることで構成できる．
+最後にSWAPゲートを用いて量子ビットの順序を反転する．
+
+\subsection{回路規模と読み出し}
+\label{subsec:qft-circuit-size-and-readout}
+
+厳密な$t$量子ビット量子フーリエ変換では，$t$個のHadamardゲートと
+$t(t-1)/2$個の制御位相ゲートを用いるため，ゲート数は$O(t^2)$である\cite{shimada2020}．
+小さな回転角を持つ制御位相ゲートを省略する近似量子フーリエ変換を用いれば，
+許容誤差に応じて回路を短くできる．
+
+ただし，量子フーリエ変換を適用しただけでは，すべてのフーリエ係数を古典的に得られるわけではない．
+一度の測定から得られるのは一つのビット列である．
+量子アルゴリズムでは，フーリエ変換後の干渉によって特定の測定結果へ確率を集中させ，
+必要な情報だけを取り出すように回路全体を設計する．
+量子位相推定は，この性質を固有位相の読み出しに利用する．

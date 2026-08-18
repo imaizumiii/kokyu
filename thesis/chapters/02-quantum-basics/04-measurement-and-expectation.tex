@@ -70,7 +70,7 @@ $n$量子ビット状態を計算基底で測定すると，長さ$n$のビッ�
 状態$\ket{\psi}$における観測量$M$の期待値は
 \begin{equation}
   \langle M\rangle_{\psi}
-  =
+  \coloneq
   \bra{\psi}M\ket{\psi}
   \label{eq:observable-expectation}
 \end{equation}
@@ -86,23 +86,3 @@ $Z$の固有値は$+1$と$-1$であるため，
 \end{align*}
 となる．
 この値は$[-1,1]$の範囲を取り，量子回路学習では回帰値や分類のスコアとして利用できる．
-
-\subsection{有限ショットによる期待値推定}
-\label{subsec:finite-shot-estimation}
-
-実際の量子デバイスでは，同じ回路を有限回実行して期待値を推定する．
-回路の実行回数をショット数といい，$N_{\mathrm{shots}}$回の測定で
-$0$が$n_0$回，$1$が$n_1$回得られたとする．
-このとき，Pauli-$Z$の期待値の推定値は
-\begin{equation}
-  \widehat{\langle Z\rangle}
-  =
-  \frac{n_0-n_1}{N_{\mathrm{shots}}},
-  \qquad
-  N_{\mathrm{shots}}=n_0+n_1
-  \label{eq:finite-shot-z-estimator}
-\end{equation}
-となる．
-有限ショットから得られる値には統計的なばらつきが含まれる．
-一般にショット数を増やすと推定値は理論的な期待値へ近づくが，回路の実行回数と計算時間も増加する．
-

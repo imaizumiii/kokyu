@@ -10,7 +10,7 @@
 その状態を確率ベクトル
 \begin{align*}
   \bm{p}
-  =
+  \coloneq
   \begin{pmatrix}
     p_0 \\
     p_1
@@ -141,14 +141,14 @@ $\ket{0}, \ket{1}$は正規直交基底であるため，
 は\textbf{外積}と呼ばれ，行列すなわち線形演算子を表す．
 例えば，計算基底への射影演算子は
 \begin{align*}
-  P_0&=\ket{0}\bra{0}
+  P_0&\coloneq\ket{0}\bra{0}
   =
   \begin{pmatrix}
     1 & 0 \\
     0 & 0
   \end{pmatrix},
   &
-  P_1&=\ket{1}\bra{1}
+  P_1&\coloneq\ket{1}\bra{1}
   =
   \begin{pmatrix}
     0 & 0 \\
@@ -171,11 +171,11 @@ $\ket{0}, \ket{1}$は正規直交基底であるため，
 代表的な重ね合わせ状態として
 \begin{align*}
   \ket{+}
-  &=
+  &\coloneq
   \frac{\ket{0}+\ket{1}}{\sqrt{2}},
   &
   \ket{-}
-  &=
+  &\coloneq
   \frac{\ket{0}-\ket{1}}{\sqrt{2}}
 \end{align*}
 がある．これらの内積を計算すると
@@ -225,7 +225,7 @@ $e^{i\gamma}\ket{\psi}$は，$\ket{\psi}$と同じ測定統計を与える．
 この状態を3次元空間の単位ベクトル
 \begin{align*}
   \bm{r}
-  =
+  \coloneq
   \begin{pmatrix}
     \sin\theta\cos\phi \\
     \sin\theta\sin\phi \\
@@ -236,4 +236,3 @@ $e^{i\gamma}\ket{\psi}$は，$\ket{\psi}$と同じ測定統計を与える．
 $\ket{0}$と$\ket{1}$はそれぞれ北極と南極に位置し，$\ket{+}$と$\ket{-}$は赤道上に位置する．
 Bloch球は1量子ビット状態を幾何学的に理解するために有用であり，
 後に導入する回転ゲートの作用を球面上の回転として捉えることができる．
-

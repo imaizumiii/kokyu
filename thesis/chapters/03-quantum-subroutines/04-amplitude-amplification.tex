@@ -1,0 +1,213 @@
+\section{振幅増幅}
+\label{sec:amplitude-amplification}
+
+\subsection{問題の設定}
+\label{subsec:amplitude-amplification-setting}
+
+量子アルゴリズム$\mathcal{A}$が$n$量子ビットの初期状態から
+\begin{equation}
+  \ket{\psi}
+  \coloneq
+  \mathcal{A}\ket{0}^{\otimes n}
+  \label{eq:amplitude-amplification-initial-state}
+\end{equation}
+を生成するとする．
+計算基底状態の集合を，目的の条件を満たす\textbf{良い状態}と，
+条件を満たさない\textbf{悪い状態}に分ける．
+良い状態が張る部分空間への射影演算子を$\Pi_{\mathrm{g}}$とし，
+初期状態を測定したときに良い状態を得る確率を
+\begin{equation}
+  a
+  \coloneq
+  \bra{\psi}\Pi_{\mathrm{g}}\ket{\psi}
+  \label{eq:initial-good-probability}
+\end{equation}
+と定義する．
+
+$0<a<1$とし，規格化した良い成分と悪い成分をそれぞれ
+\begin{align}
+  \ket{\psi_{\mathrm{g}}}
+  &\coloneq
+  \frac{\Pi_{\mathrm{g}}\ket{\psi}}{\sqrt{a}},
+  \label{eq:normalized-good-state}\\
+  \ket{\psi_{\mathrm{b}}}
+  &\coloneq
+  \frac{(I-\Pi_{\mathrm{g}})\ket{\psi}}{\sqrt{1-a}}
+  \label{eq:normalized-bad-state}
+\end{align}
+と定義する．
+さらに
+\begin{equation}
+  \theta
+  \coloneq
+  \arcsin\sqrt{a},
+  \qquad
+  0<\theta<\frac{\pi}{2}
+  \label{eq:amplification-angle}
+\end{equation}
+とおくと，初期状態は
+\begin{equation}
+  \ket{\psi}
+  =
+  \cos\theta\ket{\psi_{\mathrm{b}}}
+  +\sin\theta\ket{\psi_{\mathrm{g}}}
+  \label{eq:good-bad-decomposition}
+\end{equation}
+と表される．
+
+同じ量子回路を実行して直ちに測定する方法では，
+良い状態を得るまでに平均して$O(1/a)$回の試行が必要になる．
+\textbf{振幅増幅}は，測定前に良い成分の確率振幅を増幅し，
+必要な反復回数を$O(1/\sqrt{a})$へ減らす方法である\cite{brassard2002}．
+
+\subsection{良い部分空間に関する反射}
+\label{subsec:good-subspace-reflection}
+
+良い状態と悪い状態を判定する量子オラクルを用いて，
+良い部分空間の位相だけを反転する演算子を
+\begin{equation}
+  S_{\mathrm{g}}
+  \coloneq
+  I-2\Pi_{\mathrm{g}}
+  \label{eq:good-state-reflection}
+\end{equation}
+と定義する．
+この演算子は
+\begin{align*}
+  S_{\mathrm{g}}\ket{\psi_{\mathrm{b}}}
+  &=
+  \ket{\psi_{\mathrm{b}}},\\
+  S_{\mathrm{g}}\ket{\psi_{\mathrm{g}}}
+  &=
+  -\ket{\psi_{\mathrm{g}}}
+\end{align*}
+と作用する．
+したがって，$S_{\mathrm{g}}$は良い部分空間へ符号反転の目印を付ける操作であり，
+幾何学的には悪い部分空間を軸とする反射である．
+
+判定関数$\chi(x)\in\{0,1\}$が利用できる場合，位相オラクルを
+\begin{equation}
+  O_{\chi}\ket{x}
+  \coloneq
+  (-1)^{\chi(x)}\ket{x}
+  \label{eq:phase-oracle}
+\end{equation}
+として構成できる．
+$\chi(x)=1$を良い状態とすれば，$O_{\chi}$は$S_{\mathrm{g}}$に対応する．
+
+\subsection{初期状態に関する反射}
+\label{subsec:initial-state-reflection}
+
+初期状態$\ket{\psi}$を軸とする反射演算子を
+\begin{equation}
+  S_{\psi}
+  \coloneq
+  2\ket{\psi}\bra{\psi}-I
+  \label{eq:initial-state-reflection}
+\end{equation}
+と定義する．
+$\ket{\psi}=\mathcal{A}\ket{0}^{\otimes n}$であるため，
+\begin{equation}
+  S_{\psi}
+  =
+  \mathcal{A}
+  \left(
+    2\ket{0}^{\otimes n}\bra{0}^{\otimes n}-I
+  \right)
+  \mathcal{A}^{\dagger}
+  \label{eq:prepared-state-reflection}
+\end{equation}
+と表される．
+したがって，状態準備回路$\mathcal{A}$，その逆回路$\mathcal{A}^{\dagger}$，
+および$\ket{0}^{\otimes n}$だけを位相反転する回路を用いて$S_{\psi}$を構成できる．
+
+\subsection{二つの反射による回転}
+\label{subsec:two-reflections-as-rotation}
+
+一回の振幅増幅反復を表す演算子を
+\begin{equation}
+  Q
+  \coloneq
+  S_{\psi}S_{\mathrm{g}}
+  \label{eq:amplitude-amplification-operator}
+\end{equation}
+と定義する．
+$\{\ket{\psi_{\mathrm{b}}},\ket{\psi_{\mathrm{g}}}\}$を基底として表すと
+\begin{equation}
+  Q
+  =
+  \begin{pmatrix}
+    \cos 2\theta & -\sin 2\theta\\
+    \sin 2\theta & \cos 2\theta
+  \end{pmatrix}
+  \label{eq:amplitude-amplification-rotation-matrix}
+\end{equation}
+となる．
+すなわち，二つの反射を続けて作用させると，
+良い状態と悪い状態が張る二次元平面上で角度$2\theta$の回転が生じる\cite{shimada2020}．
+
+初期状態は悪い状態の軸から角度$\theta$だけ良い状態側へ傾いている．
+したがって，$Q$を$r$回作用させると
+\begin{equation}
+  Q^r\ket{\psi}
+  =
+  \cos((2r+1)\theta)\ket{\psi_{\mathrm{b}}}
+  +\sin((2r+1)\theta)\ket{\psi_{\mathrm{g}}}
+  \label{eq:amplitude-after-r-iterations}
+\end{equation}
+となる．
+この状態を測定して良い結果を得る確率は
+\begin{equation}
+  p_r
+  \coloneq
+  \sin^2((2r+1)\theta)
+  \label{eq:amplified-success-probability}
+\end{equation}
+である．
+一回の反復で角度が$2\theta$ずつ増加し，状態が良い部分空間へ近づくことが分かる．
+
+\subsection{反復回数と二次高速化}
+\label{subsec:amplification-iteration-count}
+
+成功確率を最大にするには，$(2r+1)\theta$が$\pi/2$に最も近くなるように$r$を選ぶ．
+したがって，必要な反復回数はおよそ
+\begin{equation}
+  r
+  \simeq
+  \frac{\pi}{4\theta}-\frac{1}{2}
+  \label{eq:near-optimal-amplification-count}
+\end{equation}
+である．
+$a$が小さい場合には$\theta=\arcsin\sqrt{a}\simeq\sqrt{a}$であるため，
+反復回数は$O(1/\sqrt{a})$となる．
+
+特に，$N$個の候補から一つの解を探すGroverの探索アルゴリズムでは$a=1/N$であり，
+振幅増幅によって$O(\sqrt{N})$回のオラクル呼び出しで解を得られる\cite{grover1996}．
+これは，$O(N)$回を必要とする古典的な総当たり探索に対する二次の高速化である．
+
+一方，最適な回数を超えて$Q$を作用させると，状態は良い部分空間を通り過ぎ，
+成功確率は再び低下する．
+したがって，初期成功確率$a$が未知の場合には，反復回数を固定するだけでは安定して増幅できない．
+反復回数を変えながら試行する方法や，良い部分空間を通り過ぎにくい固定点型の振幅増幅などが必要となる．
+
+\subsection{振幅推定との関係}
+\label{subsec:relation-to-amplitude-estimation}
+
+振幅増幅演算子$Q$は，$\ket{\psi_{\mathrm{b}}}$と$\ket{\psi_{\mathrm{g}}}$が張る部分空間で
+固有値$e^{\pm2\mathrm{i}\theta}$を持つ．
+したがって，$Q$を入力ユニタリ演算子として量子位相推定を適用すれば，
+回転角$\theta$を推定できる．
+式\eqref{eq:amplification-angle}より
+\begin{equation}
+  a
+  =
+  \sin^2\theta
+  \label{eq:probability-from-amplification-angle}
+\end{equation}
+であるため，$\theta$から初期成功確率$a$を求められる．
+この処理を\textbf{振幅推定}という\cite{brassard2002}．
+
+量子位相推定は位相をビット列として取り出す処理であり，
+振幅増幅は状態を良い部分空間へ回転させる処理である．
+振幅推定は，振幅増幅演算子が持つ固有位相を量子位相推定で読み出すことにより，
+二つのサブルーチンを接続している．

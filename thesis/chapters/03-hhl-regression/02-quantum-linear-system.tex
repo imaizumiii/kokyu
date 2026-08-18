@@ -1,0 +1,118 @@
+\section{量子線形方程式問題}
+\label{sec:quantum-linear-system-problem}
+
+\subsection{問題の設定}
+\label{subsec:qlsp-formulation}
+
+$N\times N$のエルミート行列$A$と，零でないベクトル$\bm{b}\in\mathbb{C}^{N}$に対する
+線形方程式
+\begin{align*}
+  A\bm{x}=\bm{b}
+\end{align*}
+を考える．
+$A$は可逆であるとし，$\bm{b}$を振幅符号化した量子状態を
+\begin{equation}
+  \ket{b}
+  \coloneq
+  \frac{1}{\|\bm{b}\|_2}
+  \sum_{k=0}^{N-1}b_k\ket{k}
+  \label{eq:qlsp-input-state}
+\end{equation}
+と定義する．
+必要な量子ビット数を$n\coloneq\lceil\log_2N\rceil$とする．
+$N$が2の累乗でない場合は，使用しない基底状態の振幅を零とし，
+行列を
+\begin{align*}
+  A'
+  \coloneq
+  A\oplus I_{2^n-N}
+\end{align*}
+のように拡張すれば，可逆性を保ったまま$n$量子ビットで表現できる．
+
+\textbf{量子線形方程式問題}では，古典ベクトル$\bm{x}=A^{-1}\bm{b}$の全成分を出力する代わりに，
+解ベクトルを規格化した量子状態
+\begin{equation}
+  \ket{x}
+  \coloneq
+  \frac{A^{-1}\ket{b}}
+       {\|A^{-1}\ket{b}\|_2}
+  \label{eq:qlsp-solution-state}
+\end{equation}
+を生成することを目的とする\cite{hhl2009}．
+したがって，HHLアルゴリズムの出力は$N$個の成分を並べた古典データではない．
+得られた$\ket{x}$に対して測定を行い，必要な期待値や他の量子状態との内積を評価することが基本となる．
+
+\subsection{固有値分解による解の表現}
+\label{subsec:eigendecomposition-of-solution}
+
+$A$はエルミート行列であるため，実数の固有値$\lambda_j$と正規直交固有ベクトル$\ket{u_j}$を用いて
+\begin{align}
+  A
+  &=
+  \sum_{j=0}^{N-1}\lambda_j\ket{u_j}\bra{u_j},
+  \label{eq:a-spectral-decomposition}\\
+  A\ket{u_j}
+  &=
+  \lambda_j\ket{u_j}
+  \label{eq:a-eigenvalue-equation}
+\end{align}
+と表される．
+$A$は可逆であるため，すべての固有値は$\lambda_j\neq0$を満たす．
+
+入力状態$\ket{b}$を$A$の固有ベクトルで展開すると
+\begin{equation}
+  \ket{b}
+  =
+  \sum_{j=0}^{N-1}\beta_j\ket{u_j},
+  \qquad
+  \beta_j
+  \coloneq
+  \braket{u_j|b}
+  \label{eq:b-eigenbasis-expansion}
+\end{equation}
+となる．
+このとき，逆行列を作用させた状態は
+\begin{equation}
+  A^{-1}\ket{b}
+  =
+  \sum_{j=0}^{N-1}
+  \frac{\beta_j}{\lambda_j}\ket{u_j}
+  \label{eq:inverse-a-on-b}
+\end{equation}
+である．
+したがって，HHLアルゴリズムの中心的な課題は，
+各固有ベクトル成分の振幅$\beta_j$へ固有値の逆数$1/\lambda_j$を反映することである．
+
+\subsection{条件数}
+\label{subsec:condition-number}
+
+線形方程式の解の安定性は，行列$A$の条件数に依存する．
+スペクトルノルムに関する条件数を
+\begin{equation}
+  \kappa(A)
+  \coloneq
+  \|A\|_2\|A^{-1}\|_2
+  \label{eq:condition-number-definition}
+\end{equation}
+と定義する．
+$A$が正定値行列である場合，最大固有値と最小固有値をそれぞれ
+$\lambda_{\max}$，$\lambda_{\min}$とすると
+\begin{align*}
+  \kappa(A)
+  =
+  \frac{\lambda_{\max}}{\lambda_{\min}}
+\end{align*}
+となる．
+条件数が大きいほど，小さな固有値に対応する成分が$A^{-1}$によって強く増幅される．
+その結果，入力誤差や固有値推定誤差が解へ大きく影響し，HHLアルゴリズムの成功確率や必要な精度にも影響する．
+
+線形回帰で$A=X^{\mathsf{T}}X$とした場合，$X$が最大列階数を持つならば
+\begin{equation}
+  \kappa(X^{\mathsf{T}}X)
+  =
+  \kappa(X)^2
+  \label{eq:normal-equation-condition-number}
+\end{equation}
+である．
+すなわち，正規方程式への変換は線形回帰をHHLアルゴリズムへ接続しやすくする一方で，
+条件数を悪化させる可能性がある．

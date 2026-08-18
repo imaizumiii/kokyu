@@ -10,7 +10,7 @@
 $U_{\mathrm{in}}(x)$を用いて
 \begin{equation}
   \ket{\psi(x)}
-  =
+  \coloneq
   U_{\mathrm{in}}(x)\ket{0}^{\otimes n}
   \label{eq:input-encoding}
 \end{equation}
@@ -39,7 +39,7 @@ $U_{\mathrm{in}}(x)$を用いて
 振幅符号化では，$2^n$次元の古典ベクトル
 \begin{align*}
   \bm{x}
-  =
+  \coloneq
   \begin{pmatrix}
     x_0 & x_1 & \cdots & x_{2^n-1}
   \end{pmatrix}^{\mathsf{T}}
@@ -47,7 +47,7 @@ $U_{\mathrm{in}}(x)$を用いて
 を，規格化した量子状態
 \begin{equation}
   \ket{x}
-  =
+  \coloneq
   \frac{1}{\|\bm{x}\|}
   \sum_{j=0}^{2^n-1}x_j\ket{j}
   \label{eq:amplitude-encoding}
@@ -56,49 +56,3 @@ $U_{\mathrm{in}}(x)$を用いて
 少数量子ビットの振幅に高次元ベクトルを格納できる一方で，
 任意の$\bm{x}$に対応する状態を準備する回路自体が複雑になる場合がある．
 そのため，必要量子ビット数だけでなく，状態準備の計算量も考慮する必要がある．
-
-\subsection{角度符号化}
-\label{subsec:angle-encoding}
-
-角度符号化では，古典データを回転ゲートの角度へ対応させる．
-例えば，1変数$x$を用いて
-\begin{align*}
-  \ket{\psi(x)}
-  =
-  R_Y(x)\ket{0}
-  =
-  \cos\frac{x}{2}\ket{0}
-  +
-  \sin\frac{x}{2}\ket{1}
-\end{align*}
-と符号化できる．
-多変量入力$\bm{x}=(x_1,\ldots,x_n)^{\mathsf{T}}$の場合には，
-各量子ビットへ
-\begin{align*}
-  R_Y(x_1)\otimes\cdots\otimes R_Y(x_n)
-\end{align*}
-を作用させる方法が考えられる．
-角度符号化は実装が比較的容易であり，パラメータ付き量子回路と組み合わせやすい．
-一方で，入力値を回転角へ写す方法や入力範囲の正規化が結果に影響する．
-
-\subsection{符号化方式の比較}
-\label{subsec:encoding-comparison}
-
-代表的な符号化方式の特徴を表\ref{tab:encoding-comparison}にまとめる．
-
-\begin{table}[H]
-  \centering
-  \caption{代表的なデータ符号化方式の比較}
-  \label{tab:encoding-comparison}
-  \begin{tabular}{|c|c|c|c|}
-    \hline
-    符号化方式 & 必要量子ビット数 & 状態準備 & 主な特徴 \\ \hline
-    基底符号化 & データのビット数 & 容易 & ビット列に適する \\ \hline
-    振幅符号化 & $\log_2$次元 & 複雑になり得る & 高次元ベクトルを表現できる \\ \hline
-    角度符号化 & 通常は特徴量数程度 & 比較的容易 & 変分回路と組み合わせやすい \\ \hline
-  \end{tabular}
-\end{table}
-
-本稿で用いる符号化方式を選ぶ際には，理論上の圧縮率だけでなく，
-利用可能な量子ビット数，回路の深さ，実装の容易さ，および後段の学習回路との整合性を考慮する．
-

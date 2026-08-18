@@ -1,0 +1,134 @@
+\section{HHLアルゴリズムにおけるサブルーチンの接続}
+\label{sec:subroutines-in-hhl}
+
+本節では，量子位相推定と振幅増幅がHHLアルゴリズムの内部でどのように利用されるかを整理する．
+ここではサブルーチン間の接続だけを扱い，線形回帰問題への適用は次章で述べる．
+
+\subsection{固有値を扱うための量子位相推定}
+\label{subsec:qpe-role-in-hhl}
+
+可逆なエルミート行列$A$の固有値分解を
+\begin{align*}
+  A
+  =
+  \sum_j\lambda_j\ket{u_j}\bra{u_j}
+\end{align*}
+とする．
+線形方程式の右辺を規格化した状態を
+\begin{equation}
+  \ket{b}
+  =
+  \sum_j\beta_j\ket{u_j},
+  \qquad
+  \beta_j
+  \coloneq
+  \braket{u_j|b}
+  \label{eq:hhl-b-eigenstate-expansion-subroutine}
+\end{equation}
+と展開する．
+
+HHLアルゴリズムでは，$e^{\mathrm{i}At_0}$を用いた量子位相推定により
+\begin{equation}
+  \ket{0}^{\otimes t}\ket{b}
+  \longmapsto
+  \sum_j\beta_j
+  \ket{\widetilde{\lambda}_j}\ket{u_j}
+  \label{eq:hhl-qpe-subroutine-map}
+\end{equation}
+と変換する\cite{hhl2009}．
+ここで，$\widetilde{\lambda}_j$は位相から復元した固有値$\lambda_j$の近似値である．
+状態$\ket{b}$が複数の固有状態の重ね合わせであっても，
+量子位相推定は各固有状態と対応する固有値の関係を同時に保持する．
+
+\subsection{固有値に応じた制御回転}
+\label{subsec:controlled-rotation-after-qpe}
+
+位相レジスタの$\widetilde{\lambda}_j$を制御情報として，
+補助量子ビットへ次の回転を作用させる．
+\begin{equation}
+  \ket{\widetilde{\lambda}_j}\ket{0}_{a}
+  \longmapsto
+  \ket{\widetilde{\lambda}_j}
+  \left(
+    \sqrt{1-\frac{C^2}{\widetilde{\lambda}_j^2}}\ket{0}_{a}
+    +\frac{C}{\widetilde{\lambda}_j}\ket{1}_{a}
+  \right)
+  \label{eq:hhl-controlled-rotation-subroutine}
+\end{equation}
+ここで，$C$はすべての固有値に対して$0<C\leq|\lambda_j|$を満たす定数である．
+この回転により，補助量子ビットが$\ket{1}_{a}$である成分の振幅へ，
+固有値の逆数$1/\widetilde{\lambda}_j$が反映される．
+
+制御回転後に逆量子位相推定を適用すると，位相レジスタは初期状態へ戻り，
+状態レジスタと補助量子ビットは，理想的には
+\begin{align*}
+  \sum_j\beta_j\ket{u_j}
+  \left(
+    \sqrt{1-\frac{C^2}{\lambda_j^2}}\ket{0}_{a}
+    +\frac{C}{\lambda_j}\ket{1}_{a}
+  \right)
+\end{align*}
+となる．
+補助量子ビットが$1$である成分だけを見ると
+\begin{align*}
+  C\sum_j\frac{\beta_j}{\lambda_j}\ket{u_j}
+  =
+  CA^{-1}\ket{b}
+\end{align*}
+である．
+したがって，補助量子ビットの測定結果が$1$であれば，
+状態レジスタから線形方程式の解に比例する量子状態が得られる．
+
+\subsection{成功成分に対する振幅増幅}
+\label{subsec:amplitude-amplification-role-in-hhl}
+
+制御回転と逆量子位相推定を含むHHL回路全体を，状態準備演算子$\mathcal{A}_{\mathrm{HHL}}$とみなす．
+その出力を
+\begin{equation}
+  \mathcal{A}_{\mathrm{HHL}}\ket{0}
+  =
+  \sqrt{1-p_{\mathrm{HHL}}}\ket{\Phi_0}\ket{0}_{a}
+  +\sqrt{p_{\mathrm{HHL}}}\ket{x}\ket{1}_{a}
+  \label{eq:hhl-good-bad-decomposition}
+\end{equation}
+と表す．
+ここで，$\ket{x}$は規格化された解状態，$\ket{\Phi_0}$は測定に失敗する成分である．
+理想的な場合の成功確率を
+\begin{equation}
+  p_{\mathrm{HHL}}
+  \coloneq
+  C^2\sum_j\frac{|\beta_j|^2}{\lambda_j^2}
+  \label{eq:hhl-subroutine-success-probability}
+\end{equation}
+と定義する．
+
+補助量子ビットが$\ket{1}_{a}$である部分空間を良い部分空間とすれば，
+第\ref{sec:amplitude-amplification}節の振幅増幅を適用できる．
+すなわち，補助量子ビットが$1$である成分の位相反転と，
+$\mathcal{A}_{\mathrm{HHL}}$が準備した状態に関する反射を繰り返す．
+これにより，単純な再実行では$O(1/p_{\mathrm{HHL}})$回を要する成功成分を，
+理想的には$O(1/\sqrt{p_{\mathrm{HHL}}})$回の反復で増幅できる．
+
+ただし，振幅増幅を実行するには，$\mathcal{A}_{\mathrm{HHL}}$だけでなく，
+その逆回路$\mathcal{A}_{\mathrm{HHL}}^{\dagger}$も必要となる．
+したがって，成功確率の改善と引き換えに，量子位相推定，制御回転，逆量子位相推定を含む回路を
+複数回実行する必要がある．
+
+\subsection{処理の流れ}
+\label{subsec:hhl-subroutine-flow}
+
+HHLアルゴリズムにおける主要なサブルーチンの流れは，次のようにまとめられる．
+
+\begin{enumerate}[(1)]
+  \item $\ket{b}$を状態レジスタへ準備する．
+  \item $e^{\mathrm{i}At_0}$に対する量子位相推定によって固有値を位相レジスタへ書き込む．
+  \item 固有値の逆数に応じた制御回転を補助量子ビットへ作用させる．
+  \item 逆量子位相推定によって位相レジスタを初期状態へ戻す．
+  \item 必要に応じて，補助量子ビットが$1$である成分を振幅増幅する．
+  \item 補助量子ビットを測定し，結果$1$に条件づけて解状態を得る．
+\end{enumerate}
+
+この流れにおいて，量子位相推定は固有値を量子状態のまま取り出す役割を持ち，
+振幅増幅は解状態を得る成功確率を高める役割を持つ．
+線形回帰を線形方程式へ帰着する方法，行列と右辺ベクトルの構成，
+解状態から予測値を得る方法については，次章で詳しく扱う．

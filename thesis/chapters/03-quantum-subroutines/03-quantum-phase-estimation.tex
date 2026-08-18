@@ -1,0 +1,249 @@
+\section{量子位相推定}
+\label{sec:quantum-phase-estimation}
+
+\subsection{問題の設定}
+\label{subsec:qpe-problem-setting}
+
+ユニタリ演算子$U$の固有状態$\ket{u}$と固有値の関係を
+\begin{equation}
+  U\ket{u}
+  =
+  e^{2\pi\mathrm{i}\phi}\ket{u},
+  \qquad
+  0\leq\phi<1
+  \label{eq:qpe-eigenvalue-equation}
+\end{equation}
+とする．
+ユニタリ演算子の固有値は絶対値が$1$であるため，
+固有値に含まれる情報は位相$\phi$として表すことができる．
+\textbf{量子位相推定}は，$U$と$\ket{u}$を入力とし，
+$\phi$の$t$ビット近似$\widetilde{\phi}$を補助量子ビットへ書き出すサブルーチンである
+\cite{kitaev1995,shimada2020}．
+
+量子位相推定では，$t$量子ビットの位相レジスタと，
+固有状態$\ket{u}$を保持する状態レジスタを使用する．
+初期状態は
+\begin{align*}
+  \ket{0}^{\otimes t}\ket{u}
+\end{align*}
+である．
+位相レジスタの量子ビット数$t$を増やすほど，位相を細かく区別できる．
+
+\subsection{位相キックバック}
+\label{subsec:qpe-phase-kickback}
+
+まず，一つの補助量子ビットを$\ket{+}$に準備し，
+これを制御量子ビットとして制御$U$演算を適用する．
+式\eqref{eq:qpe-eigenvalue-equation}より
+\begin{align}
+  \frac{1}{\sqrt{2}}
+  (\ket{0}+\ket{1})\ket{u}
+  &\longmapsto
+  \frac{1}{\sqrt{2}}
+  \left(
+    \ket{0}\ket{u}
+    +\ket{1}U\ket{u}
+  \right)\notag\\
+  &=
+  \frac{1}{\sqrt{2}}
+  \left(
+    \ket{0}
+    +e^{2\pi\mathrm{i}\phi}\ket{1}
+  \right)\ket{u}
+  \label{eq:single-qubit-phase-kickback}
+\end{align}
+となる．
+固有状態$\ket{u}$自体は変化せず，固有値の位相だけが制御量子ビットの相対位相へ移る．
+この現象を\textbf{位相キックバック}という．
+
+同様に，制御$U^{2^r}$演算を適用すると
+\begin{align*}
+  \frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\ket{u}
+  \longmapsto
+  \frac{1}{\sqrt{2}}
+  \left(
+    \ket{0}+e^{2\pi\mathrm{i}2^r\phi}\ket{1}
+  \right)\ket{u}
+\end{align*}
+となる．
+指数$2^r$を変えることで，$\phi$の2進表現に含まれる異なる桁の情報を取り出せる．
+
+\subsection{制御ユニタリ演算による位相の書き込み}
+\label{subsec:qpe-controlled-unitaries}
+
+位相レジスタの各量子ビットへHadamardゲートを作用させると
+\begin{align*}
+  \ket{0}^{\otimes t}
+  \longmapsto
+  \frac{1}{\sqrt{M}}
+  \sum_{k=0}^{M-1}\ket{k},
+  \qquad
+  M\coloneq2^t
+\end{align*}
+となる．
+次に，位相レジスタの各量子ビットを制御部とする
+$U,U^2,U^{2^2},\ldots,U^{2^{t-1}}$を状態レジスタへ作用させる．
+計算基底状態$\ket{k}$が選択する演算は$U^k$であるため，レジスタ全体は
+\begin{align}
+  \frac{1}{\sqrt{M}}
+  \sum_{k=0}^{M-1}\ket{k}\ket{u}
+  &\longmapsto
+  \frac{1}{\sqrt{M}}
+  \sum_{k=0}^{M-1}\ket{k}U^k\ket{u}\notag\\
+  &=
+  \frac{1}{\sqrt{M}}
+  \sum_{k=0}^{M-1}
+  e^{2\pi\mathrm{i}k\phi}\ket{k}\ket{u}
+  \label{eq:qpe-phase-register-state}
+\end{align}
+となる．
+これにより，固有位相$\phi$が位相レジスタ全体の相対位相へ書き込まれる．
+
+\subsection{逆量子フーリエ変換による読み出し}
+\label{subsec:qpe-inverse-qft-readout}
+
+まず，$\phi$が$t$ビットで厳密に表される場合を考える．
+ある整数$m\in\{0,1,\ldots,M-1\}$を用いて
+\begin{equation}
+  \phi
+  =
+  \frac{m}{M}
+  =
+  0.\phi_1\phi_2\cdots\phi_t
+  \label{eq:qpe-exact-binary-phase}
+\end{equation}
+と表せるとする．
+このとき式\eqref{eq:qpe-phase-register-state}の位相レジスタは，
+式\eqref{eq:qft-definition}の$F_M\ket{m}$と一致する．
+したがって，逆量子フーリエ変換を作用させると
+\begin{equation}
+  \frac{1}{\sqrt{M}}
+  \sum_{k=0}^{M-1}e^{2\pi\mathrm{i}km/M}\ket{k}\ket{u}
+  \xmapsto{F_M^{\dagger}}
+  \ket{m}\ket{u}
+  \label{eq:qpe-exact-output}
+\end{equation}
+となる．
+位相レジスタを計算基底で測定すれば，$\phi$の2進表現
+$\phi_1\phi_2\cdots\phi_t$が確率$1$で得られる．
+
+量子位相推定の処理は，次の手順にまとめられる．
+
+\begin{enumerate}[(1)]
+  \item 位相レジスタを$\ket{0}^{\otimes t}$，状態レジスタを$\ket{u}$に準備する．
+  \item 位相レジスタへHadamardゲートを作用させ，一様な重ね合わせを生成する．
+  \item 制御$U^{2^r}$演算によって，固有位相を位相レジスタへ書き込む．
+  \item 位相レジスタへ逆量子フーリエ変換を作用させる．
+  \item 位相レジスタを測定し，固有位相の近似値を得る．
+\end{enumerate}
+
+\subsection{有限ビット精度での推定}
+\label{subsec:qpe-finite-precision}
+
+一般の位相$\phi$は，有限の$t$ビットで厳密に表せるとは限らない．
+式\eqref{eq:qpe-phase-register-state}へ逆量子フーリエ変換を作用させた後，
+位相レジスタで整数$y$を得る確率振幅を
+\begin{equation}
+  \alpha_y
+  \coloneq
+  \frac{1}{M}
+  \sum_{k=0}^{M-1}
+  e^{2\pi\mathrm{i}k(\phi-y/M)}
+  \label{eq:qpe-finite-amplitude}
+\end{equation}
+と定義する．
+$\delta_y\coloneq\phi-y/M$とおくと，有限等比級数より
+\begin{equation}
+  |\alpha_y|^2
+  =
+  \frac{1}{M^2}
+  \frac{\sin^2(\pi M\delta_y)}
+       {\sin^2(\pi\delta_y)}
+  \label{eq:qpe-probability-distribution}
+\end{equation}
+となる．
+この確率分布は，$y/M$が$\phi$に近い値の周囲へ集中する．
+したがって，測定値$y$から
+\begin{equation}
+  \widetilde{\phi}
+  \coloneq
+  \frac{y}{2^t}
+  \label{eq:qpe-phase-estimate}
+\end{equation}
+を固有位相の近似値として得る．
+
+位相レジスタを1量子ビット増やすと，表現できる位相の間隔は半分になる．
+一方で，制御するユニタリ演算の最大指数は2倍になる．
+したがって，位相精度を高めるには，補助量子ビット数だけでなく，
+高いべき乗の制御$U$を実行する回路の深さと誤差も考慮する必要がある．
+
+\subsection{固有状態の重ね合わせに対する作用}
+\label{subsec:qpe-superposition-input}
+
+実際の量子アルゴリズムでは，状態レジスタが一つの固有状態であるとは限らない．
+$U$の正規直交固有状態を$\ket{u_j}$とし，一般の入力状態を
+\begin{equation}
+  \ket{\psi}
+  \coloneq
+  \sum_j c_j\ket{u_j}
+  \label{eq:qpe-general-input}
+\end{equation}
+とする．
+量子位相推定は線形であるため
+\begin{equation}
+  \ket{0}^{\otimes t}\ket{\psi}
+  \longmapsto
+  \sum_j c_j
+  \ket{\widetilde{\phi}_j}\ket{u_j}
+  \label{eq:qpe-superposition-output}
+\end{equation}
+と作用する．
+位相レジスタを測定すると，結果$\widetilde{\phi}_j$はおよそ$|c_j|^2$の確率で得られ，
+状態レジスタは対応する$\ket{u_j}$へ射影される．
+一方，測定を行わずに位相レジスタを制御情報として用いれば，
+すべての固有状態成分を重ね合わせのまま処理できる．
+HHLアルゴリズムでは，この性質を用いて固有値ごとに異なる回転を作用させる．
+
+\subsection{エルミート行列の固有値推定}
+\label{subsec:qpe-hermitian-eigenvalues}
+
+量子位相推定の入力$U$はユニタリ演算子でなければならない．
+一方，線形方程式で扱う行列$A$は一般にユニタリではない．
+$A$がエルミート行列であれば，実数$t_0$に対して
+\begin{equation}
+  U_A
+  \coloneq
+  e^{\mathrm{i}At_0}
+  \label{eq:qpe-hamiltonian-unitary}
+\end{equation}
+はユニタリ演算子となる．
+$A\ket{u_j}=\lambda_j\ket{u_j}$ならば
+\begin{align*}
+  U_A\ket{u_j}
+  =
+  e^{\mathrm{i}\lambda_jt_0}\ket{u_j}
+  =
+  e^{2\pi\mathrm{i}\phi_j}\ket{u_j}
+\end{align*}
+であるため，固有位相を
+\begin{equation}
+  \phi_j
+  \coloneq
+  \frac{\lambda_jt_0}{2\pi}
+  \pmod{1}
+  \label{eq:eigenvalue-to-phase}
+\end{equation}
+として推定できる．
+固有値$\lambda_j$を一意に復元するには，固有値の既知の範囲に合わせて$t_0$を選び，
+異なる固有値が同じ位相へ折り返されないようにする必要がある．
+
+\subsection{逆量子位相推定}
+\label{subsec:inverse-quantum-phase-estimation}
+
+式\eqref{eq:qpe-superposition-output}の位相レジスタを用いて別の制御演算を実行した後，
+量子位相推定回路を逆順に適用すると，位相レジスタを$\ket{0}^{\otimes t}$へ戻せる．
+これを\textbf{逆量子位相推定}という．
+位相の情報が目的のレジスタへ既に反映されていれば，
+逆量子位相推定後もその効果は残り，位相レジスタだけが初期化される．
+HHLアルゴリズムでは，固有値に応じた制御回転の後に逆量子位相推定を行い，
+固有値レジスタと解状態との不要な量子もつれを取り除く．

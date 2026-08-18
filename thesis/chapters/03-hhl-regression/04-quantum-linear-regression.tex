@@ -1,0 +1,104 @@
+\section{HHLアルゴリズムによる量子線形回帰}
+\label{sec:hhl-quantum-linear-regression}
+
+\subsection{回帰係数状態の生成}
+\label{subsec:regression-coefficient-state}
+
+式\eqref{eq:regression-linear-system}の正規方程式
+\begin{align*}
+  A\bm{w}=\bm{b},
+  \qquad
+  A=X^{\mathsf{T}}X,
+  \qquad
+  \bm{b}=X^{\mathsf{T}}\bm{y}
+\end{align*}
+をHHLアルゴリズムへ入力する．
+$X$が実行列であれば，$A$は実対称行列であり，エルミート行列でもある．
+さらに，$X$が最大列階数を持つ場合，または式\eqref{eq:regularized-regression-matrix}の正則化を用いる場合には，
+$A$は正定値かつ可逆となる．
+
+右辺ベクトル$\bm{b}$を規格化した入力状態を
+\begin{equation}
+  \ket{b}
+  \coloneq
+  \frac{1}{\|\bm{b}\|_2}
+  \sum_{k=0}^{d-1}b_k\ket{k}
+  \label{eq:regression-b-state}
+\end{equation}
+とする．
+HHLアルゴリズムを適用し，補助量子ビットの測定結果として$1$を得ると，
+回帰係数ベクトルを規格化した状態
+\begin{equation}
+  \ket{w}
+  \coloneq
+  \frac{1}{\|\bm{w}\|_2}
+  \sum_{k=0}^{d-1}w_k\ket{k}
+  =
+  \frac{A^{-1}\ket{b}}{\|A^{-1}\ket{b}\|_2}
+  \label{eq:regression-coefficient-quantum-state}
+\end{equation}
+が得られる．
+この考え方は，HHLアルゴリズムを最小二乗データフィッティングへ利用する量子アルゴリズムの基礎となる
+\cite{wiebe2012}．
+ただし，得られるのは回帰係数の全成分を並べた古典ベクトルではなく，それらを振幅として持つ量子状態である．
+
+\subsection{新しい入力に対する予測}
+\label{subsec:prediction-from-coefficient-state}
+
+新しい入力ベクトル$\bm{x}_{*}\in\mathbb{R}^{d}$に対する予測値は
+\begin{equation}
+  \widehat{y}_{*}
+  \coloneq
+  \bm{x}_{*}^{\mathsf{T}}\bm{w}
+  \label{eq:new-data-prediction}
+\end{equation}
+である．
+$\bm{x}_{*}\neq\bm{0}$を規格化した状態を
+\begin{equation}
+  \ket{x_{*}}
+  \coloneq
+  \frac{1}{\|\bm{x}_{*}\|_2}
+  \sum_{k=0}^{d-1}x_{*,k}\ket{k}
+  \label{eq:new-input-state}
+\end{equation}
+と定義すると，実数ベクトルの場合には
+\begin{equation}
+  \widehat{y}_{*}
+  =
+  \|\bm{x}_{*}\|_2\|\bm{w}\|_2
+  \braket{x_{*}|w}
+  \label{eq:prediction-as-overlap}
+\end{equation}
+となる．
+したがって，$\ket{x_{*}}$と$\ket{w}$の内積を評価すれば，回帰係数の全成分を読み出さずに予測値を求められる．
+内積の実部は，状態準備回路を制御するHadamardテストなどを用いて推定できる．
+
+予測値の大きさを復元するには，内積に加えて$\|\bm{w}\|_2$が必要である．
+理想的なHHLアルゴリズムでは，式\eqref{eq:hhl-success-probability}より
+\begin{equation}
+  \|\bm{w}\|_2
+  =
+  \frac{\|\bm{b}\|_2\sqrt{p_1}}{C}
+  \label{eq:coefficient-norm-from-success-probability}
+\end{equation}
+が成り立つ．
+したがって，古典的に既知の$\|\bm{b}\|_2$と$C$，および補助量子ビットの測定から推定した$p_1$を用いて，
+回帰係数ベクトルのノルムを評価できる．
+実際には，位相推定と制御回転の近似誤差を含むため，必要な予測精度に応じた誤差評価が必要になる．
+
+\subsection{量子線形回帰の実行手順}
+\label{subsec:quantum-linear-regression-procedure}
+
+HHLアルゴリズムを用いた量子線形回帰の一連の処理を，次に示す．
+
+\begin{enumerate}[(1)]
+  \item 訓練データから計画行列$X$と目的変数ベクトル$\bm{y}$を構成する．
+  \item $A=X^{\mathsf{T}}X$と$\bm{b}=X^{\mathsf{T}}\bm{y}$を求め，必要に応じて正則化とスケーリングを行う．
+  \item $\bm{b}$を振幅符号化し，量子状態$\ket{b}$を準備する．
+  \item $A$に対するハミルトニアンシミュレーションとHHLアルゴリズムを実行し，回帰係数状態$\ket{w}$を生成する．
+  \item 新しい入力を$\ket{x_{*}}$として準備し，$\ket{x_{*}}$と$\ket{w}$の内積を推定する．
+  \item 内積，入力のノルム，回帰係数のノルムを組み合わせ，式\eqref{eq:prediction-as-overlap}から予測値を求める．
+\end{enumerate}
+
+手順(1)と(2)を古典計算で実行する場合，$A$や$\bm{b}$の構成に要する計算量も全体の評価へ含める必要がある．
+また，多数の入力に対して予測を行う場合は，入力状態の準備と内積推定を入力ごとに繰り返す．

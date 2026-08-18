@@ -1,0 +1,147 @@
+\section{HHLアルゴリズム}
+\label{sec:hhl-algorithm}
+
+HHLアルゴリズムは，量子位相推定，固有値に応じた制御回転，逆量子位相推定，
+補助量子ビットの測定から構成される\cite{hhl2009}．
+以下では，$A$の固有値が既知の範囲に収まるようにスケーリングされ，
+$e^{\mathrm{i}At}$を量子回路として実行できるものとする．
+
+\subsection{レジスタの準備}
+\label{subsec:hhl-register-preparation}
+
+HHLアルゴリズムでは，次の三つのレジスタを使用する．
+
+\begin{enumerate}[(1)]
+  \item 線形方程式の右辺$\ket{b}$を保持する状態レジスタ
+  \item 固有値の近似値を保持する位相レジスタ
+  \item 固有値の逆数を振幅へ反映するための補助量子ビット
+\end{enumerate}
+
+初期状態を
+\begin{align*}
+  \ket{b}\ket{0}^{\otimes r}\ket{0}_{a}
+\end{align*}
+とする．
+ここで，$r$は位相レジスタの量子ビット数，下付きの$a$は補助量子ビットを表す．
+式\eqref{eq:b-eigenbasis-expansion}を用いると，状態レジスタは
+\begin{align*}
+  \ket{b}
+  =
+  \sum_j\beta_j\ket{u_j}
+\end{align*}
+と表される．
+
+\subsection{量子位相推定}
+\label{subsec:hhl-quantum-phase-estimation}
+
+行列$A$から定まるユニタリ演算子を
+\begin{equation}
+  U_A(t)
+  \coloneq
+  e^{\mathrm{i}At}
+  \label{eq:hamiltonian-simulation-unitary}
+\end{equation}
+と定義する．
+$A\ket{u_j}=\lambda_j\ket{u_j}$であるため，
+\begin{align*}
+  U_A(t)\ket{u_j}
+  =
+  e^{\mathrm{i}\lambda_jt}\ket{u_j}
+\end{align*}
+となる．
+したがって，$\ket{u_j}$を入力とする量子位相推定により，
+位相$\lambda_jt$から固有値$\lambda_j$を近似できる．
+
+量子位相推定を状態$\ket{b}$へ線形に作用させると，理想的には
+\begin{equation}
+  \sum_j\beta_j\ket{u_j}\ket{0}^{\otimes r}
+  \longmapsto
+  \sum_j\beta_j\ket{u_j}\ket{\widetilde{\lambda}_j}
+  \label{eq:hhl-phase-estimation}
+\end{equation}
+となる．
+ここで，$\widetilde{\lambda}_j$は有限個の量子ビットで表された$\lambda_j$の近似値である．
+位相レジスタを増やすと固有値の分解能は高くなるが，必要な制御演算と回路深さも増加する．
+
+\subsection{固有値の逆数を反映する制御回転}
+\label{subsec:hhl-controlled-rotation}
+
+次に，位相レジスタの値$\widetilde{\lambda}_j$に応じて補助量子ビットを回転させる．
+定数$C$を
+\begin{align*}
+  0<C\leq\min_j|\lambda_j|
+\end{align*}
+となるように選び，次の変換を行う．
+\begin{equation}
+  \ket{\widetilde{\lambda}_j}\ket{0}_{a}
+  \longmapsto
+  \ket{\widetilde{\lambda}_j}
+  \left(
+    \sqrt{1-\frac{C^2}{\widetilde{\lambda}_j^2}}\ket{0}_{a}
+    +\frac{C}{\widetilde{\lambda}_j}\ket{1}_{a}
+  \right)
+  \label{eq:hhl-controlled-rotation}
+\end{equation}
+これにより，補助量子ビットが$\ket{1}_{a}$である成分の振幅へ
+$1/\widetilde{\lambda}_j$が反映される．
+
+量子位相推定後の状態へ式\eqref{eq:hhl-controlled-rotation}を作用させると
+\begin{align*}
+  \sum_j\beta_j\ket{u_j}\ket{\widetilde{\lambda}_j}
+  \left(
+    \sqrt{1-\frac{C^2}{\widetilde{\lambda}_j^2}}\ket{0}_{a}
+    +\frac{C}{\widetilde{\lambda}_j}\ket{1}_{a}
+  \right)
+\end{align*}
+を得る．
+小さな固有値ほど回転角への影響が大きいため，固有値推定の誤差と条件数がこの処理の精度を左右する．
+
+\subsection{逆量子位相推定と補助量子ビットの測定}
+\label{subsec:hhl-uncomputation-and-measurement}
+
+制御回転の後，量子位相推定の逆回路を適用し，位相レジスタを$\ket{0}^{\otimes r}$へ戻す．
+固有値の近似誤差を無視すると，状態レジスタと補助量子ビットは
+\begin{align*}
+  \sum_j\beta_j\ket{u_j}
+  \left(
+    \sqrt{1-\frac{C^2}{\lambda_j^2}}\ket{0}_{a}
+    +\frac{C}{\lambda_j}\ket{1}_{a}
+  \right)
+\end{align*}
+となる．
+
+補助量子ビットを計算基底で測定し，結果$1$を得た場合，状態レジスタは
+\begin{align*}
+  C\sum_j\frac{\beta_j}{\lambda_j}\ket{u_j}
+  =
+  CA^{-1}\ket{b}
+\end{align*}
+に比例する状態へ射影される．
+これを規格化すると，式\eqref{eq:qlsp-solution-state}の$\ket{x}$が得られる．
+理想的な場合に補助量子ビットから$1$を得る確率は
+\begin{equation}
+  p_1
+  \coloneq
+  C^2\sum_j\frac{|\beta_j|^2}{\lambda_j^2}
+  =
+  C^2\|A^{-1}\ket{b}\|_2^2
+  \label{eq:hhl-success-probability}
+\end{equation}
+である．
+測定結果が$0$であれば解状態は得られないため，状態準備から処理をやり直す必要がある．
+
+\subsection{処理手順のまとめ}
+\label{subsec:hhl-procedure-summary}
+
+HHLアルゴリズムの処理は，次の手順にまとめられる．
+
+\begin{enumerate}[(1)]
+  \item 右辺ベクトルを規格化し，状態レジスタへ$\ket{b}$として準備する．
+  \item $e^{\mathrm{i}At}$を用いた量子位相推定により，$A$の固有値を位相レジスタへ書き込む．
+  \item 固有値の逆数に比例する振幅を，制御回転によって補助量子ビットへ書き込む．
+  \item 逆量子位相推定によって位相レジスタの計算を巻き戻す．
+  \item 補助量子ビットを測定し，結果$1$に条件づけて解状態を得る．
+\end{enumerate}
+
+このように，HHLアルゴリズムは逆行列$A^{-1}$を古典的に作成するのではなく，
+固有値ごとに振幅を変換することで$A^{-1}\ket{b}$に比例する量子状態を生成する．

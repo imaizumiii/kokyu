@@ -35,19 +35,19 @@
 
 代表的な1量子ビットゲートとして，Pauliゲート
 \begin{align*}
-  X&=
+  X&\coloneq
   \begin{pmatrix}
     0 & 1 \\
     1 & 0
   \end{pmatrix},
   &
-  Y&=
+  Y&\coloneq
   \begin{pmatrix}
     0 & -i \\
     i & 0
   \end{pmatrix},
   &
-  Z&=
+  Z&\coloneq
   \begin{pmatrix}
     1 & 0 \\
     0 & -1
@@ -72,7 +72,7 @@ $Z$ゲートは$\ket{1}$成分の符号を反転させ，
 Hadamardゲートは
 \begin{align*}
   H
-  =
+  \coloneq
   \frac{1}{\sqrt{2}}
   \begin{pmatrix}
     1 & 1 \\
@@ -94,9 +94,9 @@ Hadamardゲートは
 
 Pauli演算子を用いると，各軸まわりの回転ゲートを
 \begin{align*}
-  R_X(\theta)&=\exp\left(-i\frac{\theta}{2}X\right), \\
-  R_Y(\theta)&=\exp\left(-i\frac{\theta}{2}Y\right), \\
-  R_Z(\theta)&=\exp\left(-i\frac{\theta}{2}Z\right)
+  R_X(\theta)&\coloneq\exp\left(-i\frac{\theta}{2}X\right), \\
+  R_Y(\theta)&\coloneq\exp\left(-i\frac{\theta}{2}Y\right), \\
+  R_Z(\theta)&\coloneq\exp\left(-i\frac{\theta}{2}Z\right)
 \end{align*}
 と定義できる．
 例えば，
@@ -110,8 +110,8 @@ Pauli演算子を用いると，各軸まわりの回転ゲートを
 \end{align*}
 である．
 これらのゲートは，Bloch球上で量子状態をそれぞれ$x$軸，$y$軸，$z$軸のまわりに回転させる．
-回転角$\theta$を連続的に変えられるため，回転ゲートは古典データの符号化や
-パラメータ付き量子回路で重要な役割を持つ．
+回転角$\theta$を連続的に変えられるため，回転ゲートは量子状態を連続的に変化させる際に
+重要な役割を持つ．
 
 \subsection{制御ゲート}
 \label{subsec:controlled-gates}
@@ -129,7 +129,7 @@ CNOTゲートは，制御量子ビットが$1$のときに限り，標的量子�
 であり，行列表現は
 \begin{align*}
   \mathrm{CNOT}
-  =
+  \coloneq
   \begin{pmatrix}
     1 & 0 & 0 & 0 \\
     0 & 1 & 0 & 0 \\
@@ -165,4 +165,3 @@ CNOTゲートは，制御量子ビットが$1$のときに限り，標的量子�
 \end{align*}
 となる．
 したがって，行列積の順序は回路図に現れる順序と逆になることに注意する必要がある．
-

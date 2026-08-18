@@ -1,4 +1,28 @@
-\chapter{本論} % <- 本論のタイトルは自分の内容にあったものを考える
+\newpage
+\chapter[量子アルゴリズムの重要サブルーチン]
+        {量子アルゴリズムの\\重要サブルーチン}
+\label{chap:quantum-subroutines}
 
-数学講究研究報告で述べたい主要な事項（中心的な事項）についてまとめる．
-長くなる場合は，3.1，3.2，$\ldots$のように，内容ごとに節に分けてもよい．
+量子アルゴリズムは，問題ごとにすべての量子回路を一から構成するのではなく，
+複数のアルゴリズムに共通する処理をサブルーチンとして組み合わせて構成される．
+量子フーリエ変換，量子位相推定，振幅増幅は，その代表的な例である\cite{shimada2020}．
+
+量子位相推定は，ユニタリ演算子の固有値に含まれる位相を補助量子ビットへ書き出す処理であり，
+HHLアルゴリズムでは行列の固有値を量子状態のまま扱うために用いられる．
+一方，振幅増幅は，目的とする測定結果に対応する確率振幅を大きくし，
+成功結果を得るために必要な反復回数を減らす処理である．
+これらは，後に量子線形回帰を構成する際にも重要な役割を持つ．
+
+本章では，まず量子アルゴリズムにおけるサブルーチンの役割を整理し，
+量子位相推定の前提となる量子フーリエ変換を説明する．
+次に，量子位相推定を位相キックバック，逆量子フーリエ変換，有限精度の観点から詳しく述べる．
+続いて，振幅増幅を二つの反射からなる回転として説明し，成功確率と反復回数の関係を示す．
+最後に，これらの処理がHHLアルゴリズムの内部でどのように接続されるかを整理する．
+
+% 各節の本文は同じフォルダ内のファイルに分割している．
+\input{chapters/03-quantum-subroutines/01-role-of-subroutines}
+\input{chapters/03-quantum-subroutines/02-quantum-fourier-transform}
+\input{chapters/03-quantum-subroutines/03-quantum-phase-estimation}
+\input{chapters/03-quantum-subroutines/04-amplitude-amplification}
+\input{chapters/03-quantum-subroutines/05-connection-to-hhl}
+\input{chapters/03-quantum-subroutines/06-summary}
