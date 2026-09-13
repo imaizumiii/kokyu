@@ -1,0 +1,67 @@
+\section{制御回転による振幅の変換}
+\label{sec:controlled-rotation}
+
+値レジスタの計算基底を$\{\ket z\}$とし，
+実数値関数$g$がすべての$z$について$|g(z)|\leq1$を満たすとする．
+値$z$に応じて補助量子ビットを回転する演算$W_g$を
+\begin{equation}
+ W_g\ket z\ket0
+ =\ket z\left(
+   \sqrt{1-g(z)^2}\ket0+g(z)\ket1
+ \right)
+ \label{eq:controlled-rotation-general}
+\end{equation}
+と定める．
+
+$\theta_z=2\arcsin g(z)$と置けば，
+式\eqref{eq:ry-on-zero}より補助量子ビットへの$R_y(\theta_z)$によって
+式\eqref{eq:controlled-rotation-general}が得られる．
+値レジスタ全体では
+\begin{equation}
+ W_g=\sum_z\ket z\bra z\otimes R_y(2\arcsin g(z))
+ \label{eq:controlled-rotation-block}
+\end{equation}
+と書ける．
+
+\begin{prop}
+$W_g$はユニタリである．また，規格化された入力
+$\sum_z\alpha_z\ket z\ket0$に$W_g$を作用させて補助量子ビットを測定すると，
+結果$1$を得る確率は
+\begin{equation}
+ p_1=\sum_z|\alpha_z|^2g(z)^2
+ \label{eq:controlled-rotation-success-probability}
+\end{equation}
+である．$p_1>0$のとき，値レジスタの条件付き状態は
+\begin{equation}
+ \frac1{\sqrt{p_1}}\sum_z\alpha_zg(z)\ket z
+ \label{eq:controlled-rotation-conditional-state}
+\end{equation}
+である．
+\end{prop}
+\begin{proof}
+式\eqref{eq:controlled-rotation-block}は，互いに直交する部分空間
+$\operatorname{span}\{\ket z\}\otimes\mathbb C^2$ごとに
+ユニタリ$R_y(2\arcsin g(z))$を作用させるブロック対角演算である．実際，
+\begin{align*}
+ W_g^\dagger W_g
+ &=\sum_{z,z'}\ket z\braket{z|z'}\bra{z'}
+   \otimes R_y(2\arcsin g(z))^\dagger R_y(2\arcsin g(z'))\\
+ &=\sum_z\ket z\bra z\otimes I=I
+\end{align*}
+である．入力へ作用させた状態は
+\[
+ \sum_z\alpha_z\sqrt{1-g(z)^2}\ket z\ket0
+ +\sum_z\alpha_zg(z)\ket z\ket1
+\]
+となる．第2項のノルムの二乗を計算基底の正規直交性で求めると
+式\eqref{eq:controlled-rotation-success-probability}を得る．
+射影後の第2項を$\sqrt{p_1}$で割れば
+式\eqref{eq:controlled-rotation-conditional-state}となる．
+\end{proof}
+
+HHLでは，$z$が固有値の近似値$\widetilde\lambda$を表し，
+$g(\widetilde\lambda)=C/\widetilde\lambda$と選ぶ．
+定数$C$の条件，固有値の符号，有限精度による誤差は第4章で定める．
+本節では，角度を計算する可逆回路の構成までは扱わず，
+式\eqref{eq:controlled-rotation-block}の演算を必要な精度で実行できるものとする．
+

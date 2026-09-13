@@ -1,16 +1,16 @@
-# thesis_template のコンパイル方法
+# 卒業論文のコンパイル方法
 
-このリポジトリのルートディレクトリ（`.latexmkrc` と
-`thesis_template_20231219.tex` がある場所）で、次のコマンドを実行する。
+このリポジトリの `thesis` フォルダ（`.latexmkrc` と
+`graduation_thesis.tex` がある場所）で、次のコマンドを実行する。
 
 ```powershell
-latexmk thesis_template_20231219.tex
+latexmk graduation_thesis.tex
 ```
 
 コンパイルに成功すると、同じディレクトリに次の PDF が生成・更新される。
 
 ```text
-thesis_template_20231219.pdf
+graduation_thesis.pdf
 ```
 
 `.latexmkrc` に設定があるため、`latexmk` が次の処理を自動で行う。
@@ -39,13 +39,13 @@ dvipdfmx --version
 PDF を残して中間ファイルだけを削除する場合：
 
 ```powershell
-latexmk -c thesis_template_20231219.tex
+latexmk -c graduation_thesis.tex
 ```
 
 PDF を含む生成ファイルをすべて削除する場合：
 
 ```powershell
-latexmk -C thesis_template_20231219.tex
+latexmk -C graduation_thesis.tex
 ```
 
 ## `latexmk` を使わずに手動で行う場合
@@ -54,9 +54,9 @@ latexmk -C thesis_template_20231219.tex
 `platex` を2回実行してから PDF に変換する。
 
 ```powershell
-platex thesis_template_20231219.tex
-platex thesis_template_20231219.tex
-dvipdfmx thesis_template_20231219.dvi
+platex graduation_thesis.tex
+platex graduation_thesis.tex
+dvipdfmx graduation_thesis.dvi
 ```
 
 ## 補足
@@ -64,4 +64,4 @@ dvipdfmx thesis_template_20231219.dvi
 - 現在の構成では、Windows 上で日本語名のファイルに関する文字コード警告が
   `latexmk` に表示されることがある。ただし、最後に
   `All targets ... are up-to-date` と表示されて PDF が生成されていれば成功している。
-- エラーになった場合は、まず `thesis_template_20231219.log` の末尾付近を確認する。
+- エラーになった場合は、まず `graduation_thesis.log` の末尾付近を確認する。

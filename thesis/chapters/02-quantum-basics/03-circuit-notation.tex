@@ -1,0 +1,39 @@
+\section{量子回路の表現}
+\label{sec:circuit-notation}
+
+量子回路は，量子状態に作用するユニタリ写像と測定を図式的に表す．
+本論文では量子線を横向きに描き，時間は左から右へ進むものとする．
+1量子ビットゲートは量子線上の箱，制御ユニタリは制御点と標的の箱を結ぶ線，
+測定はメータ形の記号で表す．複数量子ビットを一つのまとまりとして扱うとき，
+そのまとまりをレジスタという．
+
+回路上で$U_1,U_2,\ldots,U_k$が左からこの順に現れる場合，
+入力$\ket{\psi}$に対する出力は
+\begin{equation}
+ U_k\cdots U_2U_1\ket{\psi}
+ \label{eq:circuit-composition-order}
+\end{equation}
+である．行列積では右端の演算子から作用することに注意する．
+
+\begin{prop}
+ユニタリ回路$W=U_k\cdots U_1$の逆回路は
+$W^\dagger=U_1^\dagger\cdots U_k^\dagger$である．
+\end{prop}
+\begin{proof}
+積の随伴について$(AB)^\dagger=B^\dagger A^\dagger$であるから，
+$(U_k\cdots U_1)^\dagger=U_1^\dagger\cdots U_k^\dagger$となる．
+各$U_j$はユニタリなので$W^\dagger W=I$である．
+したがって，回路図ではゲートの順を逆にし，各ゲートを随伴に置き換えればよい．
+\end{proof}
+
+たとえば2量子ビットに$H\otimes I$を作用させた後，
+第1量子ビットを制御とするCNOTを作用させる回路では，入力$\ket{00}$は
+\[
+ \ket{00}
+ \xmapsto{H\otimes I}
+ \frac{\ket{00}+\ket{10}}{\sqrt2}
+ \xmapsto{\mathrm{CNOT}}
+ \frac{\ket{00}+\ket{11}}{\sqrt2}
+\]
+と変化する．このように，本論文では重要な回路について，
+回路図だけでなく各段階のケットも併記する．

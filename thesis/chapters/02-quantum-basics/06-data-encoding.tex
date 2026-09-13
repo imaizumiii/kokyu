@@ -1,0 +1,39 @@
+\section{古典データの符号化}
+\label{sec:data-encoding}
+
+古典データを量子アルゴリズムで扱うには，量子状態として準備する方法を定める必要がある．
+本論文では基底符号化と振幅符号化だけを用いる\cite{shimada2020}．
+
+$n$ビット列$x=x_{n-1}\cdots x_0$を$n$量子ビットの計算基底状態
+$\ket{x_{n-1}\cdots x_0}$へ対応させる方法を基底符号化という．
+これは位相推定で整数または固定小数点数をレジスタへ保存する際に用いる．
+
+\begin{defi}[振幅符号化]
+非零ベクトル$\bm b=(b_0,\ldots,b_{N-1})^{\mathsf T}\in\mathbb C^N$に対し，
+\begin{equation}
+ \ket b=\frac1{\lVert\bm b\rVert_2}
+          \sum_{j=0}^{N-1}b_j\ket j
+ \label{eq:amplitude-encoding}
+\end{equation}
+を$\bm b$の振幅符号化という．$N$が2の冪でない場合は，
+零成分を加えて$2^n$次元の状態空間へ埋め込む．
+\end{defi}
+
+\begin{prop}
+式\eqref{eq:amplitude-encoding}で定まる$\ket b$は規格化されている．
+\end{prop}
+\begin{proof}
+計算基底の正規直交性を用いると
+\[
+ \braket{b|b}
+ =\frac1{\lVert\bm b\rVert_2^2}
+   \sum_{j,k}\overline{b_j}b_k\braket{j|k}
+ =\frac{\sum_j|b_j|^2}{\lVert\bm b\rVert_2^2}=1
+\]
+である．$\bm b\ne\bm0$という仮定により分母は零でない．
+\end{proof}
+
+HHLへの入力は式\eqref{eq:amplitude-encoding}の$\ket b$である．
+ただし，ベクトルが古典的に与えられたことだけから，この状態を効率よく準備できるとは限らない．
+したがって第4章の計算量では，$\ket b$を準備する手段とそのコストを仮定として明記する．
+

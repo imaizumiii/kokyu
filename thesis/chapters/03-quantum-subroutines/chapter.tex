@@ -1,0 +1,15 @@
+\chapter{HHLに必要な量子サブルーチン}
+\label{chap:quantum-subroutines}
+
+本章では，HHLアルゴリズムに必要な四つの数学的処理を扱う．
+量子フーリエ変換によって位相を表す基底を構成し，
+量子位相推定によってユニタリ写像の固有位相を量子レジスタへ書き込む．
+さらに，振幅増幅によって成功成分を増幅する仕組みを示す．
+最後に，エルミート行列$A$からユニタリ写像$e^{\mathrm{i}At}$を構成し，
+$A$の固有値を量子位相推定で扱える位相へ対応させる．
+
+\input{chapters/03-quantum-subroutines/01-quantum-fourier-transform}
+\input{chapters/03-quantum-subroutines/02-quantum-phase-estimation}
+\input{chapters/03-quantum-subroutines/03-amplitude-amplification}
+\input{chapters/03-quantum-subroutines/04-matrix-exponential}
+
