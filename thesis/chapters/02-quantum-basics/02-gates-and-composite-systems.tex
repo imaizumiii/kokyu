@@ -3,12 +3,17 @@
 
 \subsection{ユニタリ変換と1量子ビットゲート}
 
+量子状態に行列を掛けると，別の量子状態へ変化する．
+ただし，変化の前後でベクトルの長さが変わってはならない．
+この条件を満たす行列または線形写像をユニタリという．
+
 \begin{defi}[ユニタリ写像]
 内積空間$\mathcal H$上の線形写像$U$が
 $U^\dagger U=UU^\dagger=I$を満たすとき，$U$をユニタリ写像という．
 \end{defi}
 
-量子系が測定を受けずに閉じている間，その状態変化はユニタリ写像で表されるとする．
+量子系が測定されず，外部から影響を受けない間，
+その状態変化はユニタリ写像で表されるとする．
 したがって，初期状態が$\ket{\psi}$なら，変化後の状態は$U\ket{\psi}$である．
 
 \begin{prop}
@@ -22,7 +27,8 @@ $U^\dagger U=UU^\dagger=I$を満たすとき，$U$をユニタリ写像という
   =\braket{\phi|\psi}
 \]
 である．両ベクトルを$\ket{\phi}=\ket{\psi}$とすればノルムの保存が従う．
-また$U^\dagger U=UU^\dagger=I$は，$U^\dagger$が$U$の両側逆写像であることを表す．
+また，$U^\dagger U=UU^\dagger=I$である．
+したがって，$U^\dagger$は$U$の逆写像である．
 \end{proof}
 
 HHLまでに用いる基本的な1量子ビットゲートを
@@ -75,6 +81,10 @@ $s=\sin(\theta/2)$とおけば，
 
 \subsection{テンソル積と複合系}
 
+二つの量子ビットを同時に扱うには，二つのベクトル空間を組み合わせる必要がある．
+この組合せに使う演算がテンソル積である．
+まず，一般のベクトル空間についてテンソル積を定義する．
+
 \begin{defi}[ベクトル空間のテンソル積]
 複素ベクトル空間$V,W$のテンソル積とは，複素ベクトル空間$V\otimes W$と
 双線形写像$\tau:V\times W\to V\otimes W$の組であって，
@@ -84,14 +94,17 @@ $\widetilde f:V\otimes W\to Z$が一意に存在するものをいう．
 双線形写像の値$\tau(v,w)$を$v\otimes w$と書く．
 \end{defi}
 
-この普遍性から
+この定義は，二つの変数について線形な写像を，
+テンソル積上の一つの線形写像として表せることを意味する．
+特に，テンソル積は
 \begin{align}
   (v_1+v_2)\otimes w&=v_1\otimes w+v_2\otimes w,\\
   v\otimes(w_1+w_2)&=v\otimes w_1+v\otimes w_2,\\
   (cv)\otimes w&=v\otimes(cw)=c(v\otimes w)
 \end{align}
-が成り立つ．一般のテンソルは純テンソル$v\otimes w$の有限和で表されるが，
-必ずしも一つの純テンソルにはならない．
+を満たす．$v\otimes w$の形のベクトルを純テンソルという．
+一般のテンソルは純テンソルの有限個の和で表される．
+ただし，一つの純テンソルで表せるとは限らない．
 
 \begin{prop}
 ベクトルの族$\{e_i\}_{i=1}^{r}$を$V$の基底，$\{f_j\}_{j=1}^{s}$を$W$の基底とすると，
@@ -99,22 +112,24 @@ $\{e_i\otimes f_j\}_{i,j}$は$V\otimes W$の基底である．
 したがって$\dim(V\otimes W)=rs$である．
 \end{prop}
 \begin{proof}
-任意の$v=\sum_i a_ie_i$，$w=\sum_jb_jf_j$について，双線形性より
+任意のベクトル$v=\sum_i a_ie_i$，$w=\sum_jb_jf_j$について，双線形性より
 \[
   v\otimes w=\sum_{i,j}a_ib_j(e_i\otimes f_j)
 \]
-である．一般のテンソルは純テンソルの有限和であるから，$e_i\otimes f_j$は
-$V\otimes W$を生成する．
+である．一般のテンソルは純テンソルの有限個の和である．
+したがって，$e_i\otimes f_j$の線形結合で$V\otimes W$のすべてのベクトルを表せる．
 
-次に座標双線形写像$f_{kl}:V\times W\to\mathbb C$を
-$f_{kl}(v,w)=a_kb_l$で定める．普遍性より，
+次に，$v$の第$k$成分と$w$の第$l$成分の積を取り出す写像を考える．
+この双線形写像$f_{kl}:V\times W\to\mathbb C$を
+$f_{kl}(v,w)=a_kb_l$で定める．テンソル積の定義より，
 $f_{kl}=\widetilde f_{kl}\circ\tau$を満たす線形写像$\widetilde f_{kl}$が存在し，
 \[
   \widetilde f_{kl}(e_i\otimes f_j)=\delta_{ki}\delta_{lj}
 \]
 である．もし$\sum_{i,j}c_{ij}e_i\otimes f_j=0$なら，
-写像$\widetilde f_{kl}$を作用させて$c_{kl}=0$を得る．添字$k,l$は任意であるから線形独立である．
-よってこれは$rs$個の基底ベクトルからなる．
+写像$\widetilde f_{kl}$を作用させると$c_{kl}=0$を得る．
+添字$k,l$は自由に選べるので，すべての係数が$0$である．
+よって，$e_i\otimes f_j$は線形独立であり，$rs$個の基底ベクトルになる．
 \end{proof}
 
 内積空間$V,W$に対し，純テンソル上で
@@ -165,7 +180,8 @@ $A\otimes B$と定める．
 $(A\otimes B)^\dagger(A\otimes B)=I\otimes I$である．
 \end{proof}
 
-複合量子系の状態空間は，各部分系の状態空間のテンソル積で与えられるとする．
+複数の量子系を合わせたものを複合量子系という．
+複合量子系の状態空間は，各量子系の状態空間のテンソル積で表す．
 たとえば2量子ビットの計算基底は
 \[
  \ket{00},\ket{01},\ket{10},\ket{11},
@@ -177,13 +193,14 @@ $\ket{x_{n-1}\cdots x_0}$を整数$\sum_{j=0}^{n-1}2^jx_j$に対応させる．
 \subsection{複数量子ビットに作用するゲート}
 
 \begin{defi}[制御ユニタリ]
-1量子ビットを制御系，状態空間$\mathcal K$を標的系とするとき，
+一方の量子ビットを制御量子ビットとする．
+また，状態空間$\mathcal K$で表される側を標的とする．このとき，
 \begin{equation}
  C(U)=\ket{0}\bra{0}\otimes I_{\mathcal K}
       +\ket{1}\bra{1}\otimes U
  \label{eq:controlled-unitary}
 \end{equation}
-を制御$U$という．
+を制御$U$演算という．
 \end{defi}
 
 \begin{prop}
@@ -202,8 +219,9 @@ $P_iP_j=\delta_{ij}P_i$，$P_0+P_1=I$である．よって
 である．同様に$C(U)C(U)^\dagger=I$も得られる．
 \end{proof}
 
-標的の演算を$U=X$とした場合がCNOTゲートである．また，制御量子ビットが
-$\alpha\ket{0}+\beta\ket{1}$，標的が$\ket{\psi}$なら，線形性より
+標的に作用する演算を$U=X$としたものがCNOTゲートである．
+また，制御量子ビットが$\alpha\ket{0}+\beta\ket{1}$であり，
+標的の状態が$\ket{\psi}$であるとする．線形性より
 \begin{equation}
  C(U)(\alpha\ket{0}+\beta\ket{1})\ket{\psi}
  =\alpha\ket{0}\ket{\psi}+\beta\ket{1}U\ket{\psi}

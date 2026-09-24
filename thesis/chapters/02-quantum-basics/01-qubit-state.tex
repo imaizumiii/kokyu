@@ -3,7 +3,9 @@
 
 \subsection{ブラケット記法}
 
-複素数を成分にもつ有限次元のベクトル空間$\mathcal H$のベクトルを
+複素数を成分にもつ有限次元のベクトル空間を$\mathcal H$とする．
+空間$\mathcal H$には内積が定められているものとする．
+$\mathcal H$のベクトルを
 \begin{equation}
   \ket{\psi}
   \coloneq
@@ -13,15 +15,17 @@
   \label{eq:ket-coordinate}
 \end{equation}
 と書き，これを\textbf{ケット}という．
-ケット$\ket{\psi}$の共役転置$\bra{\psi}:=\ket{\psi}^{\dagger}$を\textbf{ブラ}という．
-ベクトル$\ket{\psi}$と$\ket{\phi}$の内積を$\braket{\phi|\psi}:=\bra{\phi}\ket{\psi}$と書き，
+ケット$\ket{\psi}$の各成分を複素共役にして横に並べたものを
+$\bra{\psi}:=\ket{\psi}^{\dagger}$と書き，\textbf{ブラ}という．
+ベクトル$\ket{\psi}$と$\ket{\phi}$の内積は
+$\braket{\phi|\psi}:=\bra{\phi}\ket{\psi}$と書く．座標を使えば，
 \begin{equation}
   \braket{\phi|\psi}=\sum_{j=0}^{d-1}\overline{\phi_j}\psi_j
 \end{equation}
 である．内積から定まるノルムを
 $\lVert\ket{\psi}\rVert:=\sqrt{\braket{\psi|\psi}}$と書く．
-また，$\ket{\psi}\bra{\phi}$は
-$\ket{v}\mapsto\braket{\phi|v}\ket{\psi}$で定まる線形写像を表す．
+また，$\ket{\psi}\bra{\phi}$は線形写像を表す．
+この写像は$\ket{v}$を$\braket{\phi|v}\ket{\psi}$へ移す．
 
 \begin{prop}
 正規直交基底$\{\ket{e_j}\}_{j=0}^{d-1}$に対し，任意の$\ket{\psi}\in\mathcal H$は
@@ -45,9 +49,12 @@ $\ket{v}\mapsto\braket{\phi|v}\ket{\psi}$で定まる線形写像を表す．
 \subsection{量子状態の公理}
 
 \begin{defi}[純粋状態]
-孤立した量子系の純粋状態は，状態空間$\mathcal H$の単位ベクトル
-$\ket{\psi}$，すなわち$\braket{\psi|\psi}=1$を満たすベクトルによって表される．
+ほかの系から影響を受けない量子系を考える．
+その純粋状態は，状態空間$\mathcal H$の長さ1のベクトル$\ket{\psi}$で表す．
+つまり，$\braket{\psi|\psi}=1$とする．
 \end{defi}
+
+ベクトルをその長さで割り，長さを1にそろえることを\textbf{規格化}という．
 
 1量子ビットの状態空間は$\mathbb C^2$である．計算基底を
 \begin{equation}
@@ -64,7 +71,8 @@ $\ket{\psi}$，すなわち$\braket{\psi|\psi}=1$を満たすベクトルによ�
 と表される．係数$\alpha,\beta$を確率振幅という．
 実数$\gamma$に対して$\ket{\psi}$と$e^{\mathrm{i}\gamma}\ket{\psi}$は
 同じ物理状態を表す．この因子を大域位相という．
-一方，$\alpha$と$\beta$の間の相対位相は，後の演算と測定結果に影響する．
+これに対して，$\alpha$と$\beta$の間の位相の差は，後の演算と測定結果に影響する．
+この差を相対位相という．
 
 \subsection{射影測定の公理}
 
@@ -74,7 +82,7 @@ $P$を直交射影という．
 \end{defi}
 
 \begin{defi}[射影測定]
-直交射影の族$\{P_m\}_{m\in M}$が
+測定結果の集合を$M$とする．各結果$m\in M$に対して直交射影$P_m$を用意し，
 \begin{equation}
   P_mP_{m'}=\delta_{mm'}P_m,
   \qquad \sum_{m\in M}P_m=I
@@ -86,7 +94,7 @@ $P$を直交射影という．
       =\lVert P_m\ket{\psi}\rVert^2
   \label{eq:born-rule-projector}
 \end{equation}
-であり，$p(m)>0$なら測定後状態は
+である．この確率をボルン則という．確率が$p(m)>0$なら，測定後の状態は
 \begin{equation}
   \ket{\psi_m}=\frac{P_m\ket{\psi}}{\sqrt{p(m)}}
   \label{eq:post-measurement-state}
@@ -114,9 +122,9 @@ $P$を直交射影という．
 となる．
 \end{proof}
 
-計算基底測定では$P_0=\ket{0}\bra{0}$，$P_1=\ket{1}\bra{1}$とする．
+計算基底で測定する場合は，$P_0=\ket{0}\bra{0}$，$P_1=\ket{1}\bra{1}$とする．
 式\eqref{eq:single-qubit-state}に対し，$p(0)=|\alpha|^2$，
-$p(1)=|\beta|^2$である．この規則をボルン則という．
+$p(1)=|\beta|^2$である．
 
 \begin{prop}
 状態$\ket{\psi}$と$e^{\mathrm{i}\gamma}\ket{\psi}$は，すべての射影測定で同じ確率を与える．

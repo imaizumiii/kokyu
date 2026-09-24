@@ -1,31 +1,38 @@
 \section{成功確率と振幅増幅}
 \label{sec:hhl-success-probability}
 
-定理\ref{thm:hhl-correctness}の仮定の下で，式\eqref{eq:hhl-before-measurement}の成功成分から
+定理\ref{thm:hhl-correctness}と同じ仮定を置く．
+式\eqref{eq:hhl-before-measurement}の結果$1$に対応する成分から
 \begin{equation}
  p_{\mathrm{HHL}}
  =C^2\sum_j\frac{|\beta_j|^2}{\lambda_j^2}
  =C^2\lVert A^{-1}\ket b\rVert^2
  \label{eq:hhl-general-success-probability}
 \end{equation}
-を得る．固有ベクトルが正規直交するため，異なる$j$の交差項は零になる．
+を得る．固有ベクトルは互いに直交するため，
+ノルムの二乗を計算したときに異なる$j$を含む項は零になる．
 
-行列$A$を$1/\kappa\leq\lambda_j\leq1$となるよう規格化し，$C=1/\kappa$とする．
+行列$A$に定数を掛け，固有値が
+$1/\kappa\leq\lambda_j\leq1$となるように大きさをそろえる．
+さらに，$C=1/\kappa$とする．
 このとき各$j$について
 \[
  \frac1{\kappa^2}\leq\frac{C^2}{\lambda_j^2}\leq1
 \]
-である．入力状態の規格化$\sum_j|\beta_j|^2=1$より
+である．入力状態の長さが1であること，すなわち
+$\sum_j|\beta_j|^2=1$より
 \begin{equation}
  \frac1{\kappa^2}\leq p_{\mathrm{HHL}}\leq1
  \label{eq:hhl-success-condition-bound}
 \end{equation}
-となる．実際の成功確率は$\ket b$が各固有空間に持つ重みに依存する．
+となる．実際の成功確率は，各固有ベクトルに掛かる係数
+$|\beta_j|^2$の大きさに依存する．
 
-HHL全体を状態準備演算$\mathcal A_{\mathrm{HHL}}$とみなし，
-補助量子ビットが$\ket1$である部分を成功部分空間とすれば，
+HHL全体を一つの状態準備演算$\mathcal A_{\mathrm{HHL}}$とみなす．
+また，補助量子ビットが$\ket1$である部分を成功部分とする．このとき，
 第\ref{sec:amplitude-amplification}節の振幅増幅を適用できる．
 成功確率を$p_{\mathrm{HHL}}$とすると必要反復回数は
-$O(1/\sqrt{p_{\mathrm{HHL}}})$であり，式\eqref{eq:hhl-success-condition-bound}の
-最悪の場合には$O(\kappa)$となる．各反復にはHHL回路だけでなく
-その逆回路も必要であるため，このコストを全体の計算量に含めなければならない．
+$O(1/\sqrt{p_{\mathrm{HHL}}})$である．式\eqref{eq:hhl-success-condition-bound}で
+成功確率が最も小さい場合には$O(\kappa)$となる．
+1回の反復にはHHL回路だけでなく，その逆回路も必要である．
+したがって，この回路を実行する時間も全体の計算量に含める必要がある．

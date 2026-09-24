@@ -1,8 +1,12 @@
 \section{量子もつれと複合系の測定}
 \label{sec:entanglement-measurement}
 
+二つの量子系$A,B$を合わせた状態空間を
+$\mathcal H_A\otimes\mathcal H_B$と書く．
+二つの状態を単純に並べて表せる場合と，表せない場合を次のように分ける．
+
 \begin{defi}[積状態と量子もつれ]
-複合系$\mathcal H_A\otimes\mathcal H_B$の純粋状態$\ket{\Psi}$が
+状態空間$\mathcal H_A\otimes\mathcal H_B$の純粋状態$\ket{\Psi}$が
 $\ket{u}\otimes\ket{v}$と表されるとき，$\ket{\Psi}$を積状態という．
 積状態として表せない純粋状態をもつれ状態という．
 \end{defi}
@@ -21,19 +25,19 @@ $\ket{u}\otimes\ket{v}$と表されるとき，$\ket{\Psi}$を積状態という
 これは$bd=1/\sqrt2$に反する．よって積状態ではない．
 \end{proof}
 
-複合系の第1部分だけを射影$P_m$で測定する操作は，
-全体系では$P_m\otimes I$によって表される．
+次に，第1の量子系だけを測定する場合を考える．
+測定に使う射影を$P_m$とすると，全体に対する演算は$P_m\otimes I$である．
 状態を
 \begin{equation}
  \ket{\Psi}=\sum_{i,j}\alpha_{ij}\ket{i}_A\ket{j}_B
  \label{eq:general-bipartite-state}
 \end{equation}
-とし，第1系を計算基底で測定する．結果$i$に対応する射影は
+とし，第1の量子系を計算基底で測定する．結果$i$に対応する射影は
 $P_i=\ket{i}\bra{i}\otimes I$であり，
 \[
  P_i\ket{\Psi}=\sum_j\alpha_{ij}\ket{i}\ket{j}
 \]
-となる．積基底の正規直交性から，結果$i$の確率は
+となる．計算基底どうしが直交しているので，結果$i$の確率は
 \begin{equation}
  p(i)=\sum_j|\alpha_{ij}|^2
  \label{eq:partial-measurement-probability}

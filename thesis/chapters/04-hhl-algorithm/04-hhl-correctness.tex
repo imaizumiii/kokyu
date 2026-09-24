@@ -5,9 +5,11 @@
 
 \begin{theo}[理想HHLの正しさ]
 \label{thm:hhl-correctness}
-行列$A$を可逆なエルミート行列とし，正規直交固有基底について
+行列$A$を逆行列をもつエルミート行列とする．
+$A$の正規直交固有ベクトルを$\ket{u_j}$と書き，
 $A\ket{u_j}=\lambda_j\ket{u_j}$とする．入力状態を
-$\ket b=\sum_j\beta_j\ket{u_j}$とし，固有値を誤差なく符号化できると仮定する．
+$\ket b=\sum_j\beta_j\ket{u_j}$とし，固有値を位相レジスタへ
+誤差なく記録できると仮定する．
 また$0<C\leq\min_j|\lambda_j|$とする．
 HHLの補助量子ビットの測定結果が$1$なら，系レジスタの状態は
 \begin{equation}
@@ -18,13 +20,14 @@ HHLの補助量子ビットの測定結果が$1$なら，系レジスタの状�
 \end{theo}
 
 \begin{proof}
-初期状態は
+位相レジスタ，状態レジスタ，補助量子ビットを，それぞれ
+$P$，$S$，$R$で表す．初期状態は
 \[
  \ket0_P\ket b_S\ket0_R
  =\sum_j\beta_j\ket0_P\ket{u_j}_S\ket0_R
 \]
-である．第\ref{sec:quantum-phase-estimation}節の位相推定を
-$e^{\mathrm{i}At}$へ適用し，固有値を正確に符号化できるとき，状態は
+である．第\ref{sec:quantum-phase-estimation}節の位相推定に
+$e^{\mathrm{i}At}$を用いる．固有値を正確に記録できるとき，状態は
 \[
  \sum_j\beta_j\ket{\lambda_j}_P\ket{u_j}_S\ket0_R
 \]
@@ -38,7 +41,8 @@ $g(\lambda_j)=C/\lambda_j$とすると，
  \right)
 \]
 を得る．仮定$|C/\lambda_j|\leq1$により回転は定義できる．
-回転は固有ベクトルと位相レジスタを変えないため，逆位相推定を作用させると
+この回転は固有ベクトルと位相レジスタを変えない．
+そのため，逆位相推定を行うと
 \begin{equation}
  \sum_j\beta_j\ket0_P\ket{u_j}_S
  \left(
@@ -49,18 +53,19 @@ $g(\lambda_j)=C/\lambda_j$とすると，
 \end{equation}
 となる．
 
-補助量子ビットの結果$1$に対応する射影を式\eqref{eq:hhl-before-measurement}へ
-作用させると，系レジスタの規格化前の成功成分は
+式\eqref{eq:hhl-before-measurement}の補助量子ビットを測定する．
+結果が$1$のとき，状態レジスタに残る成分は，長さを1にそろえる前では
 \[
  C\sum_j\frac{\beta_j}{\lambda_j}\ket{u_j}
  =C\left(\sum_j\lambda_j^{-1}\ket{u_j}\bra{u_j}\right)\ket b
  =CA^{-1}\ket b
 \]
 である．行列$A$は可逆で$\ket b\ne0$であるから$A^{-1}\ket b\ne0$である．
-第\ref{sec:entanglement-measurement}節の部分測定の規則に従い，測定後状態を規格化すると
+第\ref{sec:entanglement-measurement}節の部分測定の規則に従い，
+測定後の状態を長さ1にそろえると
 \[
  \frac{CA^{-1}\ket b}{\lVert CA^{-1}\ket b\rVert}
  =\frac{A^{-1}\ket b}{\lVert A^{-1}\ket b\rVert}
 \]
-を得る．ここでは$C>0$を用いた．
+を得る．最後の等号では$C>0$を用いた．
 \end{proof}

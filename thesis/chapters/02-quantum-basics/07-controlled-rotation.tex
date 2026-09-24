@@ -1,9 +1,10 @@
 \section{制御回転による振幅の変換}
 \label{sec:controlled-rotation}
 
+数値$z$を保存する量子ビットのまとまりを値レジスタという．
 値レジスタの計算基底を$\{\ket z\}$とし，
 実数値関数$g$がすべての$z$について$|g(z)|\leq1$を満たすとする．
-値$z$に応じて補助量子ビットを回転する演算$W_g$を
+値$z$に応じて補助量子ビットの状態を変える演算$W_g$を
 \begin{equation}
  W_g\ket z\ket0
  =\ket z\left(
@@ -39,9 +40,10 @@ $\sum_z\alpha_z\ket z\ket0$に$W_g$を作用させて補助量子ビットを測
 である．
 \end{prop}
 \begin{proof}
-式\eqref{eq:controlled-rotation-block}は，互いに直交する部分空間
-$\operatorname{span}\{\ket z\}\otimes\mathbb C^2$ごとに
-ユニタリ$R_y(2\arcsin g(z))$を作用させるブロック対角演算である．実際，
+式\eqref{eq:controlled-rotation-block}を見ると，値$z$ごとに
+補助量子ビットへユニタリ演算$R_y(2\arcsin g(z))$を加えている．
+異なる$z$に対応する部分空間は互いに直交する．
+したがって，$W_g$はブロック対角な演算である．実際，
 \begin{align*}
  W_g^\dagger W_g
  &=\sum_{z,z'}\ket z\braket{z|z'}\bra{z'}
@@ -55,12 +57,12 @@ $\operatorname{span}\{\ket z\}\otimes\mathbb C^2$ごとに
 \]
 となる．第2項のノルムの二乗を計算基底の正規直交性で求めると
 式\eqref{eq:controlled-rotation-success-probability}を得る．
-射影後の第2項を$\sqrt{p_1}$で割れば
+測定結果$1$に対応する第2項を$\sqrt{p_1}$で割り，長さを1にすると，
 式\eqref{eq:controlled-rotation-conditional-state}となる．
 \end{proof}
 
 HHLでは，$z$が固有値の近似値$\widetilde\lambda$を表し，
 $g(\widetilde\lambda)=C/\widetilde\lambda$と選ぶ．
 定数$C$の条件，固有値の符号，有限精度による誤差は第4章で定める．
-本節では，角度を計算する可逆回路の構成までは扱わず，
+本節では，回転角を計算する量子回路までは扱わない．
 式\eqref{eq:controlled-rotation-block}の演算を必要な精度で実行できるものとする．
