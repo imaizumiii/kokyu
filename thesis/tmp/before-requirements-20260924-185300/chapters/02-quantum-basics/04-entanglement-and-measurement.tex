@@ -1,0 +1,51 @@
+\section{量子もつれと複合系の測定}
+\label{sec:entanglement-measurement}
+
+\begin{defi}[積状態と量子もつれ]
+複合系$\mathcal H_A\otimes\mathcal H_B$の純粋状態$\ket{\Psi}$が
+$\ket{u}\otimes\ket{v}$と表されるとき，$\ket{\Psi}$を積状態という．
+積状態として表せない純粋状態をもつれ状態という．
+\end{defi}
+
+\begin{prop}
+ベル状態$\ket{\Phi^+}=(\ket{00}+\ket{11})/\sqrt2$はもつれ状態である．
+\end{prop}
+\begin{proof}
+積状態であると仮定し，
+\[
+ \ket{\Phi^+}=(a\ket0+b\ket1)(c\ket0+d\ket1)
+ =ac\ket{00}+ad\ket{01}+bc\ket{10}+bd\ket{11}
+\]
+と書く．係数比較より$ac=bd=1/\sqrt2$かつ$ad=bc=0$である．
+$ac\ne0$より$a,c\ne0$である．$ad=0$から$d=0$となるが，
+これは$bd=1/\sqrt2$に反する．よって積状態ではない．
+\end{proof}
+
+複合系の第1部分だけを射影$P_m$で測定する操作は，
+全体系では$P_m\otimes I$によって表される．
+状態を
+\begin{equation}
+ \ket{\Psi}=\sum_{i,j}\alpha_{ij}\ket{i}_A\ket{j}_B
+ \label{eq:general-bipartite-state}
+\end{equation}
+とし，第1系を計算基底で測定する．結果$i$に対応する射影は
+$P_i=\ket{i}\bra{i}\otimes I$であり，
+\[
+ P_i\ket{\Psi}=\sum_j\alpha_{ij}\ket{i}\ket{j}
+\]
+となる．積基底の正規直交性から，結果$i$の確率は
+\begin{equation}
+ p(i)=\sum_j|\alpha_{ij}|^2
+ \label{eq:partial-measurement-probability}
+\end{equation}
+である．$p(i)>0$のとき，測定後状態は
+\begin{equation}
+ \frac{1}{\sqrt{p(i)}}\sum_j\alpha_{ij}\ket{i}\ket{j}
+ \label{eq:partial-post-measurement-state}
+\end{equation}
+となる．
+
+ベル状態では第1量子ビットの測定結果$0,1$はともに確率$1/2$である．
+結果が$0$なら全体系は$\ket{00}$，結果が$1$なら$\ket{11}$となる．
+したがって，第1量子ビットの測定結果を知ると，第2量子ビットの結果も確定する．
+

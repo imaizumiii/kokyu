@@ -1,0 +1,138 @@
+\section{量子ビットと量子状態}
+\label{sec:qubit-state}
+
+\subsection{ブラケット記法}
+
+有限次元複素内積空間$\mathcal H$のベクトルを
+\begin{equation}
+  \ket{\psi}
+  \coloneq
+  \begin{pmatrix}
+    \psi_0&\psi_1&\cdots&\psi_{d-1}
+  \end{pmatrix}^{\mathsf T}
+  \label{eq:ket-coordinate}
+\end{equation}
+と書き，これを\textbf{ケット}という．
+ケット$\ket{\psi}$の共役転置$\bra{\psi}:=\ket{\psi}^{\dagger}$を\textbf{ブラ}という．
+$\ket{\psi}$と$\ket{\phi}$の内積を$\braket{\phi|\psi}:=\bra{\phi}\ket{\psi}$と書き，
+\begin{equation}
+  \braket{\phi|\psi}=\sum_{j=0}^{d-1}\overline{\phi_j}\psi_j
+\end{equation}
+である．内積から定まるノルムを
+$\lVert\ket{\psi}\rVert:=\sqrt{\braket{\psi|\psi}}$と書く．
+また，$\ket{\psi}\bra{\phi}$は
+$\ket{v}\mapsto\braket{\phi|v}\ket{\psi}$で定まる線形写像を表す．
+
+\begin{prop}
+正規直交基底$\{\ket{e_j}\}_{j=0}^{d-1}$に対し，任意の$\ket{\psi}\in\mathcal H$は
+\begin{equation}
+  \ket{\psi}=\sum_{j=0}^{d-1}\braket{e_j|\psi}\ket{e_j}
+  \label{eq:orthonormal-expansion}
+\end{equation}
+と一意的に表される．
+\end{prop}
+\begin{proof}
+基底であるから$\ket{\psi}=\sum_j c_j\ket{e_j}$と一意的に表される．
+左から$\bra{e_k}$を作用させると
+\[
+  \braket{e_k|\psi}
+  =\sum_jc_j\braket{e_k|e_j}
+  =\sum_jc_j\delta_{kj}=c_k
+\]
+である．したがって$c_j=\braket{e_j|\psi}$となる．
+\end{proof}
+
+\subsection{量子状態の公理}
+
+\begin{defi}[純粋状態]
+孤立した量子系の純粋状態は，状態空間$\mathcal H$の単位ベクトル
+$\ket{\psi}$，すなわち$\braket{\psi|\psi}=1$を満たすベクトルによって表される．
+\end{defi}
+
+1量子ビットの状態空間は$\mathbb C^2$である．計算基底を
+\begin{equation}
+  \ket{0}=\begin{pmatrix}1\\0\end{pmatrix},
+  \qquad
+  \ket{1}=\begin{pmatrix}0\\1\end{pmatrix}
+\end{equation}
+と定めると，一般の1量子ビット状態は
+\begin{equation}
+  \ket{\psi}=\alpha\ket{0}+\beta\ket{1},
+  \qquad |\alpha|^2+|\beta|^2=1
+  \label{eq:single-qubit-state}
+\end{equation}
+と表される．$\alpha,\beta$を確率振幅という．
+実数$\gamma$に対して$\ket{\psi}$と$e^{\mathrm{i}\gamma}\ket{\psi}$は
+同じ物理状態を表す．この因子を大域位相という．
+一方，$\alpha$と$\beta$の間の相対位相は，後の演算と測定結果に影響する．
+
+\subsection{射影測定の公理}
+
+\begin{defi}[直交射影]
+線形写像$P:\mathcal H\to\mathcal H$が$P^2=P$かつ$P^\dagger=P$を満たすとき，
+$P$を直交射影という．
+\end{defi}
+
+\begin{defi}[射影測定]
+直交射影の族$\{P_m\}_{m\in M}$が
+\begin{equation}
+  P_mP_{m'}=\delta_{mm'}P_m,
+  \qquad \sum_{m\in M}P_m=I
+  \label{eq:projective-measurement-completeness}
+\end{equation}
+を満たすとする．状態$\ket{\psi}$の測定で結果$m$を得る確率は
+\begin{equation}
+  p(m)=\bra{\psi}P_m\ket{\psi}
+      =\lVert P_m\ket{\psi}\rVert^2
+  \label{eq:born-rule-projector}
+\end{equation}
+であり，$p(m)>0$なら測定後状態は
+\begin{equation}
+  \ket{\psi_m}=\frac{P_m\ket{\psi}}{\sqrt{p(m)}}
+  \label{eq:post-measurement-state}
+\end{equation}
+であるとする．
+\end{defi}
+
+\begin{prop}
+射影測定の各結果の確率は非負で総和は1であり，
+式\eqref{eq:post-measurement-state}の状態は規格化されている．
+\end{prop}
+\begin{proof}
+式\eqref{eq:born-rule-projector}はノルムの二乗であるから$p(m)\geq0$である．
+完全性関係と状態の規格化より
+\[
+  \sum_m p(m)
+  =\bra{\psi}\left(\sum_mP_m\right)\ket{\psi}
+  =\bra{\psi}I\ket{\psi}=1
+\]
+を得る．さらに$P_m^\dagger P_m=P_m$より
+\[
+  \braket{\psi_m|\psi_m}
+  =\frac{\bra{\psi}P_m^\dagger P_m\ket{\psi}}{p(m)}=1
+\]
+となる．
+\end{proof}
+
+計算基底測定では$P_0=\ket{0}\bra{0}$，$P_1=\ket{1}\bra{1}$とする．
+式\eqref{eq:single-qubit-state}に対し，$p(0)=|\alpha|^2$，
+$p(1)=|\beta|^2$である．この規則をボルン則という．
+
+\begin{prop}
+$\ket{\psi}$と$e^{\mathrm{i}\gamma}\ket{\psi}$は，すべての射影測定で同じ確率を与える．
+\end{prop}
+\begin{proof}
+任意の$m$について
+\[
+  e^{-\mathrm{i}\gamma}\bra{\psi}P_m
+  e^{\mathrm{i}\gamma}\ket{\psi}
+  =\bra{\psi}P_m\ket{\psi}
+\]
+であるため，測定確率は大域位相に依存しない．
+\end{proof}
+
+\begin{ex}
+$\ket{\psi}=(\ket{0}+\mathrm{i}\ket{1})/\sqrt2$を計算基底で測定すると，
+$0$と$1$はともに確率$1/2$で得られる．
+\end{ex}
+

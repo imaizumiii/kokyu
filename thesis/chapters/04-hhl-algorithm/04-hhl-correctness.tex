@@ -4,7 +4,8 @@
 \subsection{理想化された場合の正しさ}
 
 \begin{theo}[理想HHLの正しさ]
-$A$を可逆なエルミート行列とし，正規直交固有基底について
+\label{thm:hhl-correctness}
+行列$A$を可逆なエルミート行列とし，正規直交固有基底について
 $A\ket{u_j}=\lambda_j\ket{u_j}$とする．入力状態を
 $\ket b=\sum_j\beta_j\ket{u_j}$とし，固有値を誤差なく符号化できると仮定する．
 また$0<C\leq\min_j|\lambda_j|$とする．
@@ -22,11 +23,13 @@ HHLの補助量子ビットの測定結果が$1$なら，系レジスタの状�
  \ket0_P\ket b_S\ket0_R
  =\sum_j\beta_j\ket0_P\ket{u_j}_S\ket0_R
 \]
-である．$e^{\mathrm{i}At}$に対する位相推定が固有値を正確に表すとき，
+である．第\ref{sec:quantum-phase-estimation}節の位相推定を
+$e^{\mathrm{i}At}$へ適用し，固有値を正確に符号化できるとき，状態は
 \[
  \sum_j\beta_j\ket{\lambda_j}_P\ket{u_j}_S\ket0_R
 \]
-となる．第2章の制御回転で$g(\lambda_j)=C/\lambda_j$とすると，
+となる．第\ref{sec:controlled-rotation}節の制御回転で
+$g(\lambda_j)=C/\lambda_j$とすると，
 \[
  \sum_j\beta_j\ket{\lambda_j}_P\ket{u_j}_S
  \left(
@@ -53,12 +56,11 @@ HHLの補助量子ビットの測定結果が$1$なら，系レジスタの状�
  =C\left(\sum_j\lambda_j^{-1}\ket{u_j}\bra{u_j}\right)\ket b
  =CA^{-1}\ket b
 \]
-である．$A$は可逆で$\ket b\ne0$であるから$A^{-1}\ket b\ne0$である．
-測定後状態を規格化すると
+である．行列$A$は可逆で$\ket b\ne0$であるから$A^{-1}\ket b\ne0$である．
+第\ref{sec:entanglement-measurement}節の部分測定の規則に従い，測定後状態を規格化すると
 \[
  \frac{CA^{-1}\ket b}{\lVert CA^{-1}\ket b\rVert}
  =\frac{A^{-1}\ket b}{\lVert A^{-1}\ket b\rVert}
 \]
 を得る．ここでは$C>0$を用いた．
 \end{proof}
-

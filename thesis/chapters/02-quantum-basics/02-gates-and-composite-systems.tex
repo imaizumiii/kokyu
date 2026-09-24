@@ -21,7 +21,7 @@ $U^\dagger U=UU^\dagger=I$を満たすとき，$U$をユニタリ写像という
   =\bra{\phi}U^\dagger U\ket{\psi}
   =\braket{\phi|\psi}
 \]
-である．$\ket{\phi}=\ket{\psi}$とすればノルムの保存が従う．
+である．両ベクトルを$\ket{\phi}=\ket{\psi}$とすればノルムの保存が従う．
 また$U^\dagger U=UU^\dagger=I$は，$U^\dagger$が$U$の両側逆写像であることを表す．
 \end{proof}
 
@@ -34,7 +34,7 @@ HHLまでに用いる基本的な1量子ビットゲートを
 \end{align}
 で定める．直接の行列計算により
 $X^\dagger X=Y^\dagger Y=Z^\dagger Z=H^\dagger H=I$であるから，
-これらはすべてユニタリである．とくに
+これらはすべてユニタリである．特に
 \begin{equation}
   H\ket{0}=\frac{\ket{0}+\ket{1}}{\sqrt2},
   \qquad
@@ -43,7 +43,7 @@ $X^\dagger X=Y^\dagger Y=Z^\dagger Z=H^\dagger H=I$であるから，
 \end{equation}
 である．
 
-$Y^2=I$を用いると，$y$軸回りの回転は
+等式$Y^2=I$を用いると，$y$軸回りの回転は
 \begin{align}
   R_y(\theta)
   &:=\exp\left(-\frac{\mathrm{i}\theta}{2}Y\right)\\
@@ -56,7 +56,7 @@ $Y^2=I$を用いると，$y$軸回りの回転は
 \end{align}
 となる．第2の等号は指数関数の級数を偶数次と奇数次に分けて得られる．
 式\eqref{eq:ry-definition}の実行列表示において$c=\cos(\theta/2)$，
-$s=\sin(\theta/2)$と置けば，
+$s=\sin(\theta/2)$とおけば，
 \[
  R_y(\theta)^\dagger R_y(\theta)
  =\begin{pmatrix}c&s\\-s&c\end{pmatrix}
@@ -81,7 +81,7 @@ $s=\sin(\theta/2)$と置けば，
 任意の複素ベクトル空間$Z$と双線形写像$f:V\times W\to Z$に対し，
 $f=\widetilde f\circ\tau$を満たす線形写像
 $\widetilde f:V\otimes W\to Z$が一意に存在するものをいう．
-$\tau(v,w)$を$v\otimes w$と書く．
+双線形写像の値$\tau(v,w)$を$v\otimes w$と書く．
 \end{defi}
 
 この普遍性から
@@ -94,7 +94,7 @@ $\tau(v,w)$を$v\otimes w$と書く．
 必ずしも一つの純テンソルにはならない．
 
 \begin{prop}
-$\{e_i\}_{i=1}^{r}$を$V$の基底，$\{f_j\}_{j=1}^{s}$を$W$の基底とすると，
+ベクトルの族$\{e_i\}_{i=1}^{r}$を$V$の基底，$\{f_j\}_{j=1}^{s}$を$W$の基底とすると，
 $\{e_i\otimes f_j\}_{i,j}$は$V\otimes W$の基底である．
 したがって$\dim(V\otimes W)=rs$である．
 \end{prop}
@@ -113,7 +113,7 @@ $f_{kl}=\widetilde f_{kl}\circ\tau$を満たす線形写像$\widetilde f_{kl}$�
   \widetilde f_{kl}(e_i\otimes f_j)=\delta_{ki}\delta_{lj}
 \]
 である．もし$\sum_{i,j}c_{ij}e_i\otimes f_j=0$なら，
-$\widetilde f_{kl}$を作用させて$c_{kl}=0$を得る．$k,l$は任意であるから線形独立である．
+写像$\widetilde f_{kl}$を作用させて$c_{kl}=0$を得る．添字$k,l$は任意であるから線形独立である．
 よってこれは$rs$個の基底ベクトルからなる．
 \end{proof}
 
@@ -161,7 +161,7 @@ $A\otimes B$と定める．
  &=\langle(A^\dagger\otimes B^\dagger)(v'\otimes w'),v\otimes w\rangle
 \end{align*}
 であり，線形性から式\eqref{eq:tensor-product-adjoint}を得る．
-$A,B$がユニタリなら両式より
+写像$A,B$がユニタリなら両式より
 $(A\otimes B)^\dagger(A\otimes B)=I\otimes I$である．
 \end{proof}
 
@@ -187,10 +187,10 @@ $\ket{x_{n-1}\cdots x_0}$を整数$\sum_{j=0}^{n-1}2^jx_j$に対応させる．
 \end{defi}
 
 \begin{prop}
-$U$がユニタリなら$C(U)$もユニタリである．
+写像$U$がユニタリなら$C(U)$もユニタリである．
 \end{prop}
 \begin{proof}
-$P_0=\ket{0}\bra{0}$，$P_1=\ket{1}\bra{1}$と置くと，
+射影を$P_0=\ket{0}\bra{0}$，$P_1=\ket{1}\bra{1}$とおくと，
 $P_iP_j=\delta_{ij}P_i$，$P_0+P_1=I$である．よって
 \begin{align*}
  C(U)^\dagger C(U)
@@ -202,7 +202,7 @@ $P_iP_j=\delta_{ij}P_i$，$P_0+P_1=I$である．よって
 である．同様に$C(U)C(U)^\dagger=I$も得られる．
 \end{proof}
 
-$U=X$の場合がCNOTゲートである．また，制御量子ビットが
+標的の演算を$U=X$とした場合がCNOTゲートである．また，制御量子ビットが
 $\alpha\ket{0}+\beta\ket{1}$，標的が$\ket{\psi}$なら，線形性より
 \begin{equation}
  C(U)(\alpha\ket{0}+\beta\ket{1})\ket{\psi}

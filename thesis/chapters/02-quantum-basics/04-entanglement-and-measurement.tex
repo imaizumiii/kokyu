@@ -17,7 +17,7 @@ $\ket{u}\otimes\ket{v}$と表されるとき，$\ket{\Psi}$を積状態という
  =ac\ket{00}+ad\ket{01}+bc\ket{10}+bd\ket{11}
 \]
 と書く．係数比較より$ac=bd=1/\sqrt2$かつ$ad=bc=0$である．
-$ac\ne0$より$a,c\ne0$である．$ad=0$から$d=0$となるが，
+条件$ac\ne0$より$a,c\ne0$である．等式$ad=0$から$d=0$となるが，
 これは$bd=1/\sqrt2$に反する．よって積状態ではない．
 \end{proof}
 
@@ -38,7 +38,7 @@ $P_i=\ket{i}\bra{i}\otimes I$であり，
  p(i)=\sum_j|\alpha_{ij}|^2
  \label{eq:partial-measurement-probability}
 \end{equation}
-である．$p(i)>0$のとき，測定後状態は
+である．確率が$p(i)>0$のとき，測定後状態は
 \begin{equation}
  \frac{1}{\sqrt{p(i)}}\sum_j\alpha_{ij}\ket{i}\ket{j}
  \label{eq:partial-post-measurement-state}
@@ -48,4 +48,3 @@ $P_i=\ket{i}\bra{i}\otimes I$であり，
 ベル状態では第1量子ビットの測定結果$0,1$はともに確率$1/2$である．
 結果が$0$なら全体系は$\ket{00}$，結果が$1$なら$\ket{11}$となる．
 したがって，第1量子ビットの測定結果を知ると，第2量子ビットの結果も確定する．
-

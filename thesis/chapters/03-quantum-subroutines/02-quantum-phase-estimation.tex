@@ -152,7 +152,7 @@ $\phi_1\phi_2\cdots\phi_t$が確率$1$で得られる．
   \label{eq:qpe-finite-amplitude}
 \end{equation}
 と定義する．
-$\delta_y\coloneq\phi-y/M$とおくと，有限等比級数より
+位相差を$\delta_y\coloneq\phi-y/M$とおくと，有限等比級数より
 \begin{equation}
   |\alpha_y|^2
   =
@@ -181,7 +181,7 @@ $\delta_y\coloneq\phi-y/M$とおくと，有限等比級数より
 \label{subsec:qpe-superposition-input}
 
 実際の量子アルゴリズムでは，状態レジスタが一つの固有状態であるとは限らない．
-$U$の正規直交固有状態を$\ket{u_j}$とし，一般の入力状態を
+演算子$U$の正規直交固有状態を$\ket{u_j}$とし，一般の入力状態を
 \begin{equation}
   \ket{\psi}
   \coloneq
@@ -209,7 +209,7 @@ HHLアルゴリズムでは，この性質を用いて固有値ごとに異な�
 
 量子位相推定の入力$U$はユニタリ演算子でなければならない．
 一方，線形方程式で扱う行列$A$は一般にユニタリではない．
-$A$がエルミート行列であれば，実数$t_0$に対して
+行列$A$がエルミートであれば，実数$t_0$に対して
 \begin{equation}
   U_A
   \coloneq
@@ -217,7 +217,7 @@ $A$がエルミート行列であれば，実数$t_0$に対して
   \label{eq:qpe-hamiltonian-unitary}
 \end{equation}
 はユニタリ演算子となる．
-$A\ket{u_j}=\lambda_j\ket{u_j}$ならば
+固有値方程式$A\ket{u_j}=\lambda_j\ket{u_j}$より
 \begin{align*}
   U_A\ket{u_j}
   =

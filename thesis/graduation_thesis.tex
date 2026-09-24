@@ -9,6 +9,7 @@
 \usepackage{float}
 \usepackage{subcaption}
 \usepackage{longtable}
+\usepackage{array}
 \usepackage{listings, jvlisting}
 \usepackage{here}
 \usepackage{bm}
@@ -49,11 +50,11 @@
 
 \input{frontmatter/titlepage}
 
-% この部分は変更しないでください．
+% 目次はローマ数字，本文は算用数字でページ番号を付ける．
+\pagestyle{plain}
 \pagenumbering{roman}
 \tableofcontents
 \cleardoublepage
-\pagestyle{plain}
 \pagenumbering{arabic}
 \baselineskip 4ex
 
@@ -63,7 +64,7 @@
 \input{chapters/03-quantum-subroutines/chapter}
 \input{chapters/04-hhl-algorithm/chapter}
 \input{chapters/05-conclusion/chapter}
-\input{appendices/program}
+% 本論と関係のないプログラム雛形は提出稿に含めない．
 \input{backmatter/acknowledgements}
 \input{backmatter/references}
 

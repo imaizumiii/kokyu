@@ -1,0 +1,54 @@
+\subsection{2次元線形方程式の具体例}
+\label{sec:hhl-example-2d}
+
+\begin{ex}
+\begin{equation}
+ A=\begin{pmatrix}3/4&1/4\\1/4&3/4\end{pmatrix},
+ \qquad \ket b=\ket0
+ \label{eq:hhl-example-data}
+\end{equation}
+とする．$\ket\pm=(\ket0\pm\ket1)/\sqrt2$と置くと，直接計算により
+\[
+ A\ket+=\ket+,
+ \qquad A\ket-=\frac12\ket-
+\]
+である．したがって
+$A=H\operatorname{diag}(1,1/2)H$，条件数は$2$であり，
+\begin{equation}
+ \ket b=\ket0=\frac{\ket++\ket-}{\sqrt2}
+ \label{eq:hhl-example-input-eigenbasis}
+\end{equation}
+となる．
+
+$U=e^{\mathrm{i}A\pi}$を位相推定に用いる．式\eqref{eq:matrix-eigenvalue-to-phase}より，
+固有値$1$の位相は$1/2=0.10_2$，固有値$1/2$の位相は$1/4=0.01_2$である．
+よって2量子ビットの位相レジスタで両方を正確に表せる．
+
+$C=1/2$と選ぶと，補助量子ビットの成功振幅$C/\lambda$は，
+固有値$1$に対して$1/2$，固有値$1/2$に対して$1$である．
+逆位相推定後，補助量子ビットが$1$の成分は
+\begin{equation}
+ \frac1{\sqrt2}\left(\frac12\ket++\ket-\right)
+ =CA^{-1}\ket0
+ \label{eq:hhl-example-success-component}
+\end{equation}
+となる．そのノルムの二乗は
+\[
+ p=\frac12\left(\frac14+1\right)=\frac58
+\]
+であるから，これが成功確率である．成功時の規格化状態は
+\begin{align}
+ \frac{1}{\sqrt{5/8}}
+ \frac1{\sqrt2}\left(\frac12\ket++\ket-\right)
+ &=\frac{\ket++2\ket-}{\sqrt5}\\
+ &=\frac{3\ket0-\ket1}{\sqrt{10}}.
+ \label{eq:hhl-example-output}
+\end{align}
+一方，古典的に逆行列を計算すると
+\[
+ A^{-1}=\frac12\begin{pmatrix}3&-1\\-1&3\end{pmatrix},
+ \qquad A^{-1}\ket0=\frac12(3\ket0-\ket1)
+\]
+である．これを規格化した状態は式\eqref{eq:hhl-example-output}と一致する．
+\end{ex}
+

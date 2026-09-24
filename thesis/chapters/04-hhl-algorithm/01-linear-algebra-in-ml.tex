@@ -1,10 +1,13 @@
 \section{機械学習に現れる線形代数計算}
 \label{sec:linear-regression-normal-equation}
 
+本節では，主資料\cite{shimada2020}の線形回帰の説明を基に，
+最小二乗法から線形方程式が得られる計算を補う．
+
 \subsection{線形回帰の定式化}
 \label{subsec:linear-regression-formulation}
 
-$m$個の訓練データからなるデータ集合を
+訓練データの個数を$m$とし，データ集合を
 \begin{align*}
   \mathcal{D}
   \coloneq
@@ -115,7 +118,7 @@ $y_i\in\mathbb{R}$は対応する目的変数である．
   \label{eq:regression-linear-system}
 \end{equation}
 となる．
-$X$の列が線形独立であれば，$A$は実対称正定値行列であり，逆行列を持つ．
+計画行列$X$の列が線形独立であれば，$A$は実対称正定値行列であり，逆行列を持つ．
 この場合，最小二乗解は
 \begin{align*}
   \bm{w}
@@ -126,10 +129,10 @@ $X$の列が線形独立であれば，$A$は実対称正定値行列であり�
 \end{align*}
 で与えられる．
 
-$X$の列が線形独立でない場合や，互いに強く相関する特徴量が存在する場合には，
+計画行列$X$の列が線形独立でない場合や，互いに強く相関する特徴量が存在する場合には，
 $A$が特異行列または悪条件行列となることがある．
 この問題を緩和する方法の一つが，正則化項を加えたリッジ回帰である．
-$\lambda>0$に対して正則化損失を
+正則化係数$\lambda>0$に対して損失関数を
 \begin{equation}
   \mathcal{L}_{\lambda}(\bm{w})
   \coloneq

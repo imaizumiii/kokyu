@@ -1,0 +1,212 @@
+\section{量子ゲートと複数量子ビット}
+\label{sec:gates-composite}
+
+\subsection{ユニタリ変換と1量子ビットゲート}
+
+\begin{defi}[ユニタリ写像]
+内積空間$\mathcal H$上の線形写像$U$が
+$U^\dagger U=UU^\dagger=I$を満たすとき，$U$をユニタリ写像という．
+\end{defi}
+
+量子系が測定を受けずに閉じている間，その状態変化はユニタリ写像で表されるとする．
+したがって，初期状態が$\ket{\psi}$なら，変化後の状態は$U\ket{\psi}$である．
+
+\begin{prop}
+ユニタリ写像$U$は内積とノルムを保存し，逆写像は$U^{-1}=U^\dagger$である．
+\end{prop}
+\begin{proof}
+任意の$\ket{\phi},\ket{\psi}$について
+\[
+  \braket{U\phi|U\psi}
+  =\bra{\phi}U^\dagger U\ket{\psi}
+  =\braket{\phi|\psi}
+\]
+である．$\ket{\phi}=\ket{\psi}$とすればノルムの保存が従う．
+また$U^\dagger U=UU^\dagger=I$は，$U^\dagger$が$U$の両側逆写像であることを表す．
+\end{proof}
+
+HHLまでに用いる基本的な1量子ビットゲートを
+\begin{align}
+  X&=\begin{pmatrix}0&1\\1&0\end{pmatrix},&
+  Y&=\begin{pmatrix}0&-\mathrm{i}\\\mathrm{i}&0\end{pmatrix},&
+  Z&=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\\
+  H&=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}
+\end{align}
+で定める．直接の行列計算により
+$X^\dagger X=Y^\dagger Y=Z^\dagger Z=H^\dagger H=I$であるから，
+これらはすべてユニタリである．とくに
+\begin{equation}
+  H\ket{0}=\frac{\ket{0}+\ket{1}}{\sqrt2},
+  \qquad
+  H\ket{1}=\frac{\ket{0}-\ket{1}}{\sqrt2}
+  \label{eq:hadamard-action}
+\end{equation}
+である．
+
+$Y^2=I$を用いると，$y$軸回りの回転は
+\begin{align}
+  R_y(\theta)
+  &:=\exp\left(-\frac{\mathrm{i}\theta}{2}Y\right)\\
+  &=\cos\frac{\theta}{2}I-\mathrm{i}\sin\frac{\theta}{2}Y
+   =\begin{pmatrix}
+      \cos(\theta/2)&-\sin(\theta/2)\\
+      \sin(\theta/2)& \cos(\theta/2)
+    \end{pmatrix}
+  \label{eq:ry-definition}
+\end{align}
+となる．第2の等号は指数関数の級数を偶数次と奇数次に分けて得られる．
+式\eqref{eq:ry-definition}の実行列表示において$c=\cos(\theta/2)$，
+$s=\sin(\theta/2)$と置けば，
+\[
+ R_y(\theta)^\dagger R_y(\theta)
+ =\begin{pmatrix}c&s\\-s&c\end{pmatrix}
+  \begin{pmatrix}c&-s\\s&c\end{pmatrix}
+ =\begin{pmatrix}c^2+s^2&0\\0&c^2+s^2\end{pmatrix}=I
+\]
+であるから，$R_y(\theta)$もユニタリである．
+したがって
+\begin{equation}
+  R_y(\theta)\ket{0}
+  =\cos\frac{\theta}{2}\ket{0}
+   +\sin\frac{\theta}{2}\ket{1}
+  \label{eq:ry-on-zero}
+\end{equation}
+である．
+
+\subsection{テンソル積と複合系}
+
+\begin{defi}[ベクトル空間のテンソル積]
+複素ベクトル空間$V,W$のテンソル積とは，複素ベクトル空間$V\otimes W$と
+双線形写像$\tau:V\times W\to V\otimes W$の組であって，
+任意の複素ベクトル空間$Z$と双線形写像$f:V\times W\to Z$に対し，
+$f=\widetilde f\circ\tau$を満たす線形写像
+$\widetilde f:V\otimes W\to Z$が一意に存在するものをいう．
+$\tau(v,w)$を$v\otimes w$と書く．
+\end{defi}
+
+この普遍性から
+\begin{align}
+  (v_1+v_2)\otimes w&=v_1\otimes w+v_2\otimes w,\\
+  v\otimes(w_1+w_2)&=v\otimes w_1+v\otimes w_2,\\
+  (cv)\otimes w&=v\otimes(cw)=c(v\otimes w)
+\end{align}
+が成り立つ．一般のテンソルは純テンソル$v\otimes w$の有限和で表されるが，
+必ずしも一つの純テンソルにはならない．
+
+\begin{prop}
+$\{e_i\}_{i=1}^{r}$を$V$の基底，$\{f_j\}_{j=1}^{s}$を$W$の基底とすると，
+$\{e_i\otimes f_j\}_{i,j}$は$V\otimes W$の基底である．
+したがって$\dim(V\otimes W)=rs$である．
+\end{prop}
+\begin{proof}
+任意の$v=\sum_i a_ie_i$，$w=\sum_jb_jf_j$について，双線形性より
+\[
+  v\otimes w=\sum_{i,j}a_ib_j(e_i\otimes f_j)
+\]
+である．一般のテンソルは純テンソルの有限和であるから，$e_i\otimes f_j$は
+$V\otimes W$を生成する．
+
+次に座標双線形写像$f_{kl}:V\times W\to\mathbb C$を
+$f_{kl}(v,w)=a_kb_l$で定める．普遍性より，
+$f_{kl}=\widetilde f_{kl}\circ\tau$を満たす線形写像$\widetilde f_{kl}$が存在し，
+\[
+  \widetilde f_{kl}(e_i\otimes f_j)=\delta_{ki}\delta_{lj}
+\]
+である．もし$\sum_{i,j}c_{ij}e_i\otimes f_j=0$なら，
+$\widetilde f_{kl}$を作用させて$c_{kl}=0$を得る．$k,l$は任意であるから線形独立である．
+よってこれは$rs$個の基底ベクトルからなる．
+\end{proof}
+
+内積空間$V,W$に対し，純テンソル上で
+\begin{equation}
+  \langle v_1\otimes w_1,v_2\otimes w_2\rangle
+  :=\langle v_1,v_2\rangle\langle w_1,w_2\rangle
+  \label{eq:tensor-inner-product}
+\end{equation}
+と定め，線形性によって$V\otimes W$全体へ拡張する．
+もとの基底が正規直交基底なら
+\[
+ \langle e_i\otimes f_j,e_k\otimes f_l\rangle
+ =\delta_{ik}\delta_{jl}
+\]
+であるから，積基底も正規直交基底である．
+
+\begin{defi}[線形写像のテンソル積]
+線形写像$A:V\to V'$，$B:W\to W'$に対し，
+$(A\otimes B)(v\otimes w)=Av\otimes Bw$を満たす線形写像を
+$A\otimes B$と定める．
+\end{defi}
+
+\begin{prop}
+写像の定義域と値域が適合するとき
+\begin{align}
+ (A\otimes B)(C\otimes D)&=AC\otimes BD,\label{eq:tensor-product-composition}\\
+ (A\otimes B)^\dagger&=A^\dagger\otimes B^\dagger
+ \label{eq:tensor-product-adjoint}
+\end{align}
+が成り立つ．したがって，$A,B$がユニタリなら$A\otimes B$もユニタリである．
+\end{prop}
+\begin{proof}
+純テンソル$v\otimes w$に作用させると
+\[
+ (A\otimes B)(C\otimes D)(v\otimes w)
+ =ACv\otimes BDw=(AC\otimes BD)(v\otimes w)
+\]
+である．純テンソルが空間を生成するため式\eqref{eq:tensor-product-composition}が従う．
+また純テンソルについて
+\begin{align*}
+ \langle v'\otimes w',(A\otimes B)(v\otimes w)\rangle
+ &=\langle v',Av\rangle\langle w',Bw\rangle\\
+ &=\langle A^\dagger v',v\rangle\langle B^\dagger w',w\rangle\\
+ &=\langle(A^\dagger\otimes B^\dagger)(v'\otimes w'),v\otimes w\rangle
+\end{align*}
+であり，線形性から式\eqref{eq:tensor-product-adjoint}を得る．
+$A,B$がユニタリなら両式より
+$(A\otimes B)^\dagger(A\otimes B)=I\otimes I$である．
+\end{proof}
+
+複合量子系の状態空間は，各部分系の状態空間のテンソル積で与えられるとする．
+たとえば2量子ビットの計算基底は
+\[
+ \ket{00},\ket{01},\ket{10},\ket{11},
+ \qquad \ket{ij}:=\ket{i}\otimes\ket{j}
+\]
+である．本論文では左側の因子を上位の量子ビットとし，
+$\ket{x_{n-1}\cdots x_0}$を整数$\sum_{j=0}^{n-1}2^jx_j$に対応させる．
+
+\subsection{複数量子ビットに作用するゲート}
+
+\begin{defi}[制御ユニタリ]
+1量子ビットを制御系，状態空間$\mathcal K$を標的系とするとき，
+\begin{equation}
+ C(U)=\ket{0}\bra{0}\otimes I_{\mathcal K}
+      +\ket{1}\bra{1}\otimes U
+ \label{eq:controlled-unitary}
+\end{equation}
+を制御$U$という．
+\end{defi}
+
+\begin{prop}
+$U$がユニタリなら$C(U)$もユニタリである．
+\end{prop}
+\begin{proof}
+$P_0=\ket{0}\bra{0}$，$P_1=\ket{1}\bra{1}$と置くと，
+$P_iP_j=\delta_{ij}P_i$，$P_0+P_1=I$である．よって
+\begin{align*}
+ C(U)^\dagger C(U)
+ &=(P_0\otimes I+P_1\otimes U^\dagger)
+   (P_0\otimes I+P_1\otimes U)\\
+ &=P_0\otimes I+P_1\otimes U^\dagger U
+  =(P_0+P_1)\otimes I=I
+\end{align*}
+である．同様に$C(U)C(U)^\dagger=I$も得られる．
+\end{proof}
+
+$U=X$の場合がCNOTゲートである．また，制御量子ビットが
+$\alpha\ket{0}+\beta\ket{1}$，標的が$\ket{\psi}$なら，線形性より
+\begin{equation}
+ C(U)(\alpha\ket{0}+\beta\ket{1})\ket{\psi}
+ =\alpha\ket{0}\ket{\psi}+\beta\ket{1}U\ket{\psi}
+ \label{eq:controlled-unitary-superposition}
+\end{equation}
+となる．この式は位相推定と制御回転で繰り返し用いる．

@@ -3,10 +3,10 @@
 
 \subsection{ブラケット記法}
 
-有限次元複素内積空間$\mathcal H$のベクトルを
+複素数を成分にもつ有限次元のベクトル空間$\mathcal H$のベクトルを
 \begin{equation}
   \ket{\psi}
-  =
+  \coloneq
   \begin{pmatrix}
     \psi_0&\psi_1&\cdots&\psi_{d-1}
   \end{pmatrix}^{\mathsf T}
@@ -14,8 +14,7 @@
 \end{equation}
 と書き，これを\textbf{ケット}という．
 ケット$\ket{\psi}$の共役転置$\bra{\psi}:=\ket{\psi}^{\dagger}$を\textbf{ブラ}という．
-本論文では内積$\braket{\phi|\psi}$を第1変数について共役線形，
-第2変数について線形とする．座標表示では
+ベクトル$\ket{\psi}$と$\ket{\phi}$の内積を$\braket{\phi|\psi}:=\bra{\phi}\ket{\psi}$と書き，
 \begin{equation}
   \braket{\phi|\psi}=\sum_{j=0}^{d-1}\overline{\phi_j}\psi_j
 \end{equation}
@@ -62,7 +61,7 @@ $\ket{\psi}$，すなわち$\braket{\psi|\psi}=1$を満たすベクトルによ�
   \qquad |\alpha|^2+|\beta|^2=1
   \label{eq:single-qubit-state}
 \end{equation}
-と表される．$\alpha,\beta$を確率振幅という．
+と表される．係数$\alpha,\beta$を確率振幅という．
 実数$\gamma$に対して$\ket{\psi}$と$e^{\mathrm{i}\gamma}\ket{\psi}$は
 同じ物理状態を表す．この因子を大域位相という．
 一方，$\alpha$と$\beta$の間の相対位相は，後の演算と測定結果に影響する．
@@ -120,7 +119,7 @@ $P$を直交射影という．
 $p(1)=|\beta|^2$である．この規則をボルン則という．
 
 \begin{prop}
-$\ket{\psi}$と$e^{\mathrm{i}\gamma}\ket{\psi}$は，すべての射影測定で同じ確率を与える．
+状態$\ket{\psi}$と$e^{\mathrm{i}\gamma}\ket{\psi}$は，すべての射影測定で同じ確率を与える．
 \end{prop}
 \begin{proof}
 任意の$m$について
@@ -133,7 +132,6 @@ $\ket{\psi}$と$e^{\mathrm{i}\gamma}\ket{\psi}$は，すべての射影測定で
 \end{proof}
 
 \begin{ex}
-$\ket{\psi}=(\ket{0}+\mathrm{i}\ket{1})/\sqrt2$を計算基底で測定すると，
-$0$と$1$はともに確率$1/2$で得られる．
+状態$\ket{\psi}=(\ket{0}+\mathrm{i}\ket{1})/\sqrt2$を計算基底で測定すると，
+結果$0$と$1$はともに確率$1/2$で得られる．
 \end{ex}
-

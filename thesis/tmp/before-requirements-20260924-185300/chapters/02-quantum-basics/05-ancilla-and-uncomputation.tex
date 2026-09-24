@@ -1,0 +1,34 @@
+\section{補助量子ビットと逆演算}
+\label{sec:ancilla-uncomputation}
+
+量子回路では，途中の計算結果を保持するために追加の量子ビットを用いる．
+これを補助量子ビット，複数まとめたものを補助レジスタという．
+補助レジスタが不要な情報を保持したまま系レジスタともつれると，
+後の干渉が妨げられる．そこで，必要な操作を終えた後に計算を逆向きに行い，
+補助レジスタを初期状態へ戻す．この操作を逆演算またはアンコンピュテーションという．
+
+系レジスタの正規直交状態$\ket{x}$に対して
+\begin{equation}
+ U\ket{x}\ket0=\ket{x}\ket{f(x)}
+ \label{eq:ancilla-computation}
+\end{equation}
+となるユニタリ$U$を考える．固有値など$f(x)$に依存する制御演算$V$を
+別の標的レジスタへ作用させた後，$U^\dagger$を作用させると
+\begin{align}
+ \sum_x\alpha_x\ket{x}\ket0\ket\eta
+ &\xmapsto{U}
+ \sum_x\alpha_x\ket{x}\ket{f(x)}\ket\eta\\
+ &\xmapsto{V}
+ \sum_x\alpha_x\ket{x}\ket{f(x)}V_{f(x)}\ket\eta\\
+ &\xmapsto{U^\dagger}
+ \sum_x\alpha_x\ket{x}\ket0V_{f(x)}\ket\eta
+ \label{eq:uncomputation-superposition}
+\end{align}
+となる．最後の等号は，$U^\dagger U=I$と線形性による．
+$V_{f(x)}\ket\eta$に$f(x)$の効果は残る一方，計算用レジスタは$\ket0$に戻る．
+
+ただし，$U^\dagger$を作用させる前に$\ket{x}$または$\ket{f(x)}$を測定したり，
+式\eqref{eq:ancilla-computation}の対応を壊す操作を加えたりすると，
+上の逆演算は成立しない．HHLでは，固有値に応じた制御回転を終えた後，
+逆量子位相推定によって位相レジスタを初期状態へ戻す．
+

@@ -6,7 +6,7 @@
 
 量子コンピュータで離散フーリエ変換を行うサブルーチンを
 \textbf{量子フーリエ変換}という\cite{shimada2020}．
-$t$を正の整数とし，$t$量子ビットの計算基底状態の総数を
+量子ビット数$t$を正の整数とし，計算基底状態の総数を
 \begin{equation}
   M
   \coloneq
@@ -311,7 +311,7 @@ SWAPゲートを作用させ，量子ビットの順序を反転する．これ�
 \begin{figure}[tbp]
   \centering
   \includegraphics[width=0.92\textwidth]{figures/quantum-fourier-transform/qft-circuit.pdf}
-  \caption{4量子ビット量子フーリエ変換の回路．$R_\ell$は式\eqref{eq:qft-phase-gate}で
+  \caption{4量子ビット量子フーリエ変換の回路．ゲート$R_\ell$は式\eqref{eq:qft-phase-gate}で
   定義した位相ゲートであり，黒丸と$R_\ell$を結ぶ線は制御$R_\ell$ゲートを表す．
   右端の$\times$印はSWAPゲートを表す．}
   \label{fig:qft-circuit-four-qubit}

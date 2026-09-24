@@ -24,7 +24,7 @@
 \end{equation}
 と定義する．
 
-$0<a<1$とし，規格化した良い成分と悪い成分をそれぞれ
+成功確率が$0<a<1$を満たすとし，規格化した良い成分と悪い成分をそれぞれ
 \begin{align}
   \ket{\psi_{\mathrm{g}}}
   &\coloneq
@@ -93,7 +93,7 @@ $0<a<1$とし，規格化した良い成分と悪い成分をそれぞれ
   \label{eq:phase-oracle}
 \end{equation}
 として構成できる．
-$\chi(x)=1$を良い状態とすれば，$O_{\chi}$は$S_{\mathrm{g}}$に対応する．
+判定値$\chi(x)=1$を良い状態とすれば，$O_{\chi}$は$S_{\mathrm{g}}$に対応する．
 
 \subsection{初期状態に関する反射}
 \label{subsec:initial-state-reflection}
@@ -106,7 +106,7 @@ $\chi(x)=1$を良い状態とすれば，$O_{\chi}$は$S_{\mathrm{g}}$に対応�
   \label{eq:initial-state-reflection}
 \end{equation}
 と定義する．
-$\ket{\psi}=\mathcal{A}\ket{0}^{\otimes n}$であるため，
+状態準備の関係$\ket{\psi}=\mathcal{A}\ket{0}^{\otimes n}$より，
 \begin{equation}
   S_{\psi}
   =
@@ -132,7 +132,7 @@ $\ket{\psi}=\mathcal{A}\ket{0}^{\otimes n}$であるため，
   \label{eq:amplitude-amplification-operator}
 \end{equation}
 と定義する．
-$\{\ket{\psi_{\mathrm{b}}},\ket{\psi_{\mathrm{g}}}\}$を基底として表すと
+順序付き基底$\{\ket{\psi_{\mathrm{b}}},\ket{\psi_{\mathrm{g}}}\}$に関して表すと
 \begin{equation}
   Q
   =
@@ -178,7 +178,7 @@ $\{\ket{\psi_{\mathrm{b}}},\ket{\psi_{\mathrm{g}}}\}$を基底として表すと
   \label{eq:near-optimal-amplification-count}
 \end{equation}
 である．
-$a$が小さい場合には$\theta=\arcsin\sqrt{a}\simeq\sqrt{a}$であるため，
+成功確率$a$が小さい場合には$\theta=\arcsin\sqrt{a}\simeq\sqrt{a}$であるため，
 反復回数は$O(1/\sqrt{a})$となる．
 
 一方，最適な回数を超えて$Q$を作用させると，状態は良い部分空間を通り過ぎ，

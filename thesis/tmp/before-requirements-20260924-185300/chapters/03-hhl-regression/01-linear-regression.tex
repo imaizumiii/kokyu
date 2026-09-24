@@ -1,0 +1,155 @@
+\section{線形回帰と正規方程式}
+\label{sec:linear-regression-normal-equation}
+
+\subsection{線形回帰の定式化}
+\label{subsec:linear-regression-formulation}
+
+$m$個の訓練データからなるデータ集合を
+\begin{align*}
+  \mathcal{D}
+  \coloneq
+  \left\{(\bm{x}_i,y_i)\mid i=1,2,\ldots,m\right\}
+\end{align*}
+とする．
+ここで，$\bm{x}_i\in\mathbb{R}^{d}$は$d$個の特徴量を持つ入力ベクトル，
+$y_i\in\mathbb{R}$は対応する目的変数である．
+線形回帰では，回帰係数ベクトル
+\begin{align*}
+  \bm{w}
+  \coloneq
+  \begin{pmatrix}
+    w_1 & w_2 & \cdots & w_d
+  \end{pmatrix}^{\mathsf{T}}
+\end{align*}
+を用いて，$i$番目の予測値を
+\begin{equation}
+  \widehat{y}_i
+  \coloneq
+  \bm{x}_i^{\mathsf{T}}\bm{w}
+  \label{eq:linear-regression-prediction}
+\end{equation}
+と表す．
+
+切片を含める場合は，各入力ベクトルの先頭に定数$1$を追加し，
+対応する回帰係数を$\bm{w}$へ含めればよい．
+以下では，この処理が既に行われているものとして議論する．
+
+訓練データをまとめた計画行列と目的変数ベクトルを，それぞれ
+\begin{align}
+  X
+  &\coloneq
+  \begin{pmatrix}
+    \bm{x}_1^{\mathsf{T}}\\
+    \bm{x}_2^{\mathsf{T}}\\
+    \vdots\\
+    \bm{x}_m^{\mathsf{T}}
+  \end{pmatrix}
+  \in\mathbb{R}^{m\times d},
+  \label{eq:design-matrix}\\
+  \bm{y}
+  &\coloneq
+  \begin{pmatrix}
+    y_1 & y_2 & \cdots & y_m
+  \end{pmatrix}^{\mathsf{T}}
+  \in\mathbb{R}^{m}
+  \label{eq:target-vector}
+\end{align}
+と定義する．
+このとき，全訓練データに対する予測値ベクトルは$X\bm{w}$となる．
+
+\subsection{最小二乗法}
+\label{subsec:least-squares-method}
+
+線形回帰では，予測値と目的変数の差を残差といい，その二乗和を最小にする回帰係数を求める．
+損失関数を
+\begin{equation}
+  \mathcal{L}(\bm{w})
+  \coloneq
+  \|X\bm{w}-\bm{y}\|_2^2
+  \label{eq:least-squares-loss}
+\end{equation}
+と定義する．
+式\eqref{eq:least-squares-loss}を展開すると
+\begin{align*}
+  \mathcal{L}(\bm{w})
+  =
+  \bm{w}^{\mathsf{T}}X^{\mathsf{T}}X\bm{w}
+  -2\bm{w}^{\mathsf{T}}X^{\mathsf{T}}\bm{y}
+  +\bm{y}^{\mathsf{T}}\bm{y}
+\end{align*}
+となる．
+したがって，$\bm{w}$に関する勾配は
+\begin{align*}
+  \nabla_{\bm{w}}\mathcal{L}(\bm{w})
+  =
+  2X^{\mathsf{T}}X\bm{w}-2X^{\mathsf{T}}\bm{y}
+\end{align*}
+である．
+損失関数を最小にする点ではこの勾配が零になるため，
+\begin{equation}
+  X^{\mathsf{T}}X\bm{w}
+  =
+  X^{\mathsf{T}}\bm{y}
+  \label{eq:normal-equation-original}
+\end{equation}
+を得る．
+式\eqref{eq:normal-equation-original}を\textbf{正規方程式}という．
+
+\subsection{線形方程式への帰着}
+\label{subsec:reduction-to-linear-system}
+
+行列$A$とベクトル$\bm{b}$を
+\begin{align}
+  A
+  &\coloneq
+  X^{\mathsf{T}}X,
+  \label{eq:regression-matrix-a}\\
+  \bm{b}
+  &\coloneq
+  X^{\mathsf{T}}\bm{y}
+  \label{eq:regression-vector-b}
+\end{align}
+と定義すると，正規方程式は
+\begin{equation}
+  A\bm{w}=\bm{b}
+  \label{eq:regression-linear-system}
+\end{equation}
+となる．
+$X$の列が線形独立であれば，$A$は実対称正定値行列であり，逆行列を持つ．
+この場合，最小二乗解は
+\begin{align*}
+  \bm{w}
+  =
+  A^{-1}\bm{b}
+  =
+  (X^{\mathsf{T}}X)^{-1}X^{\mathsf{T}}\bm{y}
+\end{align*}
+で与えられる．
+
+$X$の列が線形独立でない場合や，互いに強く相関する特徴量が存在する場合には，
+$A$が特異行列または悪条件行列となることがある．
+この問題を緩和する方法の一つが，正則化項を加えたリッジ回帰である．
+$\lambda>0$に対して正則化損失を
+\begin{equation}
+  \mathcal{L}_{\lambda}(\bm{w})
+  \coloneq
+  \|X\bm{w}-\bm{y}\|_2^2
+  +\lambda\|\bm{w}\|_2^2
+  \label{eq:ridge-loss}
+\end{equation}
+と定義すると，正規方程式は
+\begin{align*}
+  (X^{\mathsf{T}}X+\lambda I)\bm{w}
+  =
+  X^{\mathsf{T}}\bm{y}
+\end{align*}
+となる．
+このとき
+\begin{equation}
+  A_{\lambda}
+  \coloneq
+  X^{\mathsf{T}}X+\lambda I
+  \label{eq:regularized-regression-matrix}
+\end{equation}
+は正定値行列となるため，HHLアルゴリズムが要求する可逆性を確保できる．
+ただし，$\lambda$を大きくすると回帰係数が強く縮小されるため，安定性と予測精度の両方を考慮して値を定める必要がある．

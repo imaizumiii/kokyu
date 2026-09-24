@@ -5,6 +5,9 @@ HHLアルゴリズムは，量子位相推定，固有値に応じた制御回�
 補助量子ビットの測定から構成される\cite{shimada2020}．
 以下では，$A$の固有値が既知の範囲に収まるようにスケーリングされ，
 $e^{\mathrm{i}At}$を量子回路として実行できるものとする．
+各処理では，第\ref{sec:quantum-phase-estimation}節の位相推定，
+第\ref{sec:controlled-rotation}節の制御回転，
+第\ref{sec:ancilla-uncomputation}節の逆演算を用いる．
 
 \subsection{レジスタの準備}
 \label{subsec:hhl-register-preparation}
@@ -34,7 +37,7 @@ HHLアルゴリズムでは，次の三つのレジスタを使用する．
 \subsection{量子位相推定}
 \label{subsec:hhl-quantum-phase-estimation}
 
-行列$A$から定まるユニタリ演算子を
+第\ref{sec:matrix-exponential}節に従い，行列$A$から定まるユニタリ演算子を
 \begin{equation}
   U_A(t)
   \coloneq
@@ -42,7 +45,7 @@ HHLアルゴリズムでは，次の三つのレジスタを使用する．
   \label{eq:hamiltonian-simulation-unitary}
 \end{equation}
 と定義する．
-$A\ket{u_j}=\lambda_j\ket{u_j}$であるため，
+固有値方程式$A\ket{u_j}=\lambda_j\ket{u_j}$より，
 \begin{align*}
   U_A(t)\ket{u_j}
   =
@@ -71,7 +74,7 @@ $A\ket{u_j}=\lambda_j\ket{u_j}$であるため，
 \begin{align*}
   0<C\leq\min_j|\lambda_j|
 \end{align*}
-となるように選び，次の変換を行う．
+となるように選ぶ．制御回転の作用は
 \begin{equation}
   \ket{\widetilde{\lambda}_j}\ket{0}_{a}
   \longmapsto
@@ -82,6 +85,9 @@ $A\ket{u_j}=\lambda_j\ket{u_j}$であるため，
   \right)
   \label{eq:hhl-controlled-rotation}
 \end{equation}
+である．
+ここでは第\ref{sec:controlled-rotation}節の関数を
+$g(\widetilde\lambda_j)=C/\widetilde\lambda_j$としている．
 これにより，補助量子ビットが$\ket{1}_{a}$である成分の振幅へ
 $1/\widetilde{\lambda}_j$が反映される．
 
@@ -136,7 +142,8 @@ $1/\widetilde{\lambda}_j$が反映される．
 HHLアルゴリズムの処理は，次の手順にまとめられる．
 
 \begin{enumerate}[(1)]
-  \item 右辺ベクトルを規格化し，状態レジスタへ$\ket{b}$として準備する．
+  \item 第\ref{sec:data-encoding}節の振幅符号化により，
+        右辺ベクトルを規格化し，状態レジスタへ$\ket{b}$として準備する．
   \item $e^{\mathrm{i}At}$を用いた量子位相推定により，$A$の固有値を位相レジスタへ書き込む．
   \item 固有値の逆数に比例する振幅を，制御回転によって補助量子ビットへ書き込む．
   \item 逆量子位相推定によって位相レジスタの計算を巻き戻す．

@@ -1,0 +1,64 @@
+\section{HHLアルゴリズムの正しさ}
+\label{sec:hhl-correctness}
+
+\subsection{理想化された場合の正しさ}
+
+\begin{theo}[理想HHLの正しさ]
+$A$を可逆なエルミート行列とし，正規直交固有基底について
+$A\ket{u_j}=\lambda_j\ket{u_j}$とする．入力状態を
+$\ket b=\sum_j\beta_j\ket{u_j}$とし，固有値を誤差なく符号化できると仮定する．
+また$0<C\leq\min_j|\lambda_j|$とする．
+HHLの補助量子ビットの測定結果が$1$なら，系レジスタの状態は
+\begin{equation}
+ \ket x=\frac{A^{-1}\ket b}{\lVert A^{-1}\ket b\rVert}
+ \label{eq:hhl-correct-output}
+\end{equation}
+である．
+\end{theo}
+
+\begin{proof}
+初期状態は
+\[
+ \ket0_P\ket b_S\ket0_R
+ =\sum_j\beta_j\ket0_P\ket{u_j}_S\ket0_R
+\]
+である．$e^{\mathrm{i}At}$に対する位相推定が固有値を正確に表すとき，
+\[
+ \sum_j\beta_j\ket{\lambda_j}_P\ket{u_j}_S\ket0_R
+\]
+となる．第2章の制御回転で$g(\lambda_j)=C/\lambda_j$とすると，
+\[
+ \sum_j\beta_j\ket{\lambda_j}_P\ket{u_j}_S
+ \left(
+  \sqrt{1-\frac{C^2}{\lambda_j^2}}\ket0_R
+  +\frac{C}{\lambda_j}\ket1_R
+ \right)
+\]
+を得る．仮定$|C/\lambda_j|\leq1$により回転は定義できる．
+回転は固有ベクトルと位相レジスタを変えないため，逆位相推定を作用させると
+\begin{equation}
+ \sum_j\beta_j\ket0_P\ket{u_j}_S
+ \left(
+  \sqrt{1-\frac{C^2}{\lambda_j^2}}\ket0_R
+  +\frac{C}{\lambda_j}\ket1_R
+ \right)
+ \label{eq:hhl-before-measurement}
+\end{equation}
+となる．
+
+補助量子ビットの結果$1$に対応する射影を式\eqref{eq:hhl-before-measurement}へ
+作用させると，系レジスタの規格化前の成功成分は
+\[
+ C\sum_j\frac{\beta_j}{\lambda_j}\ket{u_j}
+ =C\left(\sum_j\lambda_j^{-1}\ket{u_j}\bra{u_j}\right)\ket b
+ =CA^{-1}\ket b
+\]
+である．$A$は可逆で$\ket b\ne0$であるから$A^{-1}\ket b\ne0$である．
+測定後状態を規格化すると
+\[
+ \frac{CA^{-1}\ket b}{\lVert CA^{-1}\ket b\rVert}
+ =\frac{A^{-1}\ket b}{\lVert A^{-1}\ket b\rVert}
+\]
+を得る．ここでは$C>0$を用いた．
+\end{proof}
+

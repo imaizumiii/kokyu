@@ -4,13 +4,13 @@
 \subsection{問題の設定}
 \label{subsec:qlsp-formulation}
 
-$N\times N$のエルミート行列$A$と，零でないベクトル$\bm{b}\in\mathbb{C}^{N}$に対する
+エルミート行列$A\in\mathbb C^{N\times N}$と，零でないベクトル$\bm{b}\in\mathbb{C}^{N}$に対する
 線形方程式
 \begin{align*}
   A\bm{x}=\bm{b}
 \end{align*}
 を考える．
-$A$は可逆であるとし，$\bm{b}$を振幅符号化した量子状態を
+行列$A$は可逆であるとし，$\bm{b}$を振幅符号化した量子状態を
 \begin{equation}
   \ket{b}
   \coloneq
@@ -20,7 +20,7 @@ $A$は可逆であるとし，$\bm{b}$を振幅符号化した量子状態を
 \end{equation}
 と定義する．
 必要な量子ビット数を$n\coloneq\lceil\log_2N\rceil$とする．
-$N$が2の累乗でない場合は，使用しない基底状態の振幅を零とし，
+次元$N$が2の累乗でない場合は，使用しない基底状態の振幅を零とし，
 行列を
 \begin{align*}
   A'
@@ -45,7 +45,7 @@ $N$が2の累乗でない場合は，使用しない基底状態の振幅を零�
 \subsection{固有値分解による解の表現}
 \label{subsec:eigendecomposition-of-solution}
 
-$A$はエルミート行列であるため，実数の固有値$\lambda_j$と正規直交固有ベクトル$\ket{u_j}$を用いて
+行列$A$はエルミートであるため，実数の固有値$\lambda_j$と正規直交固有ベクトル$\ket{u_j}$を用いて
 \begin{align}
   A
   &=
@@ -57,7 +57,7 @@ $A$はエルミート行列であるため，実数の固有値$\lambda_j$と正
   \label{eq:a-eigenvalue-equation}
 \end{align}
 と表される．
-$A$は可逆であるため，すべての固有値は$\lambda_j\neq0$を満たす．
+行列$A$は可逆であるため，すべての固有値は$\lambda_j\neq0$を満たす．
 
 入力状態$\ket{b}$を$A$の固有ベクトルで展開すると
 \begin{equation}
@@ -95,7 +95,7 @@ $A$は可逆であるため，すべての固有値は$\lambda_j\neq0$を満た�
   \label{eq:condition-number-definition}
 \end{equation}
 と定義する．
-$A$が正定値行列である場合，最大固有値と最小固有値をそれぞれ
+行列$A$が正定値である場合，最大固有値と最小固有値をそれぞれ
 $\lambda_{\max}$，$\lambda_{\min}$とすると
 \begin{align*}
   \kappa(A)

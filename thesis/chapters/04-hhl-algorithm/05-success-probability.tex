@@ -1,7 +1,7 @@
 \section{成功確率と振幅増幅}
 \label{sec:hhl-success-probability}
 
-定理4.1の仮定の下で，式\eqref{eq:hhl-before-measurement}の成功成分から
+定理\ref{thm:hhl-correctness}の仮定の下で，式\eqref{eq:hhl-before-measurement}の成功成分から
 \begin{equation}
  p_{\mathrm{HHL}}
  =C^2\sum_j\frac{|\beta_j|^2}{\lambda_j^2}
@@ -10,12 +10,12 @@
 \end{equation}
 を得る．固有ベクトルが正規直交するため，異なる$j$の交差項は零になる．
 
-$A$を$1/\kappa\leq\lambda_j\leq1$となるよう規格化し，$C=1/\kappa$とする．
+行列$A$を$1/\kappa\leq\lambda_j\leq1$となるよう規格化し，$C=1/\kappa$とする．
 このとき各$j$について
 \[
  \frac1{\kappa^2}\leq\frac{C^2}{\lambda_j^2}\leq1
 \]
-である．$\sum_j|\beta_j|^2=1$より
+である．入力状態の規格化$\sum_j|\beta_j|^2=1$より
 \begin{equation}
  \frac1{\kappa^2}\leq p_{\mathrm{HHL}}\leq1
  \label{eq:hhl-success-condition-bound}
@@ -29,4 +29,3 @@ HHL全体を状態準備演算$\mathcal A_{\mathrm{HHL}}$とみなし，
 $O(1/\sqrt{p_{\mathrm{HHL}}})$であり，式\eqref{eq:hhl-success-condition-bound}の
 最悪の場合には$O(\kappa)$となる．各反復にはHHL回路だけでなく
 その逆回路も必要であるため，このコストを全体の計算量に含めなければならない．
-
