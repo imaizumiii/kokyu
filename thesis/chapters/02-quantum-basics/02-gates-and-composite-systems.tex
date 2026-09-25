@@ -119,94 +119,95 @@ $w=(w_1,\ldots,w_r)^{\mathsf T}$も行列とみなせるため，
 
 次に，一般の有限次元ベクトル空間で使う形を定める．
 
-\begin{defi}[有限次元ベクトル空間のテンソル積]
-複素ベクトル空間$V,W$の基底を，それぞれ
-$\{e_i\}_{i=1}^{m}$，$\{f_j\}_{j=1}^{r}$とする．
-$V\otimes W$を，記号$e_i\otimes f_j$を基底にもつベクトル空間とする．
-また，$v=\sum_i a_ie_i$，$w=\sum_j b_jf_j$に対して
-\begin{equation}
- v\otimes w
- :=\sum_{i=1}^{m}\sum_{j=1}^{r}a_ib_j(e_i\otimes f_j)
- \label{eq:vector-space-tensor-product-definition}
-\end{equation}
-と定める．
-\end{defi}
+% \begin{defi}[有限次元ベクトル空間のテンソル積]
+% 複素ベクトル空間$V,W$の基底を，それぞれ
+% $\{e_i\}_{i=1}^{m}$，$\{f_j\}_{j=1}^{r}$とする．
+% $V\otimes W$を，記号$e_i\otimes f_j$を基底にもつベクトル空間とする．
+% また，$v=\sum_i a_ie_i$，$w=\sum_j b_jf_j$に対して
+% \begin{equation}
+%  v\otimes w
+%  :=\sum_{i=1}^{m}\sum_{j=1}^{r}a_ib_j(e_i\otimes f_j)
+%  \label{eq:vector-space-tensor-product-definition}
+% \end{equation}
+% と定める．
+% \end{defi}
 
-この定義は，座標を選んだときの式\eqref{eq:vector-tensor-product-coordinate}と一致する．
+% この定義は，座標を選んだときの式\eqref{eq:vector-tensor-product-coordinate}と一致する．
 特に，テンソル積は
 \begin{align}
   (v_1+v_2)\otimes w&=v_1\otimes w+v_2\otimes w,\\
   v\otimes(w_1+w_2)&=v\otimes w_1+v\otimes w_2,\\
   (cv)\otimes w&=v\otimes(cw)=c(v\otimes w)
 \end{align}
-を満たす．$v\otimes w$の形のベクトルを純テンソルという．
-一般のテンソルは純テンソルの有限個の和で表される．
-ただし，一つの純テンソルで表せるとは限らない．
+を満たす．
+% $v\otimes w$の形のベクトルを純テンソルという．
+% 一般のテンソルは純テンソルの有限個の和で表される．
+% ただし，一つの純テンソルで表せるとは限らない．
 
-\begin{prop}
-ベクトルの族$\{e_i\}_{i=1}^{r}$を$V$の基底，$\{f_j\}_{j=1}^{s}$を$W$の基底とすると，
-$\{e_i\otimes f_j\}_{i,j}$は$V\otimes W$の基底である．
-したがって$\dim(V\otimes W)=rs$である．
-\end{prop}
-\begin{proof}
-定義より，$e_i\otimes f_j$は$V\otimes W$の基底である．
-その個数は$rs$個であるため，$\dim(V\otimes W)=rs$となる．
-また，任意のベクトル$v=\sum_i a_ie_i$，$w=\sum_jb_jf_j$について
-\[
-  v\otimes w=\sum_{i,j}a_ib_j(e_i\otimes f_j)
-\]
-と表される．これは，式\eqref{eq:vector-space-tensor-product-definition}そのものである．
-\end{proof}
+% \begin{prop}
+% ベクトルの族$\{e_i\}_{i=1}^{r}$を$V$の基底，$\{f_j\}_{j=1}^{s}$を$W$の基底とすると，
+% $\{e_i\otimes f_j\}_{i,j}$は$V\otimes W$の基底である．
+% したがって$\dim(V\otimes W)=rs$である．
+% \end{prop}
+% \begin{proof}
+% 定義より，$e_i\otimes f_j$は$V\otimes W$の基底である．
+% その個数は$rs$個であるため，$\dim(V\otimes W)=rs$となる．
+% また，任意のベクトル$v=\sum_i a_ie_i$，$w=\sum_jb_jf_j$について
+% \[
+%   v\otimes w=\sum_{i,j}a_ib_j(e_i\otimes f_j)
+% \]
+% と表される．これは，式\eqref{eq:vector-space-tensor-product-definition}そのものである．
+% \end{proof}
 
-内積空間$V,W$に対し，純テンソル上で
-\begin{equation}
-  \langle v_1\otimes w_1,v_2\otimes w_2\rangle
-  :=\langle v_1,v_2\rangle\langle w_1,w_2\rangle
-  \label{eq:tensor-inner-product}
-\end{equation}
-と定め，線形性によって$V\otimes W$全体へ拡張する．
-もとの基底が正規直交基底なら
-\[
- \langle e_i\otimes f_j,e_k\otimes f_l\rangle
- =\delta_{ik}\delta_{jl}
-\]
-であるから，積基底も正規直交基底である．
+% 内積空間$V,W$に対し，純テンソル上で
+% \begin{equation}
+%   \langle v_1\otimes w_1,v_2\otimes w_2\rangle
+%   :=\langle v_1,v_2\rangle\langle w_1,w_2\rangle
+%   \label{eq:tensor-inner-product}
+% \end{equation}
+% と定め，線形性によって$V\otimes W$全体へ拡張する．
+% もとの基底が正規直交基底なら
+% \[
+%  \langle e_i\otimes f_j,e_k\otimes f_l\rangle
+%  =\delta_{ik}\delta_{jl}
+% \]
+% であるから，積基底も正規直交基底である．
 
-\begin{defi}[線形写像のテンソル積]
-線形写像$A:V\to V'$，$B:W\to W'$に対し，
-$(A\otimes B)(v\otimes w)=Av\otimes Bw$を満たす線形写像を
-$A\otimes B$と定める．
-\end{defi}
+% \begin{defi}[線形写像のテンソル積]
+% 線形写像$A:V\to V'$，$B:W\to W'$に対し，
+% $(A\otimes B)(v\otimes w)=Av\otimes Bw$を満たす線形写像を
+% $A\otimes B$と定める．
+% \end{defi}
 
-\begin{prop}
-写像の定義域と値域が適合するとき
-\begin{align}
- (A\otimes B)(C\otimes D)&=AC\otimes BD,\label{eq:tensor-product-composition}\\
- (A\otimes B)^\dagger&=A^\dagger\otimes B^\dagger
- \label{eq:tensor-product-adjoint}
-\end{align}
-が成り立つ．したがって，$A,B$がユニタリなら$A\otimes B$もユニタリである．
-これらは，行列のテンソル積の基本的な性質である
-\cite[75頁，定理2.8]{tsukano2023}．
-\end{prop}
-\begin{proof}
-純テンソル$v\otimes w$に作用させると
-\[
- (A\otimes B)(C\otimes D)(v\otimes w)
- =ACv\otimes BDw=(AC\otimes BD)(v\otimes w)
-\]
-である．純テンソルが空間を生成するため式\eqref{eq:tensor-product-composition}が従う．
-また純テンソルについて
-\begin{align*}
- \langle v'\otimes w',(A\otimes B)(v\otimes w)\rangle
- &=\langle v',Av\rangle\langle w',Bw\rangle\\
- &=\langle A^\dagger v',v\rangle\langle B^\dagger w',w\rangle\\
- &=\langle(A^\dagger\otimes B^\dagger)(v'\otimes w'),v\otimes w\rangle
-\end{align*}
-であり，線形性から式\eqref{eq:tensor-product-adjoint}を得る．
-写像$A,B$がユニタリなら両式より
-$(A\otimes B)^\dagger(A\otimes B)=I\otimes I$である．
-\end{proof}
+% \begin{prop}
+% 写像の定義域と値域が適合するとき
+% \begin{align}
+%  (A\otimes B)(C\otimes D)&=AC\otimes BD,\label{eq:tensor-product-composition}\\
+%  (A\otimes B)^\dagger&=A^\dagger\otimes B^\dagger
+%  \label{eq:tensor-product-adjoint}
+% \end{align}
+% が成り立つ．したがって，$A,B$がユニタリなら$A\otimes B$もユニタリである．
+% これらは，行列のテンソル積の基本的な性質である
+% \cite[75頁，定理2.8]{tsukano2023}．
+% \end{prop}
+% \begin{proof}
+% 純テンソル$v\otimes w$に作用させると
+% \[
+%  (A\otimes B)(C\otimes D)(v\otimes w)
+%  =ACv\otimes BDw=(AC\otimes BD)(v\otimes w)
+% \]
+% である．純テンソルが空間を生成するため式\eqref{eq:tensor-product-composition}が従う．
+% また純テンソルについて
+% \begin{align*}
+%  \langle v'\otimes w',(A\otimes B)(v\otimes w)\rangle
+%  &=\langle v',Av\rangle\langle w',Bw\rangle\\
+%  &=\langle A^\dagger v',v\rangle\langle B^\dagger w',w\rangle\\
+%  &=\langle(A^\dagger\otimes B^\dagger)(v'\otimes w'),v\otimes w\rangle
+% \end{align*}
+% であり，線形性から式\eqref{eq:tensor-product-adjoint}を得る．
+% 写像$A,B$がユニタリなら両式より
+% $(A\otimes B)^\dagger(A\otimes B)=I\otimes I$である．
+% \end{proof}
 
 複数の量子系を合わせたものを複合量子系という．
 複合量子系の状態空間は，各量子系の状態空間のテンソル積で表す．
