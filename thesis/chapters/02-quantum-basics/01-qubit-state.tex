@@ -27,32 +27,32 @@ $\lVert\ket{\psi}\rVert:=\sqrt{\braket{\psi|\psi}}$と書く．
 また，$\ket{\psi}\bra{\phi}$は線形写像を表す．
 この写像は$\ket{v}$を$\braket{\phi|v}\ket{\psi}$へ移す．
 
-\begin{prop}
-正規直交基底$\{\ket{e_j}\}_{j=0}^{d-1}$に対し，任意の$\ket{\psi}\in\mathcal H$は
-\begin{equation}
-  \ket{\psi}=\sum_{j=0}^{d-1}\braket{e_j|\psi}\ket{e_j}
-  \label{eq:orthonormal-expansion}
-\end{equation}
-と一意的に表される．
-\end{prop}
-\begin{proof}
-基底であるから$\ket{\psi}=\sum_j c_j\ket{e_j}$と一意的に表される．
-左から$\bra{e_k}$を作用させると
-\[
-  \braket{e_k|\psi}
-  =\sum_jc_j\braket{e_k|e_j}
-  =\sum_jc_j\delta_{kj}=c_k
-\]
-である．したがって$c_j=\braket{e_j|\psi}$となる．
-\end{proof}
+% \begin{prop}
+% 正規直交基底$\{\ket{e_j}\}_{j=0}^{d-1}$に対し，任意の$\ket{\psi}\in\mathcal H$は
+% \begin{equation}
+%   \ket{\psi}=\sum_{j=0}^{d-1}\braket{e_j|\psi}\ket{e_j}
+%   \label{eq:orthonormal-expansion}
+% \end{equation}
+% と一意的に表される．
+% \end{prop}
+% \begin{proof}
+% 基底であるから$\ket{\psi}=\sum_j c_j\ket{e_j}$と一意的に表される．
+% 左から$\bra{e_k}$を作用させると
+% \[
+%   \braket{e_k|\psi}
+%   =\sum_jc_j\braket{e_k|e_j}
+%   =\sum_jc_j\delta_{kj}=c_k
+% \]
+% である．したがって$c_j=\braket{e_j|\psi}$となる．
+% \end{proof}
 
 \subsection{量子状態の公理}
 
-\begin{defi}[純粋状態]
-ほかの系から影響を受けない量子系を考える．
-その純粋状態は，状態空間$\mathcal H$の長さ1のベクトル$\ket{\psi}$で表す．
-つまり，$\braket{\psi|\psi}=1$とする．
-\end{defi}
+% \begin{defi}[純粋状態]
+% ほかの系から影響を受けない量子系を考える．
+% その純粋状態は，状態空間$\mathcal H$の長さ1のベクトル$\ket{\psi}$で表す．
+% つまり，$\braket{\psi|\psi}=1$とする．
+% \end{defi}
 
 ベクトルをその長さで割り，長さを1にそろえることを\textbf{規格化}という．
 
@@ -68,11 +68,11 @@ $\lVert\ket{\psi}\rVert:=\sqrt{\braket{\psi|\psi}}$と書く．
   \qquad |\alpha|^2+|\beta|^2=1
   \label{eq:single-qubit-state}
 \end{equation}
-と表される．係数$\alpha,\beta$を確率振幅という．
+と表される．係数$\alpha,\beta$を\textbf{確率振幅}という．
 実数$\gamma$に対して$\ket{\psi}$と$e^{\mathrm{i}\gamma}\ket{\psi}$は
-同じ物理状態を表す．この因子を大域位相という．
+同じ物理状態を表す．この因子を\textbf{グローバル位相}という．
 これに対して，$\alpha$と$\beta$の間の位相の差は，後の演算と測定結果に影響する．
-この差を相対位相という．
+この差を\textbf{相対位相}という．
 
 \subsection{射影測定の公理}
 

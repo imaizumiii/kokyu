@@ -40,7 +40,7 @@ HHLまでに用いる基本的な1量子ビットゲートを
 \end{align}
 で定める．直接の行列計算により
 $X^\dagger X=Y^\dagger Y=Z^\dagger Z=H^\dagger H=I$であるから，
-これらはすべてユニタリである．特に
+これらはすべてユニタリ写像である．特に
 \begin{equation}
   H\ket{0}=\frac{\ket{0}+\ket{1}}{\sqrt2},
   \qquad
@@ -69,7 +69,7 @@ $s=\sin(\theta/2)$とおけば，
   \begin{pmatrix}c&-s\\s&c\end{pmatrix}
  =\begin{pmatrix}c^2+s^2&0\\0&c^2+s^2\end{pmatrix}=I
 \]
-であるから，$R_y(\theta)$もユニタリである．
+であるから，$R_y(\theta)$もユニタリ写像である．
 したがって
 \begin{equation}
   R_y(\theta)\ket{0}
@@ -83,19 +83,56 @@ $s=\sin(\theta/2)$とおけば，
 
 二つの量子ビットを同時に扱うには，二つのベクトル空間を組み合わせる必要がある．
 この組合せに使う演算がテンソル積である．
-まず，一般のベクトル空間についてテンソル積を定義する．
+まず，資料\cite[73--75頁]{tsukano2023}に従い，
+行列のテンソル積をブロック行列として定義する．
 
-\begin{defi}[ベクトル空間のテンソル積]
-複素ベクトル空間$V,W$のテンソル積とは，複素ベクトル空間$V\otimes W$と
-双線形写像$\tau:V\times W\to V\otimes W$の組であって，
-任意の複素ベクトル空間$Z$と双線形写像$f:V\times W\to Z$に対し，
-$f=\widetilde f\circ\tau$を満たす線形写像
-$\widetilde f:V\otimes W\to Z$が一意に存在するものをいう．
-双線形写像の値$\tau(v,w)$を$v\otimes w$と書く．
+\begin{defi}[行列のテンソル積]
+$m\times n$行列$A=(a_{ij})$と$r\times s$行列$B$に対し，
+\begin{equation}
+ A\otimes B
+ :=
+ \begin{pmatrix}
+  a_{11}B & a_{12}B & \cdots & a_{1n}B\\
+  a_{21}B & a_{22}B & \cdots & a_{2n}B\\
+  \vdots  & \vdots  & \ddots & \vdots\\
+  a_{m1}B & a_{m2}B & \cdots & a_{mn}B
+ \end{pmatrix}
+ \label{eq:matrix-tensor-product-definition}
+\end{equation}
+を$A$と$B$のテンソル積という．これは$mr\times ns$行列である．
 \end{defi}
 
-この定義は，二つの変数について線形な写像を，
-テンソル積上の一つの線形写像として表せることを意味する．
+列ベクトル$v=(v_1,\ldots,v_m)^{\mathsf T}$と
+$w=(w_1,\ldots,w_r)^{\mathsf T}$も行列とみなせるため，
+式\eqref{eq:matrix-tensor-product-definition}から
+\begin{equation}
+ v\otimes w
+ =
+ \begin{pmatrix}
+  v_1w\\v_2w\\\vdots\\v_mw
+ \end{pmatrix}
+ \in\mathbb C^{mr}
+ \label{eq:vector-tensor-product-coordinate}
+\end{equation}
+となる．つまり，各成分$v_i$をベクトル$w$全体に掛け，
+その結果を上から順に並べる．
+
+次に，一般の有限次元ベクトル空間で使う形を定める．
+
+\begin{defi}[有限次元ベクトル空間のテンソル積]
+複素ベクトル空間$V,W$の基底を，それぞれ
+$\{e_i\}_{i=1}^{m}$，$\{f_j\}_{j=1}^{r}$とする．
+$V\otimes W$を，記号$e_i\otimes f_j$を基底にもつベクトル空間とする．
+また，$v=\sum_i a_ie_i$，$w=\sum_j b_jf_j$に対して
+\begin{equation}
+ v\otimes w
+ :=\sum_{i=1}^{m}\sum_{j=1}^{r}a_ib_j(e_i\otimes f_j)
+ \label{eq:vector-space-tensor-product-definition}
+\end{equation}
+と定める．
+\end{defi}
+
+この定義は，座標を選んだときの式\eqref{eq:vector-tensor-product-coordinate}と一致する．
 特に，テンソル積は
 \begin{align}
   (v_1+v_2)\otimes w&=v_1\otimes w+v_2\otimes w,\\
@@ -112,24 +149,13 @@ $\{e_i\otimes f_j\}_{i,j}$は$V\otimes W$の基底である．
 したがって$\dim(V\otimes W)=rs$である．
 \end{prop}
 \begin{proof}
-任意のベクトル$v=\sum_i a_ie_i$，$w=\sum_jb_jf_j$について，双線形性より
+定義より，$e_i\otimes f_j$は$V\otimes W$の基底である．
+その個数は$rs$個であるため，$\dim(V\otimes W)=rs$となる．
+また，任意のベクトル$v=\sum_i a_ie_i$，$w=\sum_jb_jf_j$について
 \[
   v\otimes w=\sum_{i,j}a_ib_j(e_i\otimes f_j)
 \]
-である．一般のテンソルは純テンソルの有限個の和である．
-したがって，$e_i\otimes f_j$の線形結合で$V\otimes W$のすべてのベクトルを表せる．
-
-次に，$v$の第$k$成分と$w$の第$l$成分の積を取り出す写像を考える．
-この双線形写像$f_{kl}:V\times W\to\mathbb C$を
-$f_{kl}(v,w)=a_kb_l$で定める．テンソル積の定義より，
-$f_{kl}=\widetilde f_{kl}\circ\tau$を満たす線形写像$\widetilde f_{kl}$が存在し，
-\[
-  \widetilde f_{kl}(e_i\otimes f_j)=\delta_{ki}\delta_{lj}
-\]
-である．もし$\sum_{i,j}c_{ij}e_i\otimes f_j=0$なら，
-写像$\widetilde f_{kl}$を作用させると$c_{kl}=0$を得る．
-添字$k,l$は自由に選べるので，すべての係数が$0$である．
-よって，$e_i\otimes f_j$は線形独立であり，$rs$個の基底ベクトルになる．
+と表される．これは，式\eqref{eq:vector-space-tensor-product-definition}そのものである．
 \end{proof}
 
 内積空間$V,W$に対し，純テンソル上で
@@ -160,6 +186,8 @@ $A\otimes B$と定める．
  \label{eq:tensor-product-adjoint}
 \end{align}
 が成り立つ．したがって，$A,B$がユニタリなら$A\otimes B$もユニタリである．
+これらは，行列のテンソル積の基本的な性質である
+\cite[75頁，定理2.8]{tsukano2023}．
 \end{prop}
 \begin{proof}
 純テンソル$v\otimes w$に作用させると
