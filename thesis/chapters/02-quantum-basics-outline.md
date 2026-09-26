@@ -2,7 +2,7 @@
 
 作成日：2026年7月29日  
 対応ファイル：`chapters/02-quantum-basics/chapter.tex`  
-状態：本文反映済みの構成メモ
+状態：旧構成メモ。現在の採用範囲と節番号は、`chapters/02-quantum-basics/DETAIL_DESIGN.md`を正とする。
 
 ---
 
