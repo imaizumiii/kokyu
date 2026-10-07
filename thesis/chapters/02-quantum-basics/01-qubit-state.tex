@@ -3,143 +3,71 @@
 
 \subsection{ブラケット記法}
 
-複素数を成分にもつ有限次元のベクトル空間を$\mathcal H$とする．
-空間$\mathcal H$には内積が定められているものとする．
+複素数を成分にもつ有限次元のヒルベルト空間を$\mathcal H$とする．
 $\mathcal H$のベクトルを
 \begin{equation}
-  \ket{\psi}
+  \ket{a}
   \coloneq
-  \begin{pmatrix}
-    \psi_0&\psi_1&\cdots&\psi_{d-1}
-  \end{pmatrix}^{\mathsf T}
+  \begin{bmatrix}
+    a_0\\a_1\\\vdots\\a_{d-1}
+  \end{bmatrix}
   \label{eq:ket-coordinate}
 \end{equation}
-と書き，これを\textbf{ケット}という．
-ケット$\ket{\psi}$の各成分を複素共役にして横に並べたものを
-$\bra{\psi}:=\ket{\psi}^{\dagger}$と書き，\textbf{ブラ}という．
-ベクトル$\ket{\psi}$と$\ket{\phi}$の内積は
-$\braket{\phi|\psi}:=\bra{\phi}\ket{\psi}$と書く．座標を使えば，
+と書き，これを\textbf{ケット}または\textbf{ケットベクトル}という．\\
+ケット$\ket{a}$の各成分を複素共役にして横に並べたものを
+$\bra{a}:=\ket{a}^{\dagger}$と書き，\textbf{ブラ}または\textbf{ブラベクトル}という．\\
+ベクトル$\ket{a}$と$\ket{b}$の内積は
+$\braket{b|a}
+\coloneq
+\bra{b}\ket{a}$と書く．各成分を使えば，
 \begin{equation}
-  \braket{\phi|\psi}=\sum_{j=0}^{d-1}\overline{\phi_j}\psi_j
+  \braket{b|a}=\sum_{j=0}^{d-1}\overline{b_j}a_j
 \end{equation}
-である．内積から定まるノルムを
-$\lVert\ket{\psi}\rVert:=\sqrt{\braket{\psi|\psi}}$と書く．
-また，$\ket{\psi}\bra{\phi}$は線形写像を表す．
-この写像は$\ket{v}$を$\braket{\phi|v}\ket{\psi}$へ移す．
-
-% \begin{prop}
-% 正規直交基底$\{\ket{e_j}\}_{j=0}^{d-1}$に対し，任意の$\ket{\psi}\in\mathcal H$は
-% \begin{equation}
-%   \ket{\psi}=\sum_{j=0}^{d-1}\braket{e_j|\psi}\ket{e_j}
-%   \label{eq:orthonormal-expansion}
-% \end{equation}
-% と一意的に表される．
-% \end{prop}
-% \begin{proof}
-% 基底であるから$\ket{\psi}=\sum_j c_j\ket{e_j}$と一意的に表される．
-% 左から$\bra{e_k}$を作用させると
-% \[
-%   \braket{e_k|\psi}
-%   =\sum_jc_j\braket{e_k|e_j}
-%   =\sum_jc_j\delta_{kj}=c_k
-% \]
-% である．したがって$c_j=\braket{e_j|\psi}$となる．
-% \end{proof}
+と表記される．
 
 \subsection{量子状態の公理}
 
-% \begin{defi}[純粋状態]
-% ほかの系から影響を受けない量子系を考える．
-% その純粋状態は，状態空間$\mathcal H$の長さ1のベクトル$\ket{\psi}$で表す．
-% つまり，$\braket{\psi|\psi}=1$とする．
-% \end{defi}
-
-ベクトルをその長さで割り，長さを1にそろえることを\textbf{規格化}という．
-
-1量子ビットの状態空間は$\mathbb C^2$である．計算基底を
+古典コンピュータのビットは$0$か$1$のいずれかの値をとる．量子コンピュータにおいても，$0$と$1$に対応する二つの状態を考え，それぞれ
 \begin{equation}
   \ket{0}=\begin{pmatrix}1\\0\end{pmatrix},
   \qquad
   \ket{1}=\begin{pmatrix}0\\1\end{pmatrix}
 \end{equation}
-と定めると，一般の1量子ビット状態は
+記す．これらは２次元のヒルベルト空間において正規直交基底であり，量子コンピュータにおいては\textbf{計算基底}という．\\
+量子ビットはこれらの重ね合わせで構成されており，1量子ビットの状態は次のように表される．
 \begin{equation}
-  \ket{\psi}=\alpha\ket{0}+\beta\ket{1},
-  \qquad |\alpha|^2+|\beta|^2=1
+  \ket{\psi}\coloneq\alpha\ket{0}+\beta\ket{1}
+  \qquad 
+  (\alpha,\beta\in\mathbb C)
   \label{eq:single-qubit-state}
 \end{equation}
-と表される．係数$\alpha,\beta$を\textbf{確率振幅}という．
-実数$\gamma$に対して$\ket{\psi}$と$e^{\mathrm{i}\gamma}\ket{\psi}$は
-同じ物理状態を表す．この因子を\textbf{グローバル位相}という．
-これに対して，$\alpha$と$\beta$の間の位相の差は，後の演算と測定結果に影響する．
-この差を\textbf{相対位相}という．
+と表される．係数$\alpha,\beta$を\textbf{確率振幅}という．\\
+確率振幅の絶対値の二乗は，その状態が結果として得られる確率であることが知られている．これを\textbf{ボルンの規則}という．\\
+したがって，$\ket{\psi}$は長さが$1$に規格化されている必要があり，
+\begin{equation}
+  |\alpha|^2+|\beta|^2=1
+  \label{eq:single-qubit-state-normalization}
+\end{equation}が成り立つ．
 
 \subsection{射影測定の公理}
 
-\begin{defi}[直交射影]
-線形写像$P:\mathcal H\to\mathcal H$が$P^2=P$かつ$P^\dagger=P$を満たすとき，
-$P$を直交射影という．
-\end{defi}
+先に述べたように，量子ビットの状態は$\ket{0}$と$\ket{1}$の
+重ね合わせとして表される．この量子ビットを計算基底で測定すると，
+結果として$0$または$1$のいずれかが得られる．
+どちらの結果が得られるかは確率的に決まる．
+これらの確率は，$P_0\coloneq\ket{0}\bra{0}$と$P_1\coloneq\ket{1}\bra{1}$という
+射影演算子で記述され，\textbf{射影測定}と呼ばれる．
 
-\begin{defi}[射影測定]
-測定結果の集合を$M$とする．各結果$m\in M$に対して直交射影$P_m$を用意し，
+測定前の状態が$\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$のとき，
+結果$0$に対応する確率振幅は$\braket{0|\psi}$である．
+ボルンの規則より，結果$0$を得る確率$p_0$は
 \begin{equation}
-  P_mP_{m'}=\delta_{mm'}P_m,
-  \qquad \sum_{m\in M}P_m=I
-  \label{eq:projective-measurement-completeness}
+  \begin{aligned}
+    p_0
+    &= |\braket{0|\psi}|^2 \\
+    &= |\alpha\braket{0|0}+\beta\braket{0|1}|^2 \\
+    &= |\alpha|^2
+  \end{aligned}
+  \label{eq:projection-onto-0}
 \end{equation}
-を満たすとする．状態$\ket{\psi}$の測定で結果$m$を得る確率は
-\begin{equation}
-  p(m)=\bra{\psi}P_m\ket{\psi}
-      =\lVert P_m\ket{\psi}\rVert^2
-  \label{eq:born-rule-projector}
-\end{equation}
-である．この確率をボルン則という．確率が$p(m)>0$なら，測定後の状態は
-\begin{equation}
-  \ket{\psi_m}=\frac{P_m\ket{\psi}}{\sqrt{p(m)}}
-  \label{eq:post-measurement-state}
-\end{equation}
-であるとする．
-\end{defi}
-
-\begin{prop}
-射影測定の各結果の確率は非負で総和は1であり，
-式\eqref{eq:post-measurement-state}の状態は規格化されている．
-\end{prop}
-\begin{proof}
-式\eqref{eq:born-rule-projector}はノルムの二乗であるから$p(m)\geq0$である．
-完全性関係と状態の規格化より
-\[
-  \sum_m p(m)
-  =\bra{\psi}\left(\sum_mP_m\right)\ket{\psi}
-  =\bra{\psi}I\ket{\psi}=1
-\]
-を得る．さらに$P_m^\dagger P_m=P_m$より
-\[
-  \braket{\psi_m|\psi_m}
-  =\frac{\bra{\psi}P_m^\dagger P_m\ket{\psi}}{p(m)}=1
-\]
 となる．
-\end{proof}
-
-計算基底で測定する場合は，$P_0=\ket{0}\bra{0}$，$P_1=\ket{1}\bra{1}$とする．
-式\eqref{eq:single-qubit-state}に対し，$p(0)=|\alpha|^2$，
-$p(1)=|\beta|^2$である．
-
-\begin{prop}
-状態$\ket{\psi}$と$e^{\mathrm{i}\gamma}\ket{\psi}$は，すべての射影測定で同じ確率を与える．
-\end{prop}
-\begin{proof}
-任意の$m$について
-\[
-  e^{-\mathrm{i}\gamma}\bra{\psi}P_m
-  e^{\mathrm{i}\gamma}\ket{\psi}
-  =\bra{\psi}P_m\ket{\psi}
-\]
-であるため，測定確率は大域位相に依存しない．
-\end{proof}
-
-\begin{ex}
-状態$\ket{\psi}=(\ket{0}+\mathrm{i}\ket{1})/\sqrt2$を計算基底で測定すると，
-結果$0$と$1$はともに確率$1/2$で得られる．
-\end{ex}

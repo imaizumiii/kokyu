@@ -3,210 +3,157 @@
 
 \subsection{ユニタリ変換と1量子ビットゲート}
 
-量子状態に行列を掛けると，別の量子状態へ変化する．
-ただし，変化の前後でベクトルの長さが変わってはならない．
-この条件を満たす行列または線形写像をユニタリという．
-
-\begin{defi}[ユニタリ写像]
-内積空間$\mathcal H$上の線形写像$U$が
-$U^\dagger U=UU^\dagger=I$を満たすとき，$U$をユニタリ写像という．
-\end{defi}
-
-量子系が測定されず，外部から影響を受けない間，
-その状態変化はユニタリ写像で表されるとする．
-したがって，初期状態が$\ket{\psi}$なら，変化後の状態は$U\ket{\psi}$である．
+量子状態に線形写像を作用させることにより，量子状態を変化させることができる．ただし，変化後の量子状態も長さが$1$に規格化されていなければならない．したがって，量子状態の変化はユニタリ写像で表される．
 
 \begin{prop}
-ユニタリ写像$U$は内積とノルムを保存し，逆写像は$U^{-1}=U^\dagger$である．
+作用前の量子状態の長さが$1$であるとき，ユニタリ写像$U$を作用させた後の量子状態の長さも$1$である．
 \end{prop}
 \begin{proof}
-任意の$\ket{\phi},\ket{\psi}$について
+長さが$1$に規格化された任意の量子状態$\ket{\psi}$について，任意のユニタリ写像$U$を作用させると，作用後の量子状態は$U\ket{\psi}$である．そのノルムの二乗は
 \[
-  \braket{U\phi|U\psi}
-  =\bra{\phi}U^\dagger U\ket{\psi}
-  =\braket{\phi|\psi}
+  \lVert U\ket{\psi}\rVert^2
+  =\bra{\psi}U^\dagger U\ket{\psi}
+  =\braket{\psi|\psi} = 1
 \]
-である．両ベクトルを$\ket{\phi}=\ket{\psi}$とすればノルムの保存が従う．
-また，$U^\dagger U=UU^\dagger=I$である．
-したがって，$U^\dagger$は$U$の逆写像である．
+である．
+また，$U^\dagger U=UU^\dagger=I$であるので，$U^\dagger$は$U$の逆写像である．
 \end{proof}
 
-HHLまでに用いる基本的な1量子ビットゲートを
-\begin{align}
-  X&=\begin{pmatrix}0&1\\1&0\end{pmatrix},&
-  Y&=\begin{pmatrix}0&-\mathrm{i}\\\mathrm{i}&0\end{pmatrix},&
-  Z&=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\\
-  H&=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix}
-\end{align}
-で定める．直接の行列計算により
-$X^\dagger X=Y^\dagger Y=Z^\dagger Z=H^\dagger H=I$であるから，
-これらはすべてユニタリ写像である．特に
+基本的な1量子ビットに対するユニタリ写像を
+\begin{align*}
+  X&\coloneq\begin{bmatrix}0&1\\1&0\end{bmatrix},&
+  Y&\coloneq\begin{bmatrix}0&-\mathrm{i}\\\mathrm{i}&0\end{bmatrix},&
+  Z&\coloneq\begin{bmatrix}1&0\\0&-1\end{bmatrix},\\
+  H&\coloneq\frac1{\sqrt2}\begin{bmatrix}1&1\\1&-1\end{bmatrix}
+\end{align*}
+で定める．特に，アダマールゲートと呼ばれる$H$を$\ket{0}, \ket{1}$に作用させたものを$\ket{+}, \ket{-}$と書き，
 \begin{equation}
-  H\ket{0}=\frac{\ket{0}+\ket{1}}{\sqrt2},
+  \ket{+}\coloneq H\ket{0}=\frac{\ket{0}+\ket{1}}{\sqrt2},
   \qquad
-  H\ket{1}=\frac{\ket{0}-\ket{1}}{\sqrt2}
+  \ket{-} \coloneq H\ket{1}=\frac{\ket{0}-\ket{1}}{\sqrt2}
   \label{eq:hadamard-action}
 \end{equation}
-である．
+と定める．これらは互いに直交し，$\{\ket{+},\ket{-}\}$は正規直交基底をなす．$\{\ket{+},\ket{-}\}$を\textbf{アダマール基底}という．
 
-等式$Y^2=I$を用いると，$y$軸回りの回転は
-\begin{align}
-  R_y(\theta)
-  &:=\exp\left(-\frac{\mathrm{i}\theta}{2}Y\right)\\
-  &=\cos\frac{\theta}{2}I-\mathrm{i}\sin\frac{\theta}{2}Y
-   =\begin{pmatrix}
-      \cos(\theta/2)&-\sin(\theta/2)\\
-      \sin(\theta/2)& \cos(\theta/2)
-    \end{pmatrix}
-  \label{eq:ry-definition}
-\end{align}
-となる．第2の等号は指数関数の級数を偶数次と奇数次に分けて得られる．
-式\eqref{eq:ry-definition}の実行列表示において$c=\cos(\theta/2)$，
-$s=\sin(\theta/2)$とおけば，
+後で用いる$y$軸回りの回転ゲートを
 \[
- R_y(\theta)^\dagger R_y(\theta)
- =\begin{pmatrix}c&s\\-s&c\end{pmatrix}
-  \begin{pmatrix}c&-s\\s&c\end{pmatrix}
- =\begin{pmatrix}c^2+s^2&0\\0&c^2+s^2\end{pmatrix}=I
+  R_y(\theta)\coloneq
+  \begin{bmatrix}
+    \cos(\theta/2)&-\sin(\theta/2)\\
+    \sin(\theta/2)& \cos(\theta/2)
+  \end{bmatrix}
 \]
-であるから，$R_y(\theta)$もユニタリ写像である．
-したがって
+と定める．このとき，
 \begin{equation}
   R_y(\theta)\ket{0}
-  =\cos\frac{\theta}{2}\ket{0}
-   +\sin\frac{\theta}{2}\ket{1}
+  =\cos(\theta/2)\ket{0}+\sin(\theta/2)\ket{1}
   \label{eq:ry-on-zero}
 \end{equation}
-である．
+が成り立つ．
 
 \subsection{テンソル積と複合系}
 
 二つの量子ビットを同時に扱うには，二つのベクトル空間を組み合わせる必要がある．
-この組合せに使う演算がテンソル積である．
-まず，資料\cite[73--75頁]{tsukano2023}に従い，
-行列のテンソル積をブロック行列として定義する．
+この組合せに使う演算が\textbf{テンソル積}である．
 
 \begin{defi}[行列のテンソル積]
-$m\times n$行列$A=(a_{ij})$と$r\times s$行列$B$に対し，
+$A=(a_{ij})\in\mathbb{C}^{m\times n}$，$B\in\mathbb{C}^{r\times s}$に対し
 \begin{equation}
  A\otimes B
  :=
- \begin{pmatrix}
+ \begin{bmatrix}
   a_{11}B & a_{12}B & \cdots & a_{1n}B\\
   a_{21}B & a_{22}B & \cdots & a_{2n}B\\
   \vdots  & \vdots  & \ddots & \vdots\\
   a_{m1}B & a_{m2}B & \cdots & a_{mn}B
- \end{pmatrix}
+ \end{bmatrix}
  \label{eq:matrix-tensor-product-definition}
 \end{equation}
 を$A$と$B$のテンソル積という．これは$mr\times ns$行列である．
 \end{defi}
 
-列ベクトル$v=(v_1,\ldots,v_m)^{\mathsf T}$と
-$w=(w_1,\ldots,w_r)^{\mathsf T}$も行列とみなせるため，
-式\eqref{eq:matrix-tensor-product-definition}から
+\begin{theo}[テンソル積の性質]
+$m,n,r,s,p,t,u,v$を正の整数とし，
+\[
+\begin{gathered}
+  A,A'\in\mathbb{C}^{m\times n},\qquad
+  B,B'\in\mathbb{C}^{r\times s}, \qquad
+  C\in\mathbb{C}^{n\times p},\qquad
+  D\in\mathbb{C}^{s\times t},\qquad
+  E\in\mathbb{C}^{u\times v}
+\end{gathered}
+\]
+とする．また，
+$\ket{x},\ket{x'}\in\mathbb{C}^{n}$，
+$\ket{y},\ket{y'}\in\mathbb{C}^{s}$とする．
+このとき，次が成り立つ．
+
 \begin{equation}
- v\otimes w
- =
- \begin{pmatrix}
-  v_1w\\v_2w\\\vdots\\v_mw
- \end{pmatrix}
- \in\mathbb C^{mr}
- \label{eq:vector-tensor-product-coordinate}
+  \begin{aligned}
+    (A+A')\otimes B&=A\otimes B+A'\otimes B,\\
+    A\otimes(B+B')&=A\otimes B+A\otimes B'.
+  \end{aligned}
 \end{equation}
-となる．つまり，各成分$v_i$をベクトル$w$全体に掛け，
-その結果を上から順に並べる．
+\begin{equation}
+  (A\otimes B)\otimes E=A\otimes(B\otimes E).
+\end{equation}
+\begin{equation}
+  (A\otimes B)(C\otimes D)=(AC)\otimes(BD).
+\end{equation}
+\begin{equation}
+  (A\otimes B)^\dagger=A^\dagger\otimes B^\dagger.
+\end{equation}
+\end{theo}
+\begin{proof}
+$B=(b_{k\ell})$，$B'=(b'_{k\ell})$とおく．
+行と列をそれぞれ組$(i,k)$，$(j,\ell)$で表すと，
+テンソル積の定義から
+\[
+  (A\otimes B)_{(i,k),(j,\ell)}=a_{ij}b_{k\ell}
+\]
+である．各成分は複素数なので，分配律が成り立ち次のように計算できる．
+\begin{align*}
+  \bigl((A+A')\otimes B\bigr)_{(i,k),(j,\ell)}
+    &=(a_{ij}+a'_{ij})b_{k\ell}\\
+    &=a_{ij}b_{k\ell}+a'_{ij}b_{k\ell}\qquad (\because \text{分配律})\\
+    &=\bigl(A\otimes B+A'\otimes B\bigr)_{(i,k),(j,\ell)},\\
+  \bigl(A\otimes(B+B')\bigr)_{(i,k),(j,\ell)}
+    &=a_{ij}(b_{k\ell}+b'_{k\ell})\\
+    &=a_{ij}b_{k\ell}+a_{ij}b'_{k\ell}\qquad (\because \text{分配律})\\
+    &=\bigl(A\otimes B+A\otimes B'\bigr)_{(i,k),(j,\ell)}
+\end{align*}
+となる．
 
-% \begin{defi}[有限次元ベクトル空間のテンソル積]
-% 複素ベクトル空間$V,W$の基底を，それぞれ
-% $\{e_i\}_{i=1}^{m}$，$\{f_j\}_{j=1}^{r}$とする．
-% $V\otimes W$を，記号$e_i\otimes f_j$を基底にもつベクトル空間とする．
-% また，$v=\sum_i a_ie_i$，$w=\sum_j b_jf_j$に対して
-% \begin{equation}
-%  v\otimes w
-%  :=\sum_{i=1}^{m}\sum_{j=1}^{r}a_ib_j(e_i\otimes f_j)
-%  \label{eq:vector-space-tensor-product-definition}
-% \end{equation}
-% と定める．
-% \end{defi}
+$E=(e_{ab})$とおく．両辺の$(i,k,a)$行$(j,\ell,b)$列の成分を比べると，
+\begin{align*}
+  \bigl((A\otimes B)\otimes E\bigr)_{(i,k,a),(j,\ell,b)}
+    &=(a_{ij}b_{k\ell})e_{ab}\\
+    &=a_{ij}(b_{k\ell}e_{ab})\qquad (\because \text{結合律})\\
+    &=\bigl(A\otimes(B\otimes E)\bigr)_{(i,k,a),(j,\ell,b)}
+\end{align*}
+である．
 
-% この定義は，座標を選んだときの式\eqref{eq:vector-tensor-product-coordinate}と一致する．
-特に，テンソル積は
-\begin{align}
-  (v_1+v_2)\otimes w&=v_1\otimes w+v_2\otimes w,\\
-  v\otimes(w_1+w_2)&=v\otimes w_1+v\otimes w_2,\\
-  (cv)\otimes w&=v\otimes(cw)=c(v\otimes w)
-\end{align}
-を満たす．
-% $v\otimes w$の形のベクトルを純テンソルという．
-% 一般のテンソルは純テンソルの有限個の和で表される．
-% ただし，一つの純テンソルで表せるとは限らない．
-
-% \begin{prop}
-% ベクトルの族$\{e_i\}_{i=1}^{r}$を$V$の基底，$\{f_j\}_{j=1}^{s}$を$W$の基底とすると，
-% $\{e_i\otimes f_j\}_{i,j}$は$V\otimes W$の基底である．
-% したがって$\dim(V\otimes W)=rs$である．
-% \end{prop}
-% \begin{proof}
-% 定義より，$e_i\otimes f_j$は$V\otimes W$の基底である．
-% その個数は$rs$個であるため，$\dim(V\otimes W)=rs$となる．
-% また，任意のベクトル$v=\sum_i a_ie_i$，$w=\sum_jb_jf_j$について
-% \[
-%   v\otimes w=\sum_{i,j}a_ib_j(e_i\otimes f_j)
-% \]
-% と表される．これは，式\eqref{eq:vector-space-tensor-product-definition}そのものである．
-% \end{proof}
-
-% 内積空間$V,W$に対し，純テンソル上で
-% \begin{equation}
-%   \langle v_1\otimes w_1,v_2\otimes w_2\rangle
-%   :=\langle v_1,v_2\rangle\langle w_1,w_2\rangle
-%   \label{eq:tensor-inner-product}
-% \end{equation}
-% と定め，線形性によって$V\otimes W$全体へ拡張する．
-% もとの基底が正規直交基底なら
-% \[
-%  \langle e_i\otimes f_j,e_k\otimes f_l\rangle
-%  =\delta_{ik}\delta_{jl}
-% \]
-% であるから，積基底も正規直交基底である．
-
-% \begin{defi}[線形写像のテンソル積]
-% 線形写像$A:V\to V'$，$B:W\to W'$に対し，
-% $(A\otimes B)(v\otimes w)=Av\otimes Bw$を満たす線形写像を
-% $A\otimes B$と定める．
-% \end{defi}
-
-% \begin{prop}
-% 写像の定義域と値域が適合するとき
-% \begin{align}
-%  (A\otimes B)(C\otimes D)&=AC\otimes BD,\label{eq:tensor-product-composition}\\
-%  (A\otimes B)^\dagger&=A^\dagger\otimes B^\dagger
-%  \label{eq:tensor-product-adjoint}
-% \end{align}
-% が成り立つ．したがって，$A,B$がユニタリなら$A\otimes B$もユニタリである．
-% これらは，行列のテンソル積の基本的な性質である
-% \cite[75頁，定理2.8]{tsukano2023}．
-% \end{prop}
-% \begin{proof}
-% 純テンソル$v\otimes w$に作用させると
-% \[
-%  (A\otimes B)(C\otimes D)(v\otimes w)
-%  =ACv\otimes BDw=(AC\otimes BD)(v\otimes w)
-% \]
-% である．純テンソルが空間を生成するため式\eqref{eq:tensor-product-composition}が従う．
-% また純テンソルについて
-% \begin{align*}
-%  \langle v'\otimes w',(A\otimes B)(v\otimes w)\rangle
-%  &=\langle v',Av\rangle\langle w',Bw\rangle\\
-%  &=\langle A^\dagger v',v\rangle\langle B^\dagger w',w\rangle\\
-%  &=\langle(A^\dagger\otimes B^\dagger)(v'\otimes w'),v\otimes w\rangle
-% \end{align*}
-% であり，線形性から式\eqref{eq:tensor-product-adjoint}を得る．
-% 写像$A,B$がユニタリなら両式より
-% $(A\otimes B)^\dagger(A\otimes B)=I\otimes I$である．
-% \end{proof}
-
+$C=(c_{jh})$，$D=(d_{\ell q})$とおくと，
+行列積の定義より
+\begin{align*}
+  \bigl((A\otimes B)(C\otimes D)\bigr)_{(i,k),(h,q)}
+    &=\sum_{j=1}^{n}\sum_{\ell=1}^{s}
+      a_{ij}b_{k\ell}c_{jh}d_{\ell q}\\
+    &=\left(\sum_{j=1}^{n}a_{ij}c_{jh}\right)
+      \left(\sum_{\ell=1}^{s}b_{k\ell}d_{\ell q}\right)\\
+    &=(AC)_{ih}(BD)_{kq}\\
+    &=\bigl((AC)\otimes(BD)\bigr)_{(i,k),(h,q)}
+\end{align*}
+となる．最後に，共役転置の定義から
+\begin{align*}
+  \bigl((A\otimes B)^\dagger\bigr)_{(j,\ell),(i,k)}
+    &=\overline{a_{ij}b_{k\ell}}\\
+    &=\overline{a_{ij}}\,\overline{b_{k\ell}}\\
+    &=(A^\dagger)_{ji}(B^\dagger)_{\ell k}\\
+    &=\bigl(A^\dagger\otimes B^\dagger\bigr)_{(j,\ell),(i,k)}
+\end{align*}
+である．それぞれ対応する成分が一致するので，定理の各等式が従う．
+\end{proof}
 複数の量子系を合わせたものを複合量子系という．
 複合量子系の状態空間は，各量子系の状態空間のテンソル積で表す．
 $\ket{i}\otimes\ket{j}$のことを省略して$\ket{ij}$と書く．
@@ -220,8 +167,7 @@ $\ket{x_{n-1}\cdots x_0}$を整数$\sum_{j=0}^{n-1}2^jx_j$に対応させる．
 \subsection{複数量子ビットに作用するゲート}
 
 \begin{defi}[制御ユニタリ]
-一方の量子ビットを制御量子ビットとする．
-また，状態空間$\mathcal K$で表される側を標的とする．このとき，
+一方を制御量子ビット，もう一方を標的とする．標的の状態を表すベクトル空間を$\mathcal K$とする．このとき，
 \begin{equation}
  C(U)=\ket{0}\bra{0}\otimes I_{\mathcal K}
       +\ket{1}\bra{1}\otimes U

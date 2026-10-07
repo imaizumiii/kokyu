@@ -7,7 +7,7 @@ HHLアルゴリズムは，量子位相推定，固有値に応じた制御回�
 収まるように調整されているものとする．この調整をスケーリングという．
 また，$e^{\mathrm{i}At}$を量子回路として実行できるものとする．
 各処理では，第\ref{sec:quantum-phase-estimation}節の位相推定と逆量子位相推定，
-第\ref{sec:controlled-rotation}節の制御回転を用いる．
+本節で定義する制御回転を用いる．
 
 \subsection{レジスタの準備}
 \label{subsec:hhl-register-preparation}
@@ -75,7 +75,9 @@ HHLアルゴリズムでは，次の三つのレジスタを使用する．
 \begin{align*}
   0<C\leq\min_j|\lambda_j|
 \end{align*}
-となるように選ぶ．制御回転の作用は
+となるように選ぶ．また，位相推定で得る各近似値について
+$|C/\widetilde{\lambda}_j|\leq1$を満たすものとする．
+制御回転の作用は
 \begin{equation}
   \ket{\widetilde{\lambda}_j}\ket{0}_{a}
   \longmapsto
@@ -87,8 +89,8 @@ HHLアルゴリズムでは，次の三つのレジスタを使用する．
   \label{eq:hhl-controlled-rotation}
 \end{equation}
 である．
-ここでは第\ref{sec:controlled-rotation}節の関数を
-$g(\widetilde\lambda_j)=C/\widetilde\lambda_j$としている．
+式\eqref{eq:ry-on-zero}より，この変換は補助量子ビットに
+$R_y\!\left(2\arcsin(C/\widetilde{\lambda}_j)\right)$を作用させることで実現できる．
 これにより，補助量子ビットが$\ket{1}_{a}$である成分の振幅に
 $1/\widetilde{\lambda}_j$が掛けられる．
 
