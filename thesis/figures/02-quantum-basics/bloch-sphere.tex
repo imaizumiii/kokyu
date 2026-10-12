@@ -1,0 +1,43 @@
+\documentclass[tikz,border=12pt]{standalone}
+\usepackage{braket}
+\usepackage{tikz-3dplot}
+
+\tdplotsetmaincoords{70}{115}
+
+\begin{document}
+\begin{tikzpicture}[tdplot_main_coords,scale=2.7,>=stealth,font=\small]
+  \def\polarAngle{55}
+  \def\azimuthAngle{75}
+
+  % Sphere outline and the equatorial reference circle.
+  \draw[tdplot_screen_coords,gray!75,line width=0.65pt] (0,0) circle (1);
+  \tdplotdrawarc[densely dashed,gray!65,line width=0.55pt]
+    {(0,0,0)}{1}{0}{360}{}{}
+
+  % Cartesian axes and the computational basis states.
+  \draw[->,gray!85,line width=0.65pt] (0,0,0) -- (1.27,0,0)
+    node[below] {$x$};
+  \draw[->,gray!85,line width=0.65pt] (0,0,0) -- (0,1.27,0)
+    node[right] {$y$};
+  \draw[->,gray!85,line width=0.65pt] (0,0,-1.16) -- (0,0,1.25)
+    node[above] {$z$};
+  \node[left] at (0,0,1) {$\ket{0}$};
+  \node[left] at (0,0,-1) {$\ket{1}$};
+
+  % A general pure state and its projection onto the xy plane.
+  \tdplotsetcoord{P}{1}{\polarAngle}{\azimuthAngle}
+  \draw[densely dashed,gray!75] (P) -- (Pxy);
+  \draw[densely dashed,gray!75] (0,0,0) -- (Pxy);
+  \draw[->,line width=1.15pt] (0,0,0) -- (P)
+    node[above right] {$\ket{\psi}$};
+
+  % Azimuth phi is measured in the xy plane from +x.
+  \tdplotdrawarc[->,line width=0.7pt]
+    {(0,0,0)}{0.46}{0}{\azimuthAngle}{anchor=north}{$\phi$}
+
+  % Polar angle theta is measured from +z toward the state vector.
+  \tdplotsetthetaplanecoords{\azimuthAngle}
+  \tdplotdrawarc[tdplot_rotated_coords,->,line width=0.7pt]
+    {(0,0,0)}{0.58}{0}{\polarAngle}{anchor=west,xshift=3pt}{$\theta$}
+\end{tikzpicture}
+\end{document}

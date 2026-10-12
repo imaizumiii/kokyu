@@ -1,54 +1,68 @@
-\section{量子もつれと複合系の測定}
-\label{sec:entanglement-measurement}
+\section{量子回路}
+\label{sec:quantum-circuits}
+\input{figures/02-quantum-basics/gate-table-circuits}
 
-二つの量子系$A,B$を合わせた状態空間を
-$\mathcal H_A\otimes\mathcal H_B$と書く．
-二つの状態を単純に並べて表せる場合と，表せない場合を次のように分ける．
+\subsection{量子回路の書き方}
 
-\begin{defi}[積状態と量子もつれ]
-状態空間$\mathcal H_A\otimes\mathcal H_B$の純粋状態$\ket{\Psi}$が
-$\ket{u}\otimes\ket{v}$と表されるとき，$\ket{\Psi}$を積状態という．
-積状態として表せない純粋状態をもつれ状態という．
-\end{defi}
+古典コンピュータの計算は，論理ゲートを組み合わせた回路として表せる．
+量子コンピュータでも同様に，量子ゲートを用いた量子回路として計算を表すことができる．
+回路の横線は量子ビットを表し，左から右へ向かう順にゲートが作用する．
+四角い箱はゲートを表す．
 
-\begin{prop}
-ベル状態$\ket{\Phi^+}=(\ket{00}+\ket{11})/\sqrt2$はもつれ状態である．
-\end{prop}
-\begin{proof}
-積状態であると仮定し，
-\[
- \ket{\Phi^+}=(a\ket0+b\ket1)(c\ket0+d\ket1)
- =ac\ket{00}+ad\ket{01}+bc\ket{10}+bd\ket{11}
-\]
-と書く．係数比較より$ac=bd=1/\sqrt2$かつ$ad=bc=0$である．
-条件$ac\ne0$より$a,c\ne0$である．等式$ad=0$から$d=0$となるが，
-これは$bd=1/\sqrt2$に反する．よって積状態ではない．
-\end{proof}
+\subsection{1量子ビットの量子回路}
 
-次に，第1の量子系だけを測定する場合を考える．
-測定に使う射影を$P_m$とすると，全体に対する演算は$P_m\otimes I$である．
-状態を
+代表的な1量子ビットゲートを表\ref{tab:single-qubit-gates}に示す．
+行列表記は計算基底$\{\ket{0},\ket{1}\}$に関するものである．
+
+\begin{table}[H]
+    \centering
+    \caption{代表的な1量子ビットゲート}
+    \label{tab:single-qubit-gates}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.35}
+    \begin{tabular}{|>{\centering\arraybackslash}m{17mm}|>{\raggedright\arraybackslash}m{39mm}|>{\centering\arraybackslash}m{32mm}|>{\centering\arraybackslash}m{54mm}|}
+        \hline
+        名前            & 意味                        & 回路                            & 行列表記                                                                                        \\ \hline
+        $X$ゲート        & $\ket{0}$と$\ket{1}$を交換する  & \GateTableSingle{X}           & $\begin{bmatrix}0&1\\1&0\end{bmatrix}$                                                      \\ \hline
+        $Y$ゲート        & 反転に$\pm\mathrm{i}$の位相を付ける & \GateTableSingle{Y}           & $\begin{bmatrix}0&-\mathrm{i}\\\mathrm{i}&0\end{bmatrix}$                                   \\ \hline
+        $Z$ゲート        & $\ket{1}$の位相を反転する         & \GateTableSingle{Z}           & $\begin{bmatrix}1&0\\0&-1\end{bmatrix}$                                                     \\ \hline
+        $H$ゲート        & 計算基底を重ね合わせに写す             & \GateTableSingle{H}           & $\dfrac{1}{\sqrt{2}}\begin{bmatrix}1&1\\1&-1\end{bmatrix}$                                  \\ \hline
+        $S$ゲート        & $\ket{1}$の位相を$\pi/2$進める   & \GateTableSingle{S}           & $\begin{bmatrix}1&0\\0&\mathrm{i}\end{bmatrix}$                                             \\ \hline
+        $T$ゲート        & $\ket{1}$の位相を$\pi/4$進める   & \GateTableSingle{T}           & $\begin{bmatrix}1&0\\0&e^{\mathrm{i}\pi/4}\end{bmatrix}$                         \\ \hline
+        $R_y(\theta)$ & ブロッホ球の$y$軸周りに$\theta$回転する & \GateTableSingle{R_y(\theta)} & $\begin{bmatrix}\cos(\theta/2)&-\sin(\theta/2)\\\sin(\theta/2)&\cos(\theta/2)\end{bmatrix}$ \\ \hline
+    \end{tabular}
+\end{table}
+
+例えば，$H\ket{0}=\ket{+}=(\ket{0}+\ket{1})/\sqrt{2}$である．
+また，$R_y(\theta)=e^{-\mathrm{i}\theta Y/2}$は
 \begin{equation}
- \ket{\Psi}=\sum_{i,j}\alpha_{ij}\ket{i}_A\ket{j}_B
- \label{eq:general-bipartite-state}
+    R_y(\theta)\ket{0}
+    =\cos\frac{\theta}{2}\ket{0}+\sin\frac{\theta}{2}\ket{1}
+    \label{eq:ry-on-zero}
 \end{equation}
-とし，第1の量子系を計算基底で測定する．結果$i$に対応する射影は
-$P_i=\ket{i}\bra{i}\otimes I$であり，
-\[
- P_i\ket{\Psi}=\sum_j\alpha_{ij}\ket{i}\ket{j}
-\]
-となる．計算基底どうしが直交しているので，結果$i$の確率は
-\begin{equation}
- p(i)=\sum_j|\alpha_{ij}|^2
- \label{eq:partial-measurement-probability}
-\end{equation}
-である．確率が$p(i)>0$のとき，測定後状態は
-\begin{equation}
- \frac{1}{\sqrt{p(i)}}\sum_j\alpha_{ij}\ket{i}\ket{j}
- \label{eq:partial-post-measurement-state}
-\end{equation}
-となる．
+を満たす．この作用は第4章の制御回転で用いる．
 
-ベル状態では第1量子ビットの測定結果$0,1$はともに確率$1/2$である．
-結果が$0$なら全体系は$\ket{00}$，結果が$1$なら$\ket{11}$となる．
-したがって，第1量子ビットの測定結果を知ると，第2量子ビットの結果も確定する．
+\subsection{特別な記法のある量子回路}
+
+複数量子ビットに作用する代表的なゲートを表\ref{tab:special-circuit-gates}に示す．
+回路の線は上から下の順にテンソル積の因子と対応する．
+制御ゲートの黒丸は制御量子ビットを表し，$\ket{1}$のときに標的への演算が作用する．
+
+\begin{table}[H]
+    \centering
+    \caption{特別な回路記号を用いるゲート}
+    \label{tab:special-circuit-gates}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabular}{|>{\centering\arraybackslash}m{20mm}|>{\raggedright\arraybackslash}m{40mm}|>{\centering\arraybackslash}m{31mm}|>{\centering\arraybackslash}m{51mm}|}
+        \hline
+        名前              & 意味                               & 回路                      & ディラック表記                                                           \\ \hline
+        制御$U$           & 上の量子ビットが$\ket{1}$のとき，下に$U$を作用させる & \GateTableControlled{U} & $\ket{0}\bra{0}\otimes I+\ket{1}\bra{1}\otimes U$                 \\ \hline
+        CNOT            & 上が$\ket{1}$のとき，下の量子ビットを反転する      & \GateTableCNOT          & $\ket{0}\bra{0}\otimes I+\ket{1}\bra{1}\otimes X$                 \\ \hline
+        制御$Z$           & 両方が$\ket{1}$の成分の符号を反転する          & \GateTableControlled{Z} & $\ket{0}\bra{0}\otimes I+\ket{1}\bra{1}\otimes Z$                 \\ \hline
+        SWAP            & 二つの量子ビットの状態を交換する                 & \GateTableSWAP          & $\displaystyle\sum_{a,b\in\{0,1\}}\ket{ba}\bra{ab}$               \\ \hline
+        Toffoli (CCNOT) & 上の2量子ビットがともに$\ket{1}$のとき，下を反転する  & \GateTableToffoli       & $\displaystyle\sum_{a,b\in\{0,1\}}\ket{ab}\bra{ab}\otimes X^{ab}$ \\ \hline
+    \end{tabular}
+\end{table}
+
+Toffoliゲートの表記では，$a,b\in\{0,1\}$とし，$X^0=I$，$X^1=X$である．

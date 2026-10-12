@@ -3,28 +3,29 @@
 
 \subsection{ユニタリ変換と1量子ビットゲート}
 
-量子状態に線形写像を作用させることにより，量子状態を変化させることができる．ただし，変化後の量子状態も長さが$1$に規格化されていなければならない．したがって，量子状態の変化はユニタリ写像で表される．
+量子状態に線形写像を作用させることにより，量子状態を変化させることができる．ただし，変化後の量子状態も長さが$1$に規格化されていなければならない．したがって，量子状態の変化はユニタリ写像で表される．\\
+量子状態に作用させるユニタリ写像のことを\textbf{量子ゲート}という．
 
 \begin{prop}
-作用前の量子状態の長さが$1$であるとき，ユニタリ写像$U$を作用させた後の量子状態の長さも$1$である．
+  作用前の量子状態の長さが$1$であるとき，ユニタリ写像$U$を作用させた後の量子状態の長さも$1$である．
 \end{prop}
 \begin{proof}
-長さが$1$に規格化された任意の量子状態$\ket{\psi}$について，任意のユニタリ写像$U$を作用させると，作用後の量子状態は$U\ket{\psi}$である．そのノルムの二乗は
-\[
-  \lVert U\ket{\psi}\rVert^2
-  =\bra{\psi}U^\dagger U\ket{\psi}
-  =\braket{\psi|\psi} = 1
-\]
-である．
-また，$U^\dagger U=UU^\dagger=I$であるので，$U^\dagger$は$U$の逆写像である．
+  長さが$1$に規格化された任意の量子状態$\ket{\psi}$について，任意のユニタリ写像$U$を作用させると，作用後の量子状態は$U\ket{\psi}$である．そのノルムの二乗は
+  \[
+    \lVert U\ket{\psi}\rVert^2
+    =\bra{\psi}U^\dagger U\ket{\psi}
+    =\braket{\psi|\psi} = 1
+  \]
+  である．
+  また，$U^\dagger U=UU^\dagger=I$であるので，$U^\dagger$は$U$の逆写像である．
 \end{proof}
 
 基本的な1量子ビットに対するユニタリ写像を
 \begin{align*}
-  X&\coloneq\begin{bmatrix}0&1\\1&0\end{bmatrix},&
-  Y&\coloneq\begin{bmatrix}0&-\mathrm{i}\\\mathrm{i}&0\end{bmatrix},&
-  Z&\coloneq\begin{bmatrix}1&0\\0&-1\end{bmatrix},\\
-  H&\coloneq\frac1{\sqrt2}\begin{bmatrix}1&1\\1&-1\end{bmatrix}
+  X & \coloneq\begin{bmatrix}0&1\\1&0\end{bmatrix},                    &
+  Y & \coloneq\begin{bmatrix}0&-\mathrm{i}\\\mathrm{i}&0\end{bmatrix}, &
+  Z & \coloneq\begin{bmatrix}1&0\\0&-1\end{bmatrix},                     \\
+  H & \coloneq\frac1{\sqrt2}\begin{bmatrix}1&1\\1&-1\end{bmatrix}
 \end{align*}
 で定める．特に，アダマールゲートと呼ばれる$H$を$\ket{0}, \ket{1}$に作用させたものを$\ket{+}, \ket{-}$と書き，
 \begin{equation}
@@ -35,169 +36,259 @@
 \end{equation}
 と定める．これらは互いに直交し，$\{\ket{+},\ket{-}\}$は正規直交基底をなす．$\{\ket{+},\ket{-}\}$を\textbf{アダマール基底}という．
 
-後で用いる$y$軸回りの回転ゲートを
-\[
-  R_y(\theta)\coloneq
-  \begin{bmatrix}
-    \cos(\theta/2)&-\sin(\theta/2)\\
-    \sin(\theta/2)& \cos(\theta/2)
-  \end{bmatrix}
-\]
-と定める．このとき，
-\begin{equation}
-  R_y(\theta)\ket{0}
-  =\cos(\theta/2)\ket{0}+\sin(\theta/2)\ket{1}
-  \label{eq:ry-on-zero}
-\end{equation}
-が成り立つ．
-
-\subsection{テンソル積と複合系}
+\subsection{テンソル積}
 
 二つの量子ビットを同時に扱うには，二つのベクトル空間を組み合わせる必要がある．
 この組合せに使う演算が\textbf{テンソル積}である．
 
 \begin{defi}[行列のテンソル積]
-$A=(a_{ij})\in\mathbb{C}^{m\times n}$，$B\in\mathbb{C}^{r\times s}$に対し
-\begin{equation}
- A\otimes B
- :=
- \begin{bmatrix}
-  a_{11}B & a_{12}B & \cdots & a_{1n}B\\
-  a_{21}B & a_{22}B & \cdots & a_{2n}B\\
-  \vdots  & \vdots  & \ddots & \vdots\\
-  a_{m1}B & a_{m2}B & \cdots & a_{mn}B
- \end{bmatrix}
- \label{eq:matrix-tensor-product-definition}
-\end{equation}
-を$A$と$B$のテンソル積という．これは$mr\times ns$行列である．
+  $A=(a_{ij})\in\mathbb{C}^{m\times n}$，$B\in\mathbb{C}^{r\times s}$に対し
+  \begin{equation}
+    A\otimes B
+    :=
+    \begin{bmatrix}
+      a_{11}B & a_{12}B & \cdots & a_{1n}B \\
+      a_{21}B & a_{22}B & \cdots & a_{2n}B \\
+      \vdots  & \vdots  & \ddots & \vdots  \\
+      a_{m1}B & a_{m2}B & \cdots & a_{mn}B
+    \end{bmatrix}
+    \label{eq:matrix-tensor-product-definition}
+  \end{equation}
+  を$A$と$B$のテンソル積という．これは$mr\times ns$行列である．
 \end{defi}
 
 \begin{theo}[テンソル積の性質]
-$m,n,r,s,p,t,u,v$を正の整数とし，
-\[
-\begin{gathered}
-  A,A'\in\mathbb{C}^{m\times n},\qquad
-  B,B'\in\mathbb{C}^{r\times s}, \qquad
-  C\in\mathbb{C}^{n\times p},\qquad
-  D\in\mathbb{C}^{s\times t},\qquad
-  E\in\mathbb{C}^{u\times v}
-\end{gathered}
-\]
-とする．また，
-$\ket{x},\ket{x'}\in\mathbb{C}^{n}$，
-$\ket{y},\ket{y'}\in\mathbb{C}^{s}$とする．
-このとき，次が成り立つ．
+  \label{theo:matrix-tensor-product-properties}
+  $m,n,r,s,p,t,u,v$を任意の正の整数とし，
+  \[
+    \begin{gathered}
+      A,A'\in\mathbb{C}^{m\times n},\qquad
+      B,B'\in\mathbb{C}^{r\times s}, \qquad
+      C\in\mathbb{C}^{n\times p},\qquad
+      D\in\mathbb{C}^{s\times t},\qquad
+      E\in\mathbb{C}^{u\times v}
+    \end{gathered}
+  \]
+  とする．また，任意の複素数$\lambda\in\mathbb{C}$とする．
+  このとき，次が成り立つ．
 
-\begin{equation}
-  \begin{aligned}
-    (A+A')\otimes B&=A\otimes B+A'\otimes B,\\
-    A\otimes(B+B')&=A\otimes B+A\otimes B'.
-  \end{aligned}
-\end{equation}
-\begin{equation}
-  (A\otimes B)\otimes E=A\otimes(B\otimes E).
-\end{equation}
-\begin{equation}
-  (A\otimes B)(C\otimes D)=(AC)\otimes(BD).
-\end{equation}
-\begin{equation}
-  (A\otimes B)^\dagger=A^\dagger\otimes B^\dagger.
-\end{equation}
+  \begin{equation}
+    \begin{aligned}
+      (A+A')\otimes B & =A\otimes B+A'\otimes B, \\
+      A\otimes(B+B')  & =A\otimes B+A\otimes B'.
+    \end{aligned}
+  \end{equation}
+  \begin{equation}
+    (\lambda A)\otimes B
+    =\lambda(A\otimes B)
+    =A\otimes(\lambda B).
+  \end{equation}
+  \begin{equation}
+    (A\otimes B)\otimes E=A\otimes(B\otimes E).
+    \label{eq:tensor-product-associativity}
+  \end{equation}
+  \begin{equation}
+    (A\otimes B)(C\otimes D)=(AC)\otimes(BD).
+    \label{eq:tensor-product-mixed-product}
+  \end{equation}
+  \begin{equation}
+    (A\otimes B)^\dagger=A^\dagger\otimes B^\dagger.
+  \end{equation}
 \end{theo}
 \begin{proof}
-$B=(b_{k\ell})$，$B'=(b'_{k\ell})$とおく．
-行と列をそれぞれ組$(i,k)$，$(j,\ell)$で表すと，
-テンソル積の定義から
-\[
-  (A\otimes B)_{(i,k),(j,\ell)}=a_{ij}b_{k\ell}
-\]
-である．各成分は複素数なので，分配律が成り立ち次のように計算できる．
-\begin{align*}
-  \bigl((A+A')\otimes B\bigr)_{(i,k),(j,\ell)}
-    &=(a_{ij}+a'_{ij})b_{k\ell}\\
-    &=a_{ij}b_{k\ell}+a'_{ij}b_{k\ell}\qquad (\because \text{分配律})\\
-    &=\bigl(A\otimes B+A'\otimes B\bigr)_{(i,k),(j,\ell)},\\
-  \bigl(A\otimes(B+B')\bigr)_{(i,k),(j,\ell)}
-    &=a_{ij}(b_{k\ell}+b'_{k\ell})\\
-    &=a_{ij}b_{k\ell}+a_{ij}b'_{k\ell}\qquad (\because \text{分配律})\\
-    &=\bigl(A\otimes B+A\otimes B'\bigr)_{(i,k),(j,\ell)}
-\end{align*}
-となる．
+  $A=\Big[a_{ij}\Big]$，$A'=\Big[a'_{ij}\Big]$，$B=\Big[b_{k\ell}\Big]$，$B'=\Big[b'_{k\ell}\Big]$と書く．
+  行と列をそれぞれ組$(i,k)$，$(j,\ell)$で表すと，
+  テンソル積の定義から
+  \[
+    A\otimes B=\Bigl[a_{ij}b_{k\ell}\Bigr]_{(i,k),(j,\ell)}
+  \]
+  である．各成分は複素数なので，分配律が成り立ち次のように計算できる．
+  \begin{align*}
+    (A+A')\otimes B
+     & = \Big[ a_{ij} + a'_{ij} \Big] \otimes \Big[ b_{k\ell} \Big]  \\
+     & =\Big[ (a_{ij}+a'_{ij})b_{k\ell} \Big]                        \\
+     & = \Big[ a_{ij}b_{k\ell}+a'_{ij}b_{k\ell} \Big]                \\
+     & = \Big[ a_{ij}b_{k\ell} \Big] + \Big[ a'_{ij}b_{k\ell} \Big]  \\
+     & = A\otimes B + A'\otimes B                                    \\
+    A\otimes(B+B')
+     & = \Big[ a_{ij} \Big] \otimes \Big[ b_{k\ell}+b'_{k\ell} \Big] \\
+     & = \Big[ a_{ij}(b_{k\ell}+b'_{k\ell}) \Big]                    \\
+     & = \Bigl[a_{ij}b_{k\ell}+a_{ij}b'_{k\ell}\Bigr]                \\
+     & = \Bigl[a_{ij}b_{k\ell}\Bigr]+\Bigl[a_{ij}b'_{k\ell}\Bigr]    \\
+     & = A\otimes B+A\otimes B'.
+  \end{align*}
+  となる．
 
-$E=(e_{ab})$とおく．両辺の$(i,k,a)$行$(j,\ell,b)$列の成分を比べると，
-\begin{align*}
-  \bigl((A\otimes B)\otimes E\bigr)_{(i,k,a),(j,\ell,b)}
-    &=(a_{ij}b_{k\ell})e_{ab}\\
-    &=a_{ij}(b_{k\ell}e_{ab})\qquad (\because \text{結合律})\\
-    &=\bigl(A\otimes(B\otimes E)\bigr)_{(i,k,a),(j,\ell,b)}
-\end{align*}
-である．
+  同じ$(i,k)$行$(j,\ell)$列の成分を用いると，
+  \begin{align*}
+    (\lambda A)\otimes B
+     & =\Bigl[\lambda a_{ij}\Bigr]_{i,j}\otimes\Bigl[b_{k\ell}\Bigr]_{k,\ell} \\
+     & =\Bigl[(\lambda a_{ij})b_{k\ell}\Bigr]_{(i,k),(j,\ell)}                \\
+     & =\Bigl[\lambda(a_{ij}b_{k\ell})\Bigr]_{(i,k),(j,\ell)}                 \\
+     & =\lambda(A\otimes B),                                                  \\
+    A\otimes(\lambda B)
+     & =\Bigl[a_{ij}\Bigr]_{i,j}\otimes\Bigl[\lambda b_{k\ell}\Bigr]_{k,\ell} \\
+     & =\Bigl[a_{ij}(\lambda b_{k\ell})\Bigr]_{(i,k),(j,\ell)}                \\
+     & =\Bigl[\lambda(a_{ij}b_{k\ell})\Bigr]_{(i,k),(j,\ell)}                 \\
+     & =\lambda(A\otimes B).
+  \end{align*}
+  よって，スカラー倍に関する等式も成り立つ．
 
-$C=(c_{jh})$，$D=(d_{\ell q})$とおくと，
-行列積の定義より
-\begin{align*}
-  \bigl((A\otimes B)(C\otimes D)\bigr)_{(i,k),(h,q)}
-    &=\sum_{j=1}^{n}\sum_{\ell=1}^{s}
-      a_{ij}b_{k\ell}c_{jh}d_{\ell q}\\
-    &=\left(\sum_{j=1}^{n}a_{ij}c_{jh}\right)
-      \left(\sum_{\ell=1}^{s}b_{k\ell}d_{\ell q}\right)\\
-    &=(AC)_{ih}(BD)_{kq}\\
-    &=\bigl((AC)\otimes(BD)\bigr)_{(i,k),(h,q)}
-\end{align*}
-となる．最後に，共役転置の定義から
-\begin{align*}
-  \bigl((A\otimes B)^\dagger\bigr)_{(j,\ell),(i,k)}
-    &=\overline{a_{ij}b_{k\ell}}\\
-    &=\overline{a_{ij}}\,\overline{b_{k\ell}}\\
-    &=(A^\dagger)_{ji}(B^\dagger)_{\ell k}\\
-    &=\bigl(A^\dagger\otimes B^\dagger\bigr)_{(j,\ell),(i,k)}
-\end{align*}
-である．それぞれ対応する成分が一致するので，定理の各等式が従う．
+  $E=\Big[e_{ab}\Big]$とおく．行を$(i,k,a)$，列を$(j,\ell,b)$で表すと，
+  \begin{align*}
+    (A\otimes B)\otimes E
+     & =\Bigl[a_{ij}b_{k\ell}\Bigr]_{(i,k),(j,\ell)} \otimes \Big[e_{ab}\Big]_{(a,b)}  \\
+     & =\Big[(a_{ij}b_{k\ell})e_{ab}\Big]_{(i,k,a),(j,\ell,b)}                         \\
+     & =\Bigl[a_{ij}(b_{k\ell}e_{ab})\Bigr]_{(i,k,a),(j,\ell,b)}                       \\
+     & = \Bigl[a_{ij}\Bigr]_{i,j} \otimes \Bigl[b_{k\ell}e_{ab}\Bigr]_{(k,a),(\ell,b)} \\
+     & =A\otimes(B\otimes E)
+  \end{align*}
+  となる．
+
+  $C=\Big[c_{jh}\Big]$，$D=\Big[d_{\ell q}\Big]$とおく．
+  行列積の行を$(i,k)$，列を$(h,q)$で表すと，
+  \begin{align*}
+    (A\otimes B)(C\otimes D)
+     & = \Bigl[a_{ij}b_{k\ell}\Bigr]_{(i,k),(j,\ell)} \Bigl[c_{jh}d_{\ell q}\Bigr]_{(j,\ell),(h,q)}                           \\
+     & =\Biggl[\sum_{j=1}^{n}\sum_{\ell=1}^{s}(a_{ij}b_{k\ell})(c_{jh}d_{\ell q})
+    \Biggr]_{(i,k),(h,q)}                                                                                                     \\
+     & =\Biggl[\left(\sum_{j=1}^{n}a_{ij}c_{jh}\right)
+      \left(\sum_{\ell=1}^{s}b_{k\ell}d_{\ell q}\right)
+    \Biggr]_{(i,k),(h,q)}                                                                                                     \\
+     & =\Bigg[ \sum_{j=1}^{n} a_{ij}c_{jh} \Bigg]_{(i,h)} \otimes \Bigg[ \sum_{\ell=1}^{s} b_{k\ell}d_{\ell q} \Bigg]_{(k,q)} \\
+     & =(AC)\otimes(BD)
+  \end{align*}
+  となる．最後に，共役転置後の行を$(j,\ell)$，列を$(i,k)$で表すと，
+  \begin{align*}
+    (A\otimes B)^\dagger
+     & =\Bigl[\overline{a_{ij}b_{k\ell}}\Bigr]_{(j,\ell),(i,k)}              \\
+     & =\Bigl[\overline{a_{ij}}\,\overline{b_{k\ell}}\Bigr]_{(j,\ell),(i,k)} \\
+     & =\Bigl[(A^\dagger)_{ji}(B^\dagger)_{\ell k}\Bigr]_{(j,\ell),(i,k)}    \\
+     & =A^\dagger\otimes B^\dagger
+  \end{align*}
+  となる．これで定理の各等式が示された．
 \end{proof}
-複数の量子系を合わせたものを複合量子系という．
-複合量子系の状態空間は，各量子系の状態空間のテンソル積で表す．
-$\ket{i}\otimes\ket{j}$のことを省略して$\ket{ij}$と書く．
-たとえば2量子ビットの計算基底は
+任意の正の整数$k$に対して，$A$の$k$個の総テンソル積を以下のように表記する．
 \[
-\ket{00},\ket{01},\ket{10},\ket{11}
+  A^{\otimes k} \coloneq A\otimes A\otimes\cdots\otimes A \quad(k\text{個})
 \]
-である．本論文では左側の因子を上位の量子ビットとし，
-$\ket{x_{n-1}\cdots x_0}$を整数$\sum_{j=0}^{n-1}2^jx_j$に対応させる．
-
-\subsection{複数量子ビットに作用するゲート}
-
-\begin{defi}[制御ユニタリ]
-一方を制御量子ビット，もう一方を標的とする．標的の状態を表すベクトル空間を$\mathcal K$とする．このとき，
-\begin{equation}
- C(U)=\ket{0}\bra{0}\otimes I_{\mathcal K}
-      +\ket{1}\bra{1}\otimes U
- \label{eq:controlled-unitary}
-\end{equation}
-を制御$U$演算という．
-\end{defi}
-
-\begin{prop}
-写像$U$がユニタリなら$C(U)$もユニタリである．
-\end{prop}
+また，任意の正の整数$k$に対して，$A_1,\ldots,A_k$という行列があるとき，それらの総テンソル積を以下のように表記する．
+\[
+  \bigotimes_{i=1}^k A_i \coloneq A_1\otimes A_2\otimes\cdots\otimes A_k
+\]
+定理\ref{theo:matrix-tensor-product-properties}の式\eqref{eq:tensor-product-mixed-product}より，以下が成り立つ．
+\begin{theo}
+  $m,k$を正の整数とし，$i=1,\ldots,k$について
+  $A_i,B_i\in\mathbb{C}^{m\times m}$とする．このとき，次が成り立つ．
+  \begin{equation}
+    (A_1\otimes B_1)(A_2\otimes B_2)\cdots(A_k\otimes B_k)
+    = A_1A_2\cdots A_k \otimes B_1B_2\cdots B_k
+  \end{equation}
+  \begin{equation}
+    \Bigg(\bigotimes_{i=1}^k A_i\Bigg) \Bigg(\bigotimes_{i=1}^k B_i\Bigg)
+    =\bigotimes_{i=1}^k (A_i B_i)
+  \end{equation}
+\end{theo}
 \begin{proof}
-射影を$P_0=\ket{0}\bra{0}$，$P_1=\ket{1}\bra{1}$とおくと，
-$P_iP_j=\delta_{ij}P_i$，$P_0+P_1=I$である．よって
-\begin{align*}
- C(U)^\dagger C(U)
- &=(P_0\otimes I+P_1\otimes U^\dagger)
-   (P_0\otimes I+P_1\otimes U)\\
- &=P_0\otimes I+P_1\otimes U^\dagger U
-  =(P_0+P_1)\otimes I=I
-\end{align*}
-である．同様に$C(U)C(U)^\dagger=I$も得られる．
+  それぞれ$k$に対する数学的帰納法で示す．\\
+  まず一つ目の等式について，
+  $k=1$のとき，両辺は$A_1\otimes B_1$より等しい．\\
+  ある正の整数$k$について
+  \[
+    (A_1\otimes B_1)\cdots(A_k\otimes B_k)
+    = A_1\cdots A_k \otimes B_1\cdots B_k
+  \]
+  が成り立つと仮定する．このとき，$k+1$についても成り立つことを示す．
+  帰納法の仮定と式\eqref{eq:tensor-product-mixed-product}を用いると，
+  \begin{align*}
+     & (A_1\otimes B_1)\cdots(A_k\otimes B_k)
+    (A_{k+1}\otimes B_{k+1})                                                                                           \\
+     & \quad=\bigl((A_1\cdots A_k)\otimes(B_1\cdots B_k)\bigr)(A_{k+1}\otimes B_{k+1}) \qquad (\because \text{帰納法の仮定}) \\
+     & \quad=(A_1\cdots A_kA_{k+1})
+    \otimes(B_1\cdots B_kB_{k+1}) \qquad (\because \text{式\eqref{eq:tensor-product-mixed-product}})
+  \end{align*}
+  となる．よって，数学的帰納法により，すべての正の整数$k$について成り立つ．\\
+  二つ目の等式について，式\eqref{eq:tensor-product-associativity}で
+  $k=1$のとき，両辺は$A_1\otimes B_1$より等しい．\\
+  ある正の整数$k$について
+  \[
+    \left(\bigotimes_{i=1}^{k}A_i\right)
+    \left(\bigotimes_{i=1}^{k}B_i\right)
+    =\bigotimes_{i=1}^{k}(A_iB_i)
+  \]
+  が成り立つと仮定する．このとき，$k+1$についても成り立つことを示す．
+  帰納法の仮定と式\eqref{eq:tensor-product-associativity}を用いると，
+  \begin{align*}
+     & \left(\bigotimes_{i=1}^{k+1}A_i\right)
+    \left(\bigotimes_{i=1}^{k+1}B_i\right)                                                    \\
+     & \quad=\left(\left(\bigotimes_{i=1}^{k}A_i\right)
+    \otimes A_{k+1}\right)
+    \left(\left(\bigotimes_{i=1}^{k}B_i\right)
+    \otimes B_{k+1}\right)                                                                    \\
+     & \quad=\left(\left(\bigotimes_{i=1}^{k}A_i\right)
+    \left(\bigotimes_{i=1}^{k}B_i\right)\right)
+    \otimes(A_{k+1}B_{k+1}) \qquad (\because \text{式\eqref{eq:tensor-product-associativity}}) \\
+     & \quad=\left(\bigotimes_{i=1}^{k}(A_iB_i)\right)
+    \otimes(A_{k+1}B_{k+1}) \qquad (\because \text{帰納法の仮定})                                   \\
+     & \quad=\bigotimes_{i=1}^{k+1}(A_iB_i)
+  \end{align*}
+  となる．したがって，数学的帰納法により，すべての正の整数$k$について成り立つ．
 \end{proof}
 
-標的に作用する演算を$U=X$としたものがCNOTゲートである．
-また，制御量子ビットが$\alpha\ket{0}+\beta\ket{1}$であり，
-標的の状態が$\ket{\psi}$であるとする．線形性より
-\begin{equation}
- C(U)(\alpha\ket{0}+\beta\ket{1})\ket{\psi}
- =\alpha\ket{0}\ket{\psi}+\beta\ket{1}U\ket{\psi}
- \label{eq:controlled-unitary-superposition}
-\end{equation}
-となる．この式は位相推定と制御回転で繰り返し用いる．
+\subsection{複合系}
+
+量子状態についてもテンソル積を用いて複合系を表すことができる．
+\begin{defi}[複合系]
+  二つの量子系の状態空間をそれぞれ$\mathcal H_1$，$\mathcal H_2$とする．これらからなる複合系の状態空間は$\mathcal H_1\otimes\mathcal H_2$である．特に，各量子系の量子状態$\ket{\psi}\in\mathcal H_1$，$\ket{\phi}\in\mathcal H_2$に対して，$\ket{\psi}\otimes\ket{\phi}$は複合系の状態の一つである．
+\end{defi}
+$\ket{\psi}\otimes\ket{\phi}$のことを，テンソル積の記号を省略して$\ket{\psi}\ket{\phi}$や$\ket{\psi\phi}$と書くこともある．
+$1$量子ビットの状態$a_0\ket{0}+a_1\ket{1}$，$b_0\ket{0}+b_1\ket{1}$に対して，それらの複合系の状態は\begin{align*}
+   & \big(a_0\ket{0}+a_1\ket{1}\big)\otimes\big(b_0\ket{0}+b_1\ket{1}\big) \\
+   & \quad = a_0b_0\ket{00}+a_0b_1\ket{01}+a_1b_0\ket{10}+a_1b_1\ket{11}
+\end{align*}
+と表される．規格化条件\eqref{eq:single-qubit-state-normalization}より，$|a_0|^2+|a_1|^2=1$，$|b_0|^2+|b_1|^2=1$であるので，複合系の状態でも
+\[
+  |a_0b_0|^2+|a_0b_1|^2+|a_1b_0|^2+|a_1b_1|^2
+  =(|a_0|^2+|a_1|^2)(|b_0|^2+|b_1|^2)=1
+\]
+なので，複合系でも規格化条件を満たしていることがわかる．
+
+一方，二つの量子ビットの状態が常に一つのテンソル積で表せるとは限らない．
+そのような例の一つに\textbf{ベル状態}がある．
+\begin{defi}[ベル状態]
+  二つの量子ビットの状態で，次のように表されるものをベル状態という．
+  \begin{equation}
+    \begin{aligned}
+      &\ket{B_{00}}\coloneq\frac{\ket{00}+\ket{11}}{\sqrt{2}}, \qquad
+      \ket{B_{01}}\coloneq\frac{\ket{01}+\ket{10}}{\sqrt{2}}  \\
+      &\ket{B_{10}}\coloneq\frac{\ket{00}-\ket{11}}{\sqrt{2}}, \qquad
+      \ket{B_{11}}\coloneq\frac{\ket{01}-\ket{10}}{\sqrt{2}}
+    \end{aligned}
+    \label{eq:bell-states}
+  \end{equation}
+\end{defi}
+$\ket{text}{Bell}_{00}$を例にとると，これがテンソル積で表せると仮定すると，次のように書ける．
+\[
+  \ket{B_{00}}=(a_0\ket{0}+a_1\ket{1})\otimes(b_0\ket{0}+b_1\ket{1})
+  =a_0b_0\ket{00}+a_0b_1\ket{01}+a_1b_0\ket{10}+a_1b_1\ket{11}
+\]
+ここで，$\ket{B_{00}}$の係数と比較すると，以下の方程式が得られる．
+\[
+  a_0b_0=\frac{1}{\sqrt2},\qquad
+  a_0b_1=0,\qquad
+  a_1b_0=0,\qquad
+  a_1b_1=\frac{1}{\sqrt2}
+\]
+この方程式を満たす$a_0,a_1,b_0,b_1$は存在しないので，背理法より$\ket{B_{00}}$はテンソル積で表せないことがわかる．このように，二つの量子ビットの状態がテンソル積で表せない状態のことを\textbf{エンタングルメント}または\textbf{量子もつれ}と呼ぶ．
+
+\begin{defi}[$n$量子ビット系]
+  $n$個の量子ビットからなる複合系を$n$量子ビット系という．この系の量子状態は，計算基底を用いて次のように表される．
+  \begin{equation}
+    \ket{\psi}=\sum_{x\in\{0,1\}^n}\alpha_x\ket{x}
+    \qquad (\alpha_x\in\mathbb C)
+    \label{eq:n-qubit-state-space}
+  \end{equation}
+  $\ket{x}$は$n$量子ビット系の計算基底ベクトルであり，$\sum_{x\in\{0,1\}^n}|\alpha_x|^2=1$が成り立つ．
+\end{defi}
+$\ket{x}$は，$\ket{0}$または$\ket{1}$をテンソル積で結合したものである．$1$量子ビット系が$\mathbb{C}^2$で$2$次元あることから，テンソル積の定義より$n$量子ビット系は$(\mathbb{C}^2)^{\otimes n} \cong \mathbb{C}^{2^{n}}$で$2^n$次元である．
+

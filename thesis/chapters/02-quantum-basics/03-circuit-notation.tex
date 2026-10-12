@@ -1,40 +1,37 @@
-\section{量子回路の表現}
-\label{sec:circuit-notation}
+\section{$n$量子ビットゲート}
 
-量子回路は，量子状態に加える演算と測定を回路図で表したものである．
-本論文では量子線を横向きに描き，時間は左から右へ進むものとする．
-1量子ビットゲートは量子線上の箱，制御ユニタリは制御点と標的の箱を結ぶ線，
-測定はメータ形の記号で表す．複数量子ビットを一つのまとまりとして扱うとき，
-この量子ビットのまとまりをレジスタという．
-
-回路上で$U_1,U_2,\ldots,U_k$が左からこの順に現れる場合，
-入力$\ket{\psi}$に対する出力は
-\begin{equation}
- U_k\cdots U_2U_1\ket{\psi}
- \label{eq:circuit-composition-order}
-\end{equation}
-である．行列の積では，右端の演算から順に状態へ作用する．
-
-\begin{prop}
-ユニタリ回路$W=U_k\cdots U_1$の逆回路は
-$W^\dagger=U_1^\dagger\cdots U_k^\dagger$である．
-\end{prop}
-\begin{proof}
-行列の積の共役転置は$(AB)^\dagger=B^\dagger A^\dagger$であるから，
-$(U_k\cdots U_1)^\dagger=U_1^\dagger\cdots U_k^\dagger$となる．
-各$U_j$はユニタリなので$W^\dagger W=I$である．
-したがって，逆回路を作るにはゲートの順を逆にし，
-各ゲートをその共役転置に置き換えればよい．
-\end{proof}
-
-たとえば2量子ビットに$H\otimes I$を作用させた後，
-第1量子ビットを制御とするCNOTを作用させる回路では，入力$\ket{00}$は
+\subsection{複数量子ビットに作用するゲート}
+$n$量子ビット系の量子状態に作用させるユニタリ写像のことを\textbf{$n$量子ビットゲート}という．
+$n$量子ビットゲートもテンソル積を用いた表現を使うことができる．\\
+例えば，量子状態$\ket{\psi}$，$\ket{\phi}$の複合系$\ket{\psi}\otimes\ket{\phi}$に対して，$\ket{\psi}$に量子ゲート$U$を，$\ket{\phi}$に量子ゲート$V$を作用させる場合を考える．作用させた後の量子状態は
 \[
- \ket{00}
- \xmapsto{H\otimes I}
- \frac{\ket{00}+\ket{10}}{\sqrt2}
- \xmapsto{\mathrm{CNOT}}
- \frac{\ket{00}+\ket{11}}{\sqrt2}
+  U\ket{\psi}\otimes V\ket{\phi}
 \]
-と変化する．このように，本論文では重要な回路について，
-回路図だけでなく各段階のケットも併記する．
+である．式(2.12)より，
+\[
+  U\ket{\psi}\otimes V\ket{\phi} = (U\otimes V)(\ket{\psi}\otimes\ket{\phi})
+\]
+なので，複合系に対する量子ゲートの作用は$U\otimes V$の形で表されることがわかる．\\
+$\ket{\psi}$のみに$U$を作用させ，$\ket{\phi}$には何も作用させないような場合も，恒等写像$I$を用いて次のように表せる．
+\[
+  (U\otimes I)(\ket{\psi}\otimes\ket{\phi}) = U\ket{\psi}\otimes I\ket{\phi} = U\ket{\psi}\otimes\ket{\phi}
+\]
+
+\subsection{制御ゲート}
+
+制御ゲートは，ある量子ビットの状態に応じて他の量子ビットに作用する量子ゲートである．
+作用させる対象である量子ビットを\textbf{ターゲット量子ビット}，制御の役割を果たす量子ビットを\textbf{制御量子ビット}と呼ぶ．\\
+制御量子ビットの状態を$\alpha\ket{0}+\beta\ket{1}$とし，ターゲット量子ビットの状態を$\ket{\psi}$とする．
+標的に作用する量子ゲートを$U$とすると，制御$U$ゲートの作用は次のように表される．
+\[
+  C(U) \coloneq \ket{0}\bra{0}\otimes I + \ket{1}\bra{1}\otimes U
+\]
+実際，制御量子ビットとターゲット量子ビットの複合量子ビット$\big(\alpha\ket{0}+\beta\ket{1}\big)\otimes\ket{\psi}$に対して，$C(U)$ゲートを作用させると
+\begin{align*}
+  C(U)\big(\big(\alpha\ket{0}+\beta\ket{1}\big)\otimes\ket{\psi}\big)
+  &= (\ket{0}\bra{0}\otimes I + \ket{1}\bra{1}\otimes U)\big(\alpha\ket{0}\otimes\ket{\psi} + \beta\ket{1}\otimes\ket{\psi}\big) \\
+  &= \alpha\braket{0|0}\otimes I\ket{\psi} + \beta\braket{0|1}\otimes U \\
+  &\quad + \alpha\braket{1|0}\otimes I\ket{\psi} + \beta\braket{1|1}\otimes U \\
+  &= \alpha\ket{0}\otimes\ket{\psi} + \beta\ket{1}\otimes U\ket{\psi} 
+\end{align*}
+このように，制御量子ビットが$\ket{0}$のときはターゲット量子ビットには何も作用せず，制御量子ビットが$\ket{1}$のときにのみターゲット量子ビットに$U$が作用していることがわかる．

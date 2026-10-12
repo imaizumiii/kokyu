@@ -29,9 +29,9 @@ $\braket{b|a}
 
 古典コンピュータのビットは$0$か$1$のいずれかの値をとる．量子コンピュータにおいても，$0$と$1$に対応する二つの状態を考え，それぞれ
 \begin{equation}
-  \ket{0}=\begin{pmatrix}1\\0\end{pmatrix},
+  \ket{0}=\begin{bmatrix}1\\0\end{bmatrix},
   \qquad
-  \ket{1}=\begin{pmatrix}0\\1\end{pmatrix}
+  \ket{1}=\begin{bmatrix}0\\1\end{bmatrix}
 \end{equation}
 記す．これらは２次元のヒルベルト空間において正規直交基底であり，量子コンピュータにおいては\textbf{計算基底}という．\\
 量子ビットはこれらの重ね合わせで構成されており，1量子ビットの状態は次のように表される．
@@ -41,7 +41,14 @@ $\braket{b|a}
   (\alpha,\beta\in\mathbb C)
   \label{eq:single-qubit-state}
 \end{equation}
-と表される．係数$\alpha,\beta$を\textbf{確率振幅}という．\\
+と表される．係数$\alpha,\beta$を\textbf{確率振幅}という．
+ベクトル表記では
+\begin{equation}
+  \ket{\psi}=
+  \begin{bmatrix}
+    \alpha\\\beta
+  \end{bmatrix}
+\end{equation}と書ける．\\
 確率振幅の絶対値の二乗は，その状態が結果として得られる確率であることが知られている．これを\textbf{ボルンの規則}という．\\
 したがって，$\ket{\psi}$は長さが$1$に規格化されている必要があり，
 \begin{equation}
@@ -71,3 +78,29 @@ $\braket{b|a}
   \label{eq:projection-onto-0}
 \end{equation}
 となる．
+
+\subsection{ブロッホ球による表現}
+
+量子ビットの状態$\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$は，ブロッホ球と呼ばれる単位球面上の点として表すことができる．
+複素数$\alpha$，$\beta$は規格化条件$|\alpha|^2+|\beta|^2=1$を満たすので，
+$\theta\in[0,\pi]$を選んで
+\[
+  |\alpha|=\cos\frac{\theta}{2}, \qquad |\beta|=\sin\frac{\theta}{2}
+\]
+とすると，$\ket{\psi}$は次のように表すことができる．
+\begin{equation}
+  \ket{\psi} = e^{i\Phi}\left(\cos\frac{\theta}{2}\ket{0} + e^{i\phi}\sin\frac{\theta}{2}\ket{1}\right),
+  \qquad \ \Phi\in[0,2\pi), \ \theta\in[0,\pi], \ \phi\in[0,2\pi)
+\end{equation}
+\newpage
+$\Phi$は全体にかかる位相（\textbf{グローバル位相}）であり，物理的には観測できないため、通常は無視される．したがって，量子ビットの状態は実質的に$\theta$と$\phi$の二つのパラメータで表すことができる．\\
+この二つの角度で量子状態を球面に対応させたものを\textbf{ブロッホ球}という．
+図\ref{fig:bloch-sphere}にその対応を示す．球面上の点の座標は
+$(\sin\theta\cos\phi,\sin\theta\sin\phi,\cos\theta)$である．
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.62\textwidth]{figures/02-quantum-basics/bloch-sphere.pdf}
+  \caption{1量子ビットの量子状態を表すブロッホ球}
+  \label{fig:bloch-sphere}
+\end{figure}
