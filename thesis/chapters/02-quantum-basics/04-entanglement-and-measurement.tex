@@ -7,7 +7,14 @@
 古典コンピュータの計算は，論理ゲートを組み合わせた回路として表せる．
 量子コンピュータでも同様に，量子ゲートを用いた量子回路として計算を表すことができる．
 回路の横線は量子ビットを表し，左から右へ向かう順にゲートが作用する．
-四角い箱はゲートを表す．
+図\ref{fig:three-qubit-circuit-example}は，３量子ビットに操作する量子回路である．
+図の右端の計器を描いた箱は計算基底での測定を表す．
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.76\textwidth]{figures/02-quantum-basics/three-qubit-circuit-example.pdf}
+  \caption{３量子ビットに操作する量子回路の例}
+  \label{fig:three-qubit-circuit-example}
+\end{figure}
 
 \subsection{1量子ビットの量子回路}
 
@@ -60,9 +67,31 @@
         制御$U$           & 上の量子ビットが$\ket{1}$のとき，下に$U$を作用させる & \GateTableControlled{U} & $\ket{0}\bra{0}\otimes I+\ket{1}\bra{1}\otimes U$                 \\ \hline
         CNOT            & 上が$\ket{1}$のとき，下の量子ビットを反転する      & \GateTableCNOT          & $\ket{0}\bra{0}\otimes I+\ket{1}\bra{1}\otimes X$                 \\ \hline
         制御$Z$           & 両方が$\ket{1}$の成分の符号を反転する          & \GateTableControlled{Z} & $\ket{0}\bra{0}\otimes I+\ket{1}\bra{1}\otimes Z$                 \\ \hline
-        SWAP            & 二つの量子ビットの状態を交換する                 & \GateTableSWAP          & $\displaystyle\sum_{a,b\in\{0,1\}}\ket{ba}\bra{ab}$               \\ \hline
-        Toffoli (CCNOT) & 上の2量子ビットがともに$\ket{1}$のとき，下を反転する  & \GateTableToffoli       & $\displaystyle\sum_{a,b\in\{0,1\}}\ket{ab}\bra{ab}\otimes X^{ab}$ \\ \hline
+        SWAP            & 二つの量子ビットの状態を交換する                 & \GateTableSWAP          & $\ket{00}\bra{00}+\ket{10}\bra{01}+\ket{01}\bra{10}+\ket{11}\bra{11}$               \\ \hline
+        Toffoli (CCNOT) & 上の2量子ビットがともに$\ket{1}$のとき，下を反転する  & \GateTableToffoli       & $\bigl(\ket{00}\bra{00}+\ket{01}\bra{01}+\ket{10}\bra{10}\bigr)\otimes I + \ket{11}\bra{11}\otimes X$ \\ \hline
     \end{tabular}
 \end{table}
 
-Toffoliゲートの表記では，$a,b\in\{0,1\}$とし，$X^0=I$，$X^1=X$である．
+\subsection{量子回路の計算}
+例として，図\ref{fig:three-qubit-circuit-example}の回路を考える．
+初期の量子状態は$\ket{000}$であり，第１量子ビットと第２量子ビットに$H$ゲートを作用させ，下段に$X$ゲートを作用させる．
+\begin{align*}
+    \left(H \otimes H \otimes X\right)\ket{000} 
+    &= \frac{1}{\sqrt{2}}(\ket{0}+\ket{1}) \otimes \frac{1}{\sqrt{2}}(\ket{0}+\ket{1}) \otimes \ket{1} \\
+    &= \frac{1}{2}\ket{001} + \frac{1}{2}\ket{011} + \frac{1}{2}\ket{101} + \frac{1}{2}\ket{111}
+\end{align*}
+次に，第２量子ビットを制御ビットとするCNOTゲートを第３量子ビットに作用させる．
+第２量子ビットが$1$である項の第３量子ビットが反転する．
+\begin{align*}
+    &\left(I \otimes \left( \ket{0}\bra{0} \otimes I + \ket{1}\bra{1} \otimes X \right)\right)
+    \left(\frac{1}{2}\ket{001} + \frac{1}{2}\ket{011} + \frac{1}{2}\ket{101} + \frac{1}{2}\ket{111}\right) \\
+    &\quad= \frac{1}{2}\ket{001} + \frac{1}{2}\ket{010} + \frac{1}{2}\ket{101} + \frac{1}{2}\ket{110}
+\end{align*}
+最後に，第１量子ビットと第２量子ビットを制御ビットとするToffoliゲートを第３量子ビットに作用させる．
+第１量子ビットと第２量子ビットがともに$1$である項の第３量子ビットが反転する．
+\begin{align*}
+    &\left(\left( \ket{00}\bra{00}+\ket{01}\bra{01}+\ket{10}\bra{10}\right)\otimes I + \ket{11}\bra{11}\otimes X\right)
+    \left(\frac{1}{2}\ket{001} + \frac{1}{2}\ket{010} + \frac{1}{2}\ket{101} + \frac{1}{2}\ket{110}\right) \\
+    &\quad= \frac{1}{2}\ket{001} + \frac{1}{2}\ket{010} + \frac{1}{2}\ket{101} + \frac{1}{2}\ket{111}
+\end{align*}
+測定すると，$\left(\frac{1}{2}\right)^2 = \frac{1}{4}$の確率で$\ket{001}$，$\ket{010}$，$\ket{101}$，$\ket{111}$の各状態が得られる．

@@ -8,9 +8,10 @@ $n$量子ビットゲートもテンソル積を用いた表現を使うこと�
   U\ket{\psi}\otimes V\ket{\phi}
 \]
 である．式(2.12)より，
-\[
+\begin{equation}
   U\ket{\psi}\otimes V\ket{\phi} = (U\otimes V)(\ket{\psi}\otimes\ket{\phi})
-\]
+  \label{eq:tensor-product-of-gates}
+\end{equation}
 なので，複合系に対する量子ゲートの作用は$U\otimes V$の形で表されることがわかる．\\
 $\ket{\psi}$のみに$U$を作用させ，$\ket{\phi}$には何も作用させないような場合も，恒等写像$I$を用いて次のように表せる．
 \[
@@ -23,15 +24,75 @@ $\ket{\psi}$のみに$U$を作用させ，$\ket{\phi}$には何も作用させ�
 作用させる対象である量子ビットを\textbf{ターゲット量子ビット}，制御の役割を果たす量子ビットを\textbf{制御量子ビット}と呼ぶ．\\
 制御量子ビットの状態を$\alpha\ket{0}+\beta\ket{1}$とし，ターゲット量子ビットの状態を$\ket{\psi}$とする．
 標的に作用する量子ゲートを$U$とすると，制御$U$ゲートの作用は次のように表される．
-\[
+\begin{equation}
   C(U) \coloneq \ket{0}\bra{0}\otimes I + \ket{1}\bra{1}\otimes U
-\]
+\end{equation}
 実際，制御量子ビットとターゲット量子ビットの複合量子ビット$\big(\alpha\ket{0}+\beta\ket{1}\big)\otimes\ket{\psi}$に対して，$C(U)$ゲートを作用させると
 \begin{align*}
   C(U)\big(\big(\alpha\ket{0}+\beta\ket{1}\big)\otimes\ket{\psi}\big)
-  &= (\ket{0}\bra{0}\otimes I + \ket{1}\bra{1}\otimes U)\big(\alpha\ket{0}\otimes\ket{\psi} + \beta\ket{1}\otimes\ket{\psi}\big) \\
-  &= \alpha\braket{0|0}\otimes I\ket{\psi} + \beta\braket{0|1}\otimes U \\
-  &\quad + \alpha\braket{1|0}\otimes I\ket{\psi} + \beta\braket{1|1}\otimes U \\
-  &= \alpha\ket{0}\otimes\ket{\psi} + \beta\ket{1}\otimes U\ket{\psi} 
+   & = (\ket{0}\bra{0}\otimes I + \ket{1}\bra{1}\otimes U)\big(\alpha\ket{0}\otimes\ket{\psi} + \beta\ket{1}\otimes\ket{\psi}\big) \\
+   & = \alpha\braket{0|0}\otimes I\ket{\psi} + \beta\braket{0|1}\otimes U                                                          \\
+   & \quad + \alpha\braket{1|0}\otimes I\ket{\psi} + \beta\braket{1|1}\otimes U                                                    \\
+   & = \alpha\ket{0}\otimes\ket{\psi} + \beta\ket{1}\otimes U\ket{\psi}
 \end{align*}
 このように，制御量子ビットが$\ket{0}$のときはターゲット量子ビットには何も作用せず，制御量子ビットが$\ket{1}$のときにのみターゲット量子ビットに$U$が作用していることがわかる．
+
+\subsection{SWAPゲート}
+SWAPゲートは，二つの量子ビットの状態を入れ替える量子ゲートである． 計算基底を用いると，SWAPゲートはディラック表記で次のように表される．
+\[
+  \text{SWAP}
+  \coloneq \ket{00}\bra{00}+\ket{10}\bra{01}
+  +\ket{01}\bra{10}+\ket{11}\bra{11}
+\]
+実際，$a,b\in\{0,1\}$に対して，計算基底の正規直交性より
+\[
+  \text{SWAP}\ket{ab}
+  =\sum_{i,j\in\{0,1\}}\ket{ji}\braket{ij|ab}
+  =\ket{ba}
+\]
+なので，$\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$，$\ket{\phi}=\gamma\ket{0}+\delta\ket{1}$とすると
+\begin{align*}
+  \text{SWAP}(\ket{\psi}\otimes\ket{\phi})
+   & =\text{SWAP}\bigl(\alpha\gamma\ket{00}+\alpha\delta\ket{01}
+  +\beta\gamma\ket{10}+\beta\delta\ket{11}\bigr)                       \\
+   & =\alpha\gamma\ket{00}+\alpha\delta\ket{10}
+  +\beta\gamma\ket{01}+\beta\delta\ket{11}                             \\
+   & =(\gamma\ket{0}+\delta\ket{1})\otimes(\alpha\ket{0}+\beta\ket{1}) \\
+   & =\ket{\phi}\otimes\ket{\psi}
+\end{align*}
+となり，二つの量子ビットの状態が入れ替わることがわかる．
+
+\subsection{Toffoliゲート}
+Toffoliゲートは，二つの制御量子ビットがともに$\ket{1}$のときにのみ，三つ目のターゲット量子ビットに$X$ゲートを作用させる量子ゲートである．
+最初の二つの量子ビットを制御量子ビット，三つ目をターゲット量子ビットとすると，ディラック表記では
+\[
+  \text{Toffoli}
+  \coloneq \bigl(\ket{00}\bra{00}+\ket{01}\bra{01}+\ket{10}\bra{10}\bigr)\otimes I
+  +\ket{11}\bra{11}\otimes X
+\]
+と表される．
+二つの制御量子ビットの状態をそれぞれ
+$\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$，
+$\ket{\phi}=\gamma\ket{0}+\delta\ket{1}$とすると，任意のターゲット量子ビットの状態$\ket{\chi}$に対して，Toffoliゲートの作用は次のようになる．
+\begin{align*}
+  \text{Toffoli}(\ket{\psi}\otimes\ket{\phi}\otimes\ket{\chi})
+   & =\alpha\gamma\ket{00}\otimes\ket{\chi}
+  +\alpha\delta\ket{01}\otimes\ket{\chi}        \\
+   & \quad+\beta\gamma\ket{10}\otimes\ket{\chi}
+  +\beta\delta\ket{11}\otimes X\ket{\chi}
+\end{align*}
+となる．したがって，二つの制御量子ビットがともに$\ket{1}$である成分$\ket{11}$に限り，ターゲット量子ビットが反転する．
+
+\subsection{量子オラクル}
+内部でどのように計算しているかを考えず，入力と出力の関係だけに注目して扱う関数を\textbf{ブラックボックス関数}という．
+
+アルゴリズムが関数の値を問い合わせるために利用するブラックボックスを\textbf{オラクル}という．
+量子計算では，量子状態に作用するゲートとしてオラクルを表す．このようなオラクルを\textbf{量子オラクル}と呼ぶ．
+
+例として，$n$ビットの入力$x$に対して$0$または$1$を返す関数$f:\{0,1\}^n\to\{0,1\}$を考える．
+入力を表す量子ビット列$\ket{x}$と，結果を書き込む量子ビット$\ket{y}$に対して，量子オラクル$U_f$を
+\[
+  U_f\ket{x}\ket{y}\coloneq\ket{x}\ket{y\oplus f(x)}
+\]
+と定める．ここで$\oplus$は排他的論理和を表す．Toffoliゲートは，$f(x_1,x_2)=x_1x_2$とした場合の量子オラクルに当たる．\\
+$x_1 = x_2 = 1$のときのみ，$f(x_1,x_2)=1$となり，ターゲット量子ビット$\ket{y}$が反転する．
