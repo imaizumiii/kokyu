@@ -3,6 +3,7 @@
 
 \subsection{ブラケット表記（ディラック表記）}
 
+\begin{defi}[ブラケット表記]
 複素数を成分にもつ有限次元のヒルベルト空間を$\mathcal H$とする．
 $\mathcal H$のベクトルを
 \begin{equation}
@@ -25,17 +26,20 @@ $\braket{b|a}
 \end{equation}
 と表記される．
 このようなベクトルの表記の仕方を\textbf{ブラケット表記}または\textbf{ディラック表記}という．
+\end{defi}
 
 \subsection{量子状態の公理}
 
+\begin{defi}[1量子ビットの状態]
 古典コンピュータのビットは$0$か$1$のいずれかの値をとる．量子コンピュータにおいても，$0$と$1$に対応する二つの状態を考え，それぞれ
 \begin{equation}
-  \ket{0}=\begin{bmatrix}1\\0\end{bmatrix},
+  \ket{0}\coloneq\begin{bmatrix}1\\0\end{bmatrix},
   \qquad
-  \ket{1}=\begin{bmatrix}0\\1\end{bmatrix}
+  \ket{1}\coloneq\begin{bmatrix}0\\1\end{bmatrix}
 \end{equation}
 記す．これらは２次元のヒルベルト空間において正規直交基底であり，量子コンピュータにおいては\textbf{計算基底}という．\\
-量子ビットはこれらの重ね合わせで構成されており，1量子ビットの状態は次のように表される．
+
+量子ビットは$\ket{0}$と$\ket{1}$の線形結合によって構成されており，1量子ビットの状態は一般的に次のように表される．
 \begin{equation}
   \ket{\psi}\coloneq\alpha\ket{0}+\beta\ket{1}
   \qquad 
@@ -43,6 +47,7 @@ $\braket{b|a}
   \label{eq:single-qubit-state}
 \end{equation}
 と表される．係数$\alpha,\beta$を\textbf{確率振幅}という．
+\end{defi}
 ベクトル表記では
 \begin{equation}
   \ket{\psi}=
@@ -60,11 +65,17 @@ $\braket{b|a}
 \subsection{射影測定の公理}
 
 先に述べたように，量子ビットの状態は$\ket{0}$と$\ket{1}$の
-重ね合わせとして表される．この量子ビットを計算基底で測定すると，
+線形結合として表される．この量子ビットを計算基底で測定すると，
 結果として$0$または$1$のいずれかが得られる．
 どちらの結果が得られるかは確率的に決まる．
-これらの確率は，$P_0\coloneq\ket{0}\bra{0}$と$P_1\coloneq\ket{1}\bra{1}$という
-射影演算子で記述され，\textbf{射影測定}と呼ばれる．
+
+計算基底での測定を記述するために，結果$0$と$1$に対応する成分を
+それぞれ取り出す演算子を考える．この役割を果たすのが射影演算子である．
+
+\begin{defi}[射影測定]
+計算基底での測定は，$P_0\coloneq\ket{0}\bra{0}$と$P_1\coloneq\ket{1}\bra{1}$という
+射影演算子で記述される．このような測定を\textbf{射影測定}と呼ぶ．
+\end{defi}
 
 測定前の状態が$\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$のとき，
 結果$0$に対応する確率振幅は$\braket{0|\psi}$である．
@@ -86,18 +97,20 @@ $\braket{b|a}
 複素数$\alpha$，$\beta$は規格化条件$|\alpha|^2+|\beta|^2=1$を満たすので，
 $\theta\in[0,\pi]$を選んで
 \[
-  |\alpha|=\cos\frac{\theta}{2}, \qquad |\beta|=\sin\frac{\theta}{2}
+  \cos\frac{\theta}{2} \coloneq |\alpha|, \qquad \sin\frac{\theta}{2} \coloneq |\beta|
 \]
-とすると，$\ket{\psi}$は次のように表すことができる．
+と定義すると，$\ket{\psi}$は次のように表すことができる．
 \begin{equation}
   \ket{\psi} = e^{i\Phi}\left(\cos\frac{\theta}{2}\ket{0} + e^{i\phi}\sin\frac{\theta}{2}\ket{1}\right),
   \qquad \ \Phi\in[0,2\pi), \ \theta\in[0,\pi], \ \phi\in[0,2\pi)
 \end{equation}
-\newpage
-$\Phi$は全体にかかる位相（\textbf{グローバル位相}）であり，物理的には観測できないため、通常は無視される．したがって，量子ビットの状態は実質的に$\theta$と$\phi$の二つのパラメータで表すことができる．\\
-この二つの角度で量子状態を球面に対応させたものを\textbf{ブロッホ球}という．
-図\ref{fig:bloch-sphere}にその対応を示す．球面上の点の座標は
+
+$\Phi$は全体にかかる位相（\textbf{グローバル位相}）であり，物理的には観測できないため，通常は無視される．したがって，量子ビットの状態は実質的に$\theta$と$\phi$の二つのパラメータで表すことができる．
+
+角度$\theta$と$\phi$で1量子ビットの量子状態を単位球面に対応させたものを\textbf{ブロッホ球}という．
+球面上の点の座標は
 $(\sin\theta\cos\phi,\sin\theta\sin\phi,\cos\theta)$である．
+図\ref{fig:bloch-sphere}にその対応を示す．
 
 \begin{figure}[H]
   \centering

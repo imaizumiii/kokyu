@@ -3,7 +3,7 @@
 
 \subsection{ユニタリ変換と1量子ビットゲート}
 
-量子状態に線形写像を作用させることにより，量子状態を変化させることができる．ただし，変化後の量子状態も長さが$1$に規格化されていなければならない．したがって，量子状態の変化はユニタリ写像で表される．\\
+量子状態に線形写像を作用させることにより，量子状態を変化させることができる．ただし，変化後の量子状態も長さが$1$に規格化されていなければならない．したがって，量子状態の変化はユニタリ写像で表される．
 量子状態に作用させるユニタリ写像のことを\textbf{量子ゲート}という．
 
 \begin{prop}
@@ -20,21 +20,28 @@
   また，$U^\dagger U=UU^\dagger=I$であるので，$U^\dagger$は$U$の逆写像である．
 \end{proof}
 
-基本的な1量子ビットに対するユニタリ写像を
-\begin{align*}
-  X & \coloneq\begin{bmatrix}0&1\\1&0\end{bmatrix},                    &
-  Y & \coloneq\begin{bmatrix}0&-\mathrm{i}\\\mathrm{i}&0\end{bmatrix}, &
-  Z & \coloneq\begin{bmatrix}1&0\\0&-1\end{bmatrix},                     \\
-  H & \coloneq\frac1{\sqrt2}\begin{bmatrix}1&1\\1&-1\end{bmatrix}
-\end{align*}
-で定める．特に，アダマールゲートと呼ばれる$H$を$\ket{0}, \ket{1}$に作用させたものを$\ket{+}, \ket{-}$と書き，
-\begin{equation}
-  \ket{+}\coloneq H\ket{0}=\frac{\ket{0}+\ket{1}}{\sqrt2},
-  \qquad
-  \ket{-} \coloneq H\ket{1}=\frac{\ket{0}-\ket{1}}{\sqrt2}
-  \label{eq:hadamard-action}
-\end{equation}
-と定める．これらは互いに直交し，$\{\ket{+},\ket{-}\}$は正規直交基底をなす．$\{\ket{+},\ket{-}\}$を\textbf{アダマール基底}という．
+\begin{defi}[基本的な1量子ビットゲート]
+  基本的な1量子ビットに対するユニタリ写像を
+  \begin{align*}
+    X & \coloneq\begin{bmatrix}0&1\\1&0\end{bmatrix},                    &
+    Y & \coloneq\begin{bmatrix}0&-\mathrm{i}\\\mathrm{i}&0\end{bmatrix}, &
+    Z & \coloneq\begin{bmatrix}1&0\\0&-1\end{bmatrix},                     \\
+    H & \coloneq\frac1{\sqrt2}\begin{bmatrix}1&1\\1&-1\end{bmatrix}
+  \end{align*}
+  で定める．
+\end{defi}
+
+特に，アダマールゲートと呼ばれる$H$は，$\ket{0}$と$\ket{1}$の線形結合を作る作用を持つため，量子計算において重要である．
+\begin{defi}[アダマール基底]
+  $H$を$\ket{0}, \ket{1}$に作用させたものを$\ket{+}, \ket{-}$と書き，
+  \begin{equation}
+    \ket{+}\coloneq H\ket{0}=\frac{\ket{0}+\ket{1}}{\sqrt2},
+    \qquad
+    \ket{-} \coloneq H\ket{1}=\frac{\ket{0}-\ket{1}}{\sqrt2}
+    \label{eq:hadamard-action}
+  \end{equation}
+  と定める．これらは互いに直交し，$\{\ket{+},\ket{-}\}$は正規直交基底をなす．$\{\ket{+},\ket{-}\}$を\textbf{アダマール基底}という．
+\end{defi}
 
 \subsection{テンソル積}
 
@@ -168,14 +175,16 @@
   \end{align*}
   となる．これで定理の各等式が示された．
 \end{proof}
-任意の正の整数$k$に対して，$A$の$k$個の総テンソル積を以下のように表記する．
-\[
-  A^{\otimes k} \coloneq A\otimes A\otimes\cdots\otimes A \quad(k\text{個})
-\]
-また，任意の正の整数$k$に対して，$A_1,\ldots,A_k$という行列があるとき，それらの総テンソル積を以下のように表記する．
-\[
-  \bigotimes_{i=1}^k A_i \coloneq A_1\otimes A_2\otimes\cdots\otimes A_k
-\]
+\begin{defi}[テンソル積の記法]
+  任意の正の整数$k$に対して，$A$の$k$個の総テンソル積を以下のように表記する．
+  \[
+    A^{\otimes k} \coloneq A\otimes A\otimes\cdots\otimes A \quad(k\text{個})
+  \]
+  また，任意の正の整数$k$に対して，$A_1,\ldots,A_k$という行列があるとき，それらの総テンソル積を以下のように表記する．
+  \[
+    \bigotimes_{i=1}^k A_i \coloneq A_1\otimes A_2\otimes\cdots\otimes A_k
+  \]
+\end{defi}
 定理\ref{theo:matrix-tensor-product-properties}の式\eqref{eq:tensor-product-mixed-product}より，以下が成り立つ．
 \begin{theo}
   $m,k$を正の整数とし，$i=1,\ldots,k$について
@@ -238,11 +247,11 @@
 \subsection{複合系}
 
 量子状態についてもテンソル積を用いて複合系を表すことができる．
-\begin{defi}[複合系]
-  二つの量子系の状態空間をそれぞれ$\mathcal H_1$，$\mathcal H_2$とする．これらからなる複合系の状態空間は$\mathcal H_1\otimes\mathcal H_2$である．特に，各量子系の量子状態$\ket{\psi}\in\mathcal H_1$，$\ket{\phi}\in\mathcal H_2$に対して，$\ket{\psi}\otimes\ket{\phi}$は複合系の状態の一つである．
-\end{defi}
+二つの量子系の状態空間をそれぞれ$\mathcal H_1$，$\mathcal H_2$とする．これらからなる複合系の状態空間は$\mathcal H_1\otimes\mathcal H_2$である．特に，各量子系の量子状態$\ket{\psi}\in\mathcal H_1$，$\ket{\phi}\in\mathcal H_2$に対して，$\ket{\psi}\otimes\ket{\phi}$は複合系の状態の一つである．
 $\ket{\psi}\otimes\ket{\phi}$のことを，テンソル積の記号を省略して$\ket{\psi}\ket{\phi}$や$\ket{\psi\phi}$と書くこともある．
-$1$量子ビットの状態$a_0\ket{0}+a_1\ket{1}$，$b_0\ket{0}+b_1\ket{1}$に対して，それらの複合系の状態は\begin{align*}
+
+１量子ビットの状態$a_0\ket{0}+a_1\ket{1}$，$b_0\ket{0}+b_1\ket{1}$に対して，それらの複合系の状態は
+\begin{align*}
    & \big(a_0\ket{0}+a_1\ket{1}\big)\otimes\big(b_0\ket{0}+b_1\ket{1}\big) \\
    & \quad = a_0b_0\ket{00}+a_0b_1\ket{01}+a_1b_0\ket{10}+a_1b_1\ket{11}
 \end{align*}
@@ -255,19 +264,17 @@ $1$量子ビットの状態$a_0\ket{0}+a_1\ket{1}$，$b_0\ket{0}+b_1\ket{1}$に�
 
 一方，二つの量子ビットの状態が常に一つのテンソル積で表せるとは限らない．
 そのような例の一つに\textbf{ベル状態}がある．
-\begin{defi}[ベル状態]
-  二つの量子ビットの状態で，次のように表されるものをベル状態という．
-  \begin{equation}
-    \begin{aligned}
-      &\ket{B_{00}}\coloneq\frac{\ket{00}+\ket{11}}{\sqrt{2}}, \qquad
-      \ket{B_{01}}\coloneq\frac{\ket{01}+\ket{10}}{\sqrt{2}}  \\
-      &\ket{B_{10}}\coloneq\frac{\ket{00}-\ket{11}}{\sqrt{2}}, \qquad
-      \ket{B_{11}}\coloneq\frac{\ket{01}-\ket{10}}{\sqrt{2}}
-    \end{aligned}
-    \label{eq:bell-states}
-  \end{equation}
-\end{defi}
-$\ket{text}{Bell}_{00}$を例にとると，これがテンソル積で表せると仮定すると，次のように書ける．
+二つの量子ビットの状態で，次のように表されるものをベル状態という．
+\begin{equation}
+  \begin{aligned}
+     & \ket{B_{00}}\coloneq\frac{\ket{00}+\ket{11}}{\sqrt{2}}, \qquad
+    \ket{B_{01}}\coloneq\frac{\ket{01}+\ket{10}}{\sqrt{2}}            \\
+     & \ket{B_{10}}\coloneq\frac{\ket{00}-\ket{11}}{\sqrt{2}}, \qquad
+    \ket{B_{11}}\coloneq\frac{\ket{01}-\ket{10}}{\sqrt{2}}
+  \end{aligned}
+  \label{eq:bell-states}
+\end{equation}
+$\ket{B_{00}}$を例にとると，これがテンソル積で表せると仮定すると，次のように書ける．
 \[
   \ket{B_{00}}=(a_0\ket{0}+a_1\ket{1})\otimes(b_0\ket{0}+b_1\ket{1})
   =a_0b_0\ket{00}+a_0b_1\ket{01}+a_1b_0\ket{10}+a_1b_1\ket{11}
@@ -279,8 +286,11 @@ $\ket{text}{Bell}_{00}$を例にとると，これがテンソル積で表せる
   a_1b_0=0,\qquad
   a_1b_1=\frac{1}{\sqrt2}
 \]
-この方程式を満たす$a_0,a_1,b_0,b_1$は存在しないので，背理法より$\ket{B_{00}}$はテンソル積で表せないことがわかる．このように，二つの量子ビットの状態がテンソル積で表せない状態のことを\textbf{エンタングルメント}または\textbf{量子もつれ}と呼ぶ．
+この方程式を満たす$a_0,a_1,b_0,b_1$は存在しないので，背理法より$\ket{B_{00}}$はテンソル積で表せないことがわかる．
+二つの量子ビットの状態が一つのテンソル積で表せない状態のことを\textbf{エンタングルメント}または\textbf{量子もつれ}と呼ぶ．
 
+ここまでは二つの量子ビットからなる複合系を扱った．テンソル積を繰り返せば，より多くの量子ビットを一つの系として扱える．
+そこで，量子ビットの個数を一般の$n$に拡張し，その状態の表し方を定める．
 \begin{defi}[$n$量子ビット系]
   $n$個の量子ビットからなる複合系を$n$量子ビット系という．この系の量子状態は，計算基底を用いて次のように表される．
   \begin{equation}
@@ -288,7 +298,13 @@ $\ket{text}{Bell}_{00}$を例にとると，これがテンソル積で表せる
     \qquad (\alpha_x\in\mathbb C)
     \label{eq:n-qubit-state-space}
   \end{equation}
-  $\ket{x}$は$n$量子ビット系の計算基底ベクトルであり，$\sum_{x\in\{0,1\}^n}|\alpha_x|^2=1$が成り立つ．
 \end{defi}
-$\ket{x}$は，$\ket{0}$または$\ket{1}$をテンソル積で結合したものである．$1$量子ビット系が$\mathbb{C}^2$で$2$次元あることから，テンソル積の定義より$n$量子ビット系は$(\mathbb{C}^2)^{\otimes n} \cong \mathbb{C}^{2^{n}}$で$2^n$次元である．
+$\ket{x}$は，$\ket{0}$または$\ket{1}$のテンソル積で表したものである．
+$10$進数表現で以下のように書くこともある．
+\[
+  \ket{\psi} = \sum_{i=0}^{2^n-1}\alpha_i\ket{i}
+\]
+
+$\ket{x}$は$n$量子ビット系の計算基底ベクトルであり，$\sum_{x\in\{0,1\}^n}|\alpha_x|^2=1$が成り立つ．
+$1$量子ビット系が$\mathbb{C}^2$で$2$次元あることから，テンソル積の定義より$n$量子ビット系は$(\mathbb{C}^2)^{\otimes n} \cong \mathbb{C}^{2^{n}}$で$2^n$次元である．
 
