@@ -1,2 +1,10 @@
-\chapter{HHLに必要な量子計算の処理}
+\chapter{量子計算の基本サブルーチン}
 \label{chap:quantum-subroutines}
+
+量子計算の特徴の一つが\textbf{量子並列性}である．
+量子ビットが重ね合わせ状態にあるとき，量子ゲートはその重ね合わせの各成分に同時に作用する．
+この性質を利用することで，古典コンピュータによる計算では時間のかかる問題に対しても高速に解を求めることが可能になる．本章では，量子計算における基本的なサブルーチンについて解説する．
+
+\input{chapters/03-quantum-subroutines/01-bernstein-vazirani}
+
+\input{chapters/03-quantum-subroutines/02-quantum-fourier-transform.tex}
