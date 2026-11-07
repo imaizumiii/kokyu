@@ -6,16 +6,15 @@ $n$量子ビット系の量子状態に作用させるユニタリ写像のこ�
 \[
   U\ket{\psi}\otimes V\ket{\phi}
 \]
-である．式(2.12)より，
-\begin{equation}
+である．式\eqref{eq:tensor-product-mixed-product}より，
+\begin{equation*}
   U\ket{\psi}\otimes V\ket{\phi} = (U\otimes V)(\ket{\psi}\otimes\ket{\phi})
-  \label{eq:tensor-product-of-gates}
-\end{equation}
+\end{equation*}
 なので，複合系に対する量子ゲートの作用は$U\otimes V$の形で表されることがわかる．
 
 $\ket{\psi}$のみに$U$を作用させ，$\ket{\phi}$には何も作用させないような場合も，恒等写像$I$を用いて次のように表せる．
 \[
-  (U\otimes I)(\ket{\psi}\otimes\ket{\phi}) = U\ket{\psi}\otimes I\ket{\phi} = U\ket{\psi}\otimes\ket{\phi}
+  (U\otimes I)(\ket{\psi}\otimes\ket{\phi}) = U\ket{\psi}\otimes I\ket{\phi} = U\ket{\psi}\otimes\ket{\phi}.
 \]
 
 \subsection{制御ゲート}
@@ -25,9 +24,9 @@ $\ket{\psi}$のみに$U$を作用させ，$\ket{\phi}$には何も作用させ�
 制御量子ビットの状態を$\alpha\ket{0}+\beta\ket{1}$とし，ターゲット量子ビットの状態を$\ket{\phi}$とする．
 \begin{defi}[制御$U$ゲート]
 標的に作用する量子ゲートを$U$とすると，制御$U$ゲートの作用は次のように表される．
-\begin{equation}
-  C(U) \coloneq \ket{0}\bra{0}\otimes I + \ket{1}\bra{1}\otimes U
-\end{equation}
+\begin{equation*}
+  C(U) \coloneq \ket{0}\bra{0}\otimes I + \ket{1}\bra{1}\otimes U.
+\end{equation*}
 \end{defi}
 実際，制御量子ビットとターゲット量子ビットの複合量子ビット$\big(\alpha\ket{0}+\beta\ket{1}\big)\otimes\ket{\phi}$に対して，$C(U)$ゲートを作用させると
 \begin{align*}
@@ -45,7 +44,7 @@ SWAPゲートは，二つの量子ビットの状態を入れ替える量子ゲ�
 \[
   \text{SWAP}
   \coloneq \ket{00}\bra{00}+\ket{10}\bra{01}
-  +\ket{01}\bra{10}+\ket{11}\bra{11}
+  +\ket{01}\bra{10}+\ket{11}\bra{11}.
 \]
 \end{defi}
 実際，$a,b\in\{0,1\}$に対して，計算基底の正規直交性より

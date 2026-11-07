@@ -13,7 +13,7 @@
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.76\textwidth]{figures/02-quantum-basics/three-qubit-circuit-example.pdf}
-    \caption{３量子ビットに操作する量子回路の例}
+    \caption{３量子ビットに操作する量子回路の例．}
     \label{fig:three-qubit-circuit-example}
 \end{figure}
 \newpage
@@ -25,7 +25,7 @@
 
 \begin{table}[H]
     \centering
-    \caption{代表的な1量子ビットゲート}
+    \caption{代表的な1量子ビットゲート．}
     \label{tab:single-qubit-gates}
     \footnotesize
     \renewcommand{\arraystretch}{1.35}
@@ -53,7 +53,7 @@
 
 \begin{table}[H]
     \centering
-    \caption{特別な回路記号を用いるゲート}
+    \caption{特別な回路記号を用いるゲート．}
     \label{tab:special-circuit-gates}
     \footnotesize
     \renewcommand{\arraystretch}{1.25}
@@ -74,20 +74,20 @@
 \begin{align*}
     \left(H \otimes H \otimes X\right)\ket{000}
      & = \frac{1}{\sqrt{2}}(\ket{0}+\ket{1}) \otimes \frac{1}{\sqrt{2}}(\ket{0}+\ket{1}) \otimes \ket{1} \\
-     & = \frac{1}{2}\ket{001} + \frac{1}{2}\ket{011} + \frac{1}{2}\ket{101} + \frac{1}{2}\ket{111}
+     & = \frac{1}{2}\ket{001} + \frac{1}{2}\ket{011} + \frac{1}{2}\ket{101} + \frac{1}{2}\ket{111}.
 \end{align*}
 次に，第２量子ビットを制御ビットとするCNOTゲートを第３量子ビットに作用させる．
 第２量子ビットが$1$である項の第３量子ビットが反転する．
 \begin{align*}
      & \left(I \otimes \left( \ket{0}\bra{0} \otimes I + \ket{1}\bra{1} \otimes X \right)\right)
     \left(\frac{1}{2}\ket{001} + \frac{1}{2}\ket{011} + \frac{1}{2}\ket{101} + \frac{1}{2}\ket{111}\right) \\
-     & \quad= \frac{1}{2}\ket{001} + \frac{1}{2}\ket{010} + \frac{1}{2}\ket{101} + \frac{1}{2}\ket{110}
+     & \quad= \frac{1}{2}\ket{001} + \frac{1}{2}\ket{010} + \frac{1}{2}\ket{101} + \frac{1}{2}\ket{110}.
 \end{align*}
 最後に，第１量子ビットと第２量子ビットを制御ビットとするToffoliゲートを第３量子ビットに作用させる．
 第１量子ビットと第２量子ビットがともに$1$である項の第３量子ビットが反転する．
 \begin{align*}
      & \left(\left( \ket{00}\bra{00}+\ket{01}\bra{01}+\ket{10}\bra{10}\right)\otimes I + \ket{11}\bra{11}\otimes X\right)
     \left(\frac{1}{2}\ket{001} + \frac{1}{2}\ket{010} + \frac{1}{2}\ket{101} + \frac{1}{2}\ket{110}\right)                \\
-     & \quad= \frac{1}{2}\ket{001} + \frac{1}{2}\ket{010} + \frac{1}{2}\ket{101} + \frac{1}{2}\ket{111}
+     & \quad= \frac{1}{2}\ket{001} + \frac{1}{2}\ket{010} + \frac{1}{2}\ket{101} + \frac{1}{2}\ket{111}.
 \end{align*}
 測定すると，$\left(\dfrac{1}{2}\right)^2 = \dfrac{1}{4}$の確率で$\ket{001}$，$\ket{010}$，$\ket{101}$，$\ket{111}$の各状態が得られる．
