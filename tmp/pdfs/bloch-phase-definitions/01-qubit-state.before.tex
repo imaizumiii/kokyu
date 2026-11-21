@@ -1,0 +1,223 @@
+\section{量子ビットと量子状態}
+\label{sec:qubit-state}
+
+量子力学の性質を利用したコンピュータのことを\textbf{量子コンピュータ}といい，それに対して我々が普段扱うコンピュータのことを\textbf{古典コンピュータ}という．
+古典コンピュータでは，$0$か$1$のいずれかの値をとる\textbf{ビット}を情報の基本単位として扱うが，それに対して量子コンピュータでは，情報の基本単位として\textbf{量子ビット}を扱う．
+この章では，量子ビットとその状態である量子状態についての基本計算について説明する．
+
+\subsection{行列とベクトルの基本記法}
+
+\begin{defi}[複素共役]
+実数$x,y$と，$i^2=-1$を満たす虚数単位$i$を用いて，
+複素数$z=x+iy$を表す．
+このとき，
+\begin{equation*}
+  \overline{z}\coloneq x-iy
+\end{equation*}
+を$z$の\textbf{複素共役}という．
+また，正の整数$m,n$に対し，複素数を成分にもつ$m$行$n$列の行列$A=(a_{jk}) \in \mathbb{C}^{m\times n}$を考える．
+各成分の複素共役を取った$m$行$n$列の行列を$A$の\textbf{複素共役}といい，
+\begin{equation*}
+  \overline{A}\coloneq\bigl(\overline{a_{jk}}\bigr)
+\end{equation*}
+と書く．
+\end{defi}
+
+\begin{defi}[転置]
+正の整数$m,n$に対し，$m$行$n$列の行列$A=(a_{jk}) \in \mathbb{C}^{m\times n}$の行と列を入れ替えた
+$n$行$m$列の行列を$A$の\textbf{転置行列}といい，$A^\top$と書く．各成分を
+\begin{equation*}
+  (A^\top)_{jk}\coloneq a_{kj}
+  \qquad (j=1,\ldots,n,\ k=1,\ldots,m)
+\end{equation*}
+で定める．
+\end{defi}
+
+\begin{defi}[随伴行列]
+正の整数$m,n$に対し，$m$行$n$列の行列$A=(a_{jk}) \in \mathbb{C}^{m\times n}$を考える．
+行列$A$を転置してから各成分を複素共役にした$n$行$m$列の行列を
+$A$の\textbf{随伴行列}といい，$A^{\dagger}$と書く．
+随伴行列の各成分を
+\begin{equation*}
+  (A^{\dagger})_{jk}\coloneq\overline{(A^\top)_{jk}}=\overline{a_{kj}}
+  \qquad (j=1,\ldots,n,\ k=1,\ldots,m)
+\end{equation*}
+で定める．
+\end{defi}
+
+\begin{samepage}
+\begin{defi}[内積]
+正の整数$d$に対し，$d$次元の2つのベクトル
+\begin{equation*}
+  \bm{a}=\begin{pmatrix}a_0\\a_1\\\vdots\\a_{d-1}\end{pmatrix}
+  \in\mathbb C^d,
+  \qquad
+  \bm{b}=\begin{pmatrix}b_0\\b_1\\\vdots\\b_{d-1}\end{pmatrix}
+  \in\mathbb C^d
+\end{equation*}
+に対し，\textbf{内積}を
+\begin{equation*}
+  \langle \bm{a},\bm{b}\rangle\coloneq \bm{a}^{\dagger}\bm{b}
+  =\sum_{j=0}^{d-1}\overline{a_j}b_j
+\end{equation*}
+で定義する．
+\end{defi}
+\end{samepage}
+
+
+\subsection{ブラケット表記（ディラック表記）}
+
+量子計算において，ブラケット表記という記法がよく用いられる．以下ではその基本的な記法を示す．
+
+\begin{defi}[ケットベクトル・ブラベクトル]
+正の整数$d$に対し，内積空間
+$\mathcal H=\mathbb C^d$を考える．
+$\mathcal H$のベクトルを
+\begin{equation*}
+  \ket{a}
+  \coloneq
+  \begin{pmatrix}
+    a_0\\a_1\\\vdots\\a_{d-1}
+  \end{pmatrix}
+\end{equation*}
+と書き，これを\textbf{ケット}または\textbf{ケットベクトル}という．
+また，ケット$\ket{a}$の随伴行列$\ket{a}^{\dagger}$を$\bra{a}$と書き，\textbf{ブラ}または\textbf{ブラベクトル}という．
+
+ベクトル$\ket{b}$と$\ket{a}$の内積を
+ブラケット表記では$\braket{b|a}$と書く．すなわち，
+\begin{equation*}
+  \braket{b|a}\coloneq\langle b,a\rangle
+  =\bra{b}\ket{a}
+  =\sum_{j=0}^{d-1}\overline{b_j}a_j
+\end{equation*}
+である．
+このようなケットベクトルとブラベクトルを用いた表記の仕方を\textbf{ブラケット表記}または\textbf{ディラック表記}という．
+\end{defi}
+
+\subsection{量子状態の公理}
+
+\begin{defi}[計算基底]
+古典コンピュータのビットは$0$か$1$のいずれかの値をとる．
+量子コンピュータにおいても，$0$と$1$に対応する二つの状態を考え，それぞれ
+\begin{equation*}
+  \ket{0}\coloneq\begin{pmatrix}1\\0\end{pmatrix},
+  \qquad
+  \ket{1}\coloneq\begin{pmatrix}0\\1\end{pmatrix}
+\end{equation*}
+と定める．これらは2次元の内積空間において正規直交基底であり，量子コンピュータにおいては\textbf{計算基底}という．
+
+量子ビットは$\ket{0}$と$\ket{1}$の線形結合によって構成されており，1量子ビットの状態$\ket{\psi}$は一般的に次のように表される．
+\begin{equation*}
+  \ket{\psi}\eqcolon\alpha\ket{0}+\beta\ket{1} = \begin{pmatrix}\alpha\\\beta\end{pmatrix}
+  \qquad
+  (\alpha,\beta\in\mathbb C)
+\end{equation*}
+係数$\alpha,\beta$は\textbf{確率振幅}をという．
+確率振幅は
+\begin{equation}
+  |\alpha|^2+|\beta|^2=1
+  \label{eq:single-qubit-state-normalization}
+\end{equation}
+を満たすものとする．
+\end{defi}
+
+確率振幅$\alpha,\beta$がともに$0$でないとき，この状態を
+$\ket{0}$と$\ket{1}$の\textbf{重ね合わせ状態}という．
+状態を表すベクトル$\ket{\psi}$を成分で書くと，
+\begin{equation*}
+  \ket{\psi}=
+  \begin{pmatrix}
+    \alpha\\\beta
+  \end{pmatrix}
+\end{equation*}
+となる．
+状態$\ket{\psi}$を計算基底で測定すると，結果は$0$または$1$のいずれかと確率的に決まる．
+結果$0$を得る確率は$|\alpha|^2$，結果$1$を得る確率は$|\beta|^2$である．
+このように，測定結果の確率を対応する確率振幅の絶対値の二乗で与える規則を\textbf{ボルンの規則}という．
+式\eqref{eq:single-qubit-state-normalization}は，確率の総和が1になることを保証しており，\textbf{規格化条件}と呼ばれる．
+測定については，次節で射影測定の公理として述べる．
+\subsection{射影測定の公理}
+
+先に述べたように，量子ビットの状態は$\ket{0}$と$\ket{1}$の
+線形結合として表される．この量子ビットを計算基底で測定すると，
+結果として$0$または$1$のいずれかが得られる．
+どちらの結果が得られるかは確率的に決まる．
+
+計算基底での測定を記述するために，結果$0$と$1$に対応する成分を
+それぞれ取り出す演算子を考える．
+
+% \begin{defi}[射影演算子]
+% \label{def:projection-operator}
+% 正の整数$d$に対し，$d$行$d$列の複素行列$P$が
+% \begin{equation*}
+%   P^2=P,
+%   \qquad
+%   P^{\dagger}=P
+% \end{equation*}
+% を満たすとき，$P$を\textbf{射影演算子}という．
+% \end{defi}
+
+% 条件$P^2=P$は，一度$P$を作用させたベクトルに再び$P$を作用させても，
+% 結果が変わらないことを表す．
+% 任意のベクトル$\ket{\psi}\in\mathbb C^d$に対し，この二つの条件により，
+% $P\ket{\psi}$と$\ket{\psi}-P\ket{\psi}$は互いに直交する．
+% この意味で，$P$はベクトルからある部分空間に属する成分を取り出す働きをもつ．
+
+% \begin{defi}[射影測定]
+% 計算基底での測定は，次の二つの射影演算子で記述される．
+% \begin{equation*}
+%   P_0\coloneq\ket{0}\bra{0}=\begin{pmatrix}1&0\\0&0\end{pmatrix},
+%   \qquad
+%   P_1\coloneq\ket{1}\bra{1}=\begin{pmatrix}0&0\\0&1\end{pmatrix}
+% \end{equation*}
+% この測定を，計算基底での\textbf{射影測定}という\cite{shimada2020}．
+% \end{defi}
+
+% 行列$P_0,P_1$は，$j=0,1$について$P_j^2=P_j$および$P_j^{\dagger}=P_j$を満たすので，
+% 射影演算子である．
+% 測定前の状態$\ket{\psi}=\alpha\ket{0}+\beta\ket{1}$に作用させると，
+% \begin{equation*}
+%   P_0\ket{\psi}=\alpha\ket{0},
+%   \qquad
+%   P_1\ket{\psi}=\beta\ket{1}
+% \end{equation*}
+% となる．したがって，$P_0$は$\ket{0}$方向の成分を，$P_1$は$\ket{1}$方向の成分を取り出す．
+
+% 結果$0$に対応する確率振幅は$\braket{0|\psi}$である．
+% ボルンの規則より，結果$0$を得る確率$p_0$は
+% \begin{equation*}
+%   \begin{aligned}
+%     p_0
+%     &= \bra{\psi}P_0\ket{\psi} \\
+%     &= |\braket{0|\psi}|^2 \\
+%     &= |\alpha\braket{0|0}+\beta\braket{0|1}|^2 \\
+%     &= |\alpha|^2
+%   \end{aligned}
+% \end{equation*}
+% となる．
+
+\subsection{ブロッホ球による表現}
+\label{subsec:bloch-sphere}
+
+量子ビットの状態$\ket{\psi} = \alpha\ket{0} + \beta\ket{1}$は，ブロッホ球と呼ばれる単位球面上の点として表すことができる．
+複素数$\alpha, \beta$は規格化条件\eqref{eq:single-qubit-state-normalization}を満たすので，$\theta \in [0,\pi]$を選んで
+\begin{equation*}
+  |\alpha| = \cos\frac{\theta}{2}, \qquad |\beta| = \sin\frac{\theta}{2}
+\end{equation*}
+と定義すると，$\ket{\psi}$は次のように表すことができる．
+\begin{equation*}
+  \ket{\psi} = e^{i\Phi} \left( \cos\frac{\theta}{2}\ket{0} + e^{i\phi}\sin\frac{\theta}{2}\ket{1} \right),
+  \qquad \Phi \in [0,2\pi),\quad \theta \in [0,\pi], \quad \phi \in [0,2\pi)
+  \label{eq:qubit-angular-representation}
+\end{equation*}
+
+複素数$r e^{i\varphi}$において，$r$を絶対値，$\varphi$は偏角または位相という．
+式\eqref{eq:qubit-angular-representation}において，位相$\Phi$は\textbf{グローバル位相}，位相$\phi$は\textbf{相対位相}という．
+グローバル位相は物理的に観測できず，状態の本質的な性質には影響しない．一方，相対位相は干渉などの現象に影響を与える．
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.62\textwidth]{figures/02-quantum-basics/bloch-sphere.pdf}
+  \caption{1量子ビットの量子状態を表すブロッホ球．}
+  \label{fig:bloch-sphere}
+\end{figure}

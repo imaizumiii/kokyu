@@ -8,12 +8,12 @@
 量子状態に作用させるユニタリ行列のことを\textbf{量子ゲート}という．
 
 \begin{defi}[ユニタリ行列]
-正の整数$d$に対し，$d$行$d$列の複素行列$U$が
+任意の正の整数$d$に対し，$d$行$d$列の複素行列$U$が
 \label{def:unitary-matrix-map}
 \begin{equation*}
   U^\dagger U=UU^\dagger=I_d
 \end{equation*}
-を満たすとき，$U$を\textbf{ユニタリ行列}という\cite{shimada2020}．
+を満たすとき，$U$を\textbf{ユニタリ行列}という．
 ここで，$I_d$は$d$行$d$列の単位行列である．
 \end{defi}
 \end{samepage}
@@ -21,7 +21,7 @@
 以下では，ユニタリ写像とその表現行列を同じ記号$U$で表す．
 
 \begin{prop}[ユニタリ行列による規格化条件の保存]
-  正の整数$d$に対し，$U\in\mathbb C^{d\times d}$をユニタリ行列とする．
+  任意の正の整数$d$に対し，$U\in\mathbb C^{d\times d}$をユニタリ行列とする．
   規格化条件$\braket{\psi|\psi}=1$を満たす状態ベクトル$\ket{\psi}\in\mathbb C^d$に対し，
   $U\ket{\psi}$も規格化条件を満たす．
   \label{prop:unitary-preserves-normalization}
@@ -69,6 +69,7 @@
 この組合せに使う演算が\textbf{テンソル積}である．
 
 \begin{defi}[行列のテンソル積]
+  任意の正の整数$m,n,r,s$に対し，
   $A=(a_{ij})\in\mathbb{C}^{m\times n}$，$B\in\mathbb{C}^{r\times s}$に対し
   \begin{equation*}
     A\otimes B
@@ -95,7 +96,7 @@
       E\in\mathbb{C}^{u\times v}
     \end{gathered}
   \]
-  とする．また，任意の複素数$\lambda\in\mathbb{C}$とする．
+  とする．また，$\lambda\in\mathbb{C}$を任意の複素数とする．
   このとき，次が成り立つ．
 
   \begin{equation*}
@@ -195,9 +196,9 @@
   となる．これで定理の各等式が示された．
 \end{proof}
 \begin{defi}[テンソル積の記法]
-  任意の正の整数$k$に対して，$A$の$k$個の総テンソル積を以下のように表記する．
+  任意の正の整数$k$に対して，行列$A$の$k$個の総テンソル積を以下のように表記する．
   \[
-    A^{\otimes k} \coloneq A\otimes A\otimes\cdots\otimes A \quad(k\text{個}).
+    A^{\otimes k} \coloneq \underbrace{A\otimes A\otimes\cdots\otimes A}_{k\text{個}}.
   \]
   また，任意の正の整数$k$に対して，$A_1,\ldots,A_k$という行列があるとき，それらの総テンソル積を以下のように表記する．
   \[
@@ -219,7 +220,7 @@
 \end{theo}
 \begin{proof}
   それぞれ$k$に対する数学的帰納法で示す．\\
-  まず一つ目の等式について，
+  まず1つ目の等式について，
   $k=1$のとき，両辺は$A_1\otimes B_1$より等しい．\\
   ある正の整数$k$について
   \[
@@ -266,7 +267,7 @@
 \subsection{複合系}
 
 量子状態についてもテンソル積を用いて複合系を表すことができる．
-二つの量子系の状態空間をそれぞれ$\mathcal H_1$，$\mathcal H_2$とする．これらからなる複合系の状態空間は$\mathcal H_1\otimes\mathcal H_2$である．特に，各量子系の量子状態$\ket{\psi}\in\mathcal H_1$，$\ket{\phi}\in\mathcal H_2$に対して，$\ket{\psi}\otimes\ket{\phi}$は複合系の状態の一つである．
+二つの量子系の状態空間をそれぞれ$\mathcal H_1$，$\mathcal H_2$とする．これらからなる複合系の状態空間は$\mathcal H_1\otimes\mathcal H_2$である．特に，各量子系の量子状態$\ket{\psi}\in\mathcal H_1$，$\ket{\phi}\in\mathcal H_2$に対して，$\ket{\psi}\otimes\ket{\phi}$は複合系の状態の1つである．
 $\ket{\psi}\otimes\ket{\phi}$のことを，テンソル積の記号を省略して$\ket{\psi}\ket{\phi}$や$\ket{\psi\phi}$と書くこともある．
 
 １量子ビットの状態$a_0\ket{0}+a_1\ket{1}$，$b_0\ket{0}+b_1\ket{1}$に対して，それらの複合系の状態は
@@ -281,8 +282,8 @@ $\ket{\psi}\otimes\ket{\phi}$のことを，テンソル積の記号を省略し
 \]
 なので，複合系でも規格化条件を満たしていることがわかる．
 
-一方，二つの量子ビットの状態が常に一つのテンソル積で表せるとは限らない．
-そのような例の一つに\textbf{ベル状態}がある．
+一方，二つの量子ビットの状態が常に1つのテンソル積で表せるとは限らない．
+そのような例の1つに\textbf{ベル状態}がある．
 二つの量子ビットの状態で，次のように表されるものをベル状態という．
 \begin{equation*}
   \begin{aligned}
@@ -307,7 +308,7 @@ $\ket{B_{00}}$を例にとると，これがテンソル積で表せると仮定
 この方程式を満たす$a_0,a_1,b_0,b_1$は存在しないので，背理法より$\ket{B_{00}}$はテンソル積で表せないことがわかる．
 二つの量子ビットの状態が一つのテンソル積で表せない状態のことを\textbf{エンタングルメント}または\textbf{量子もつれ}と呼ぶ．
 
-ここまでは二つの量子ビットからなる複合系を扱った．テンソル積を繰り返せば，より多くの量子ビットを一つの系として扱える．
+ここまでは二つの量子ビットからなる複合系を扱った．テンソル積を繰り返せば，より多くの量子ビットを1つの系として扱える．
 そこで，量子ビットの個数を一般の$n$に拡張し，その状態の表し方を定める．
 \begin{defi}[$n$量子ビット系]
   $n$個の量子ビットからなる複合系を$n$量子ビット系という．この系の量子状態は，計算基底を用いて次のように表される．
