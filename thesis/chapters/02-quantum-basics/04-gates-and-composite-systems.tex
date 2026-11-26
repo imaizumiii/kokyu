@@ -6,16 +6,6 @@
 
 量子状態に線形写像を作用させることにより，量子状態を変化させることができる．ただし，変化後の量子状態も長さが$1$に規格化されていなければならない．したがって，量子状態の変化はユニタリ行列で表される．
 量子状態に作用させるユニタリ行列のことを\textbf{量子ゲート}という．
-
-\begin{defi}[ユニタリ行列]
-任意の正の整数$d$に対し，$d$行$d$列の複素行列$U$が
-\label{def:unitary-matrix-map}
-\begin{equation*}
-  U^\dagger U=UU^\dagger=I_d
-\end{equation*}
-を満たすとき，$U$を\textbf{ユニタリ行列}という．
-ここで，$I_d$は$d$行$d$列の単位行列である．
-\end{defi}
 \end{samepage}
 
 以下では，ユニタリ写像とその表現行列を同じ記号$U$で表す．
@@ -28,7 +18,7 @@
 \end{prop}
 \begin{proof}
   変換後の状態ベクトルを$\ket{\psi'}\coloneq U\ket{\psi}$とおく．
-  ユニタリ行列の定義より$U^\dagger U=I_d$であるから，
+  定義\ref{def:unitary-matrix-map}より$U^\dagger U=I_d$であるから，
   \begin{equation*}
     \begin{aligned}
       \braket{\psi'|\psi'}

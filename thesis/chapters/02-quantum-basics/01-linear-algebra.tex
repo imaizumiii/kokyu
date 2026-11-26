@@ -1,0 +1,295 @@
+\section{線形代数の基礎}
+
+\subsection{ベクトル空間}
+
+\begin{defi}[ベクトル空間]
+  \label{def:vector-space}
+  体$K$と空でない集合$V$を考える．
+  $V$の任意の二つの元$\bm{u},\bm{v}$に対して和$\bm{u}+\bm{v}\in V$が定まり，
+  任意の$\alpha\in K$と$\bm{u}\in V$に対して$\alpha\bm{u}\in V$が定まっているとする．
+  これらの演算について，任意の$\bm{u},\bm{v},\bm{w}\in V$と$\alpha,\beta\in K$に対して
+  次の条件が成り立つとき，$V$を$K$上の\textbf{ベクトル空間}という．
+  \begin{enumerate}[(1)]
+    \item （和の結合則）$(\bm{u}+\bm{v})+\bm{w}=\bm{u}+(\bm{v}+\bm{w})$．
+    \item （和の交換則）$\bm{u}+\bm{v}=\bm{v}+\bm{u}$．
+    \item （零ベクトルの存在）$\bm{0}\in V$が存在し，すべての$\bm{u}\in V$に対して$\bm{u}+\bm{0}=\bm{u}$となる．
+    \item （逆ベクトルの存在）各$\bm{u}\in V$に対して，$\bm{u}+\bm{v}=\bm{0}$となる$\bm{v}\in V$が存在する．
+    \item （ベクトルの和に対する分配則）$\alpha(\bm{u}+\bm{v})=\alpha\bm{u}+\alpha\bm{v}$．
+    \item （スカラーの和に対する分配則）$(\alpha+\beta)\bm{u}=\alpha\bm{u}+\beta\bm{u}$．
+    \item （スカラー倍の結合則）$(\alpha\beta)\bm{u}=\alpha(\beta\bm{u})$．
+    \item （スカラー倍の単位元）$K$の乗法の単位元$1$に対して，$1\bm{u}=\bm{u}$となる．
+  \end{enumerate}
+  $V$の元を\textbf{ベクトル}といい，$K$の元を\textbf{スカラー}という．
+\end{defi}
+
+例えば，$n$個の複素数を並べた組全体の集合$\mathbb C^n$は，
+和とスカラー倍を成分ごとに行うと，$\mathbb C$上のベクトル空間になる．
+
+\subsection{基底}
+
+\begin{samepage}
+体$K$上のベクトル空間で，ベクトル$\bm{v}_1,\ldots,\bm{v}_m$とスカラー$c_1,\ldots,c_m\in K$を考える．
+各ベクトル$\bm{v}_j$を$c_j$倍して足し合わせた
+\begin{equation*}
+  c_1\bm{v}_1+\cdots+c_m\bm{v}_m
+  =\sum_{j=1}^{m}c_j\bm{v}_j
+\end{equation*}
+を，$\bm{v}_1,\ldots,\bm{v}_m$の\textbf{線形結合}という．
+
+\begin{defi}[線形独立]
+  \label{def:linear-independence}
+  正の整数$m$に対し，体$K$上のベクトル空間$V$のベクトル$\bm{v}_1,\ldots,\bm{v}_m$を考える．
+  等式
+  \begin{equation*}
+    \sum_{j=1}^{m}c_j\bm{v}_j=\bm{0}
+  \end{equation*}
+  を満たすスカラーの組$c_1,\ldots,c_m$が$c_1=\cdots=c_m=0$だけであるとき，
+  ベクトルの組$\{\bm{v}_1,\ldots,\bm{v}_m\}$は\textbf{線形独立}であるという．
+\end{defi}
+\end{samepage}
+
+体$K$上のベクトル空間$V$で，線形独立なベクトルの組$\{\bm{v}_1,\ldots,\bm{v}_m\}$を考える．
+$V$の任意のベクトル$\bm{v}$が，これらのベクトルの線形結合として
+\begin{equation*}
+  \bm{v}=\sum_{j=1}^{m}c_j\bm{v}_j
+  \qquad(c_1,\ldots,c_m\in K)
+\end{equation*}
+と表せるとき，
+この組を$V$の\textbf{基底}という．
+
+\subsection{複素共役}
+
+\begin{defi}[複素共役]
+  実数$x,y$と，$i^2=-1$を満たす虚数単位$i$を用いて，
+  複素数$z=x+iy$を表す．
+  このとき，
+  \begin{equation*}
+    \overline{z}\coloneq x-iy
+  \end{equation*}
+  を$z$の\textbf{複素共役}という．
+\end{defi}
+
+\subsection{内積}
+
+\begin{samepage}
+\begin{defi}[内積]
+  正の整数$n$に対し，$\mathbb C^n$の二つのベクトル
+  \begin{equation*}
+    \bm{a}=
+    \begin{pmatrix}
+      a_1\\
+      \vdots\\
+      a_n
+    \end{pmatrix},
+    \qquad
+    \bm{b}=
+    \begin{pmatrix}
+      b_1\\
+      \vdots\\
+      b_n
+    \end{pmatrix}
+  \end{equation*}
+  を考える．
+  このとき，$\bm{a}$と$\bm{b}$の\textbf{内積}を
+  \begin{equation*}
+    \langle\bm{a},\bm{b}\rangle\coloneq\sum_{j=1}^{n}\overline{a_j}b_j
+  \end{equation*}
+  で定める．
+\end{defi}
+\end{samepage}
+
+\begin{defi}[ノルム]
+  \label{def:vector-norm}
+  任意の正の整数$n$に対し，任意のベクトル$\bm{x}\in\mathbb C^n$の\textbf{ノルム}を
+  \begin{equation*}
+    \lVert\bm{x}\rVert\coloneq\sqrt{\langle\bm{x},\bm{x}\rangle}
+  \end{equation*}
+  と定める．
+\end{defi}
+
+\subsection{行列の定義と演算}
+
+\begin{defi}[行列]
+  正の整数$m,n$に対し，複素数を$m$行$n$列に並べたものを$m$行$n$列の\textbf{行列}という．
+  行列$A$を
+  \begin{equation*}
+    A\coloneq
+    \begin{pmatrix}
+      a_{11} & \cdots & a_{1n}\\
+      \vdots & \ddots & \vdots\\
+      a_{m1} & \cdots & a_{mn}
+    \end{pmatrix}
+  \end{equation*}
+  と書く．
+  $a_{jk}$を$A$の$(j,k)$\textbf{成分}という．
+  また，$m$行$n$列の複素数を成分にもつ行列全体の集合を
+  $\mathbb C^{m\times n}$または$M(m,n;\mathbb C)$と書く．
+\end{defi}
+
+\begin{defi}[行列の和とスカラー倍]
+  正の整数$m,n$に対し，$A=(a_{jk}), B=(b_{jk})\in\mathbb C^{m\times n}$とし，$c\in\mathbb C$とする．
+  行列$A$と$B$の和と，行列$A$の$c$によるスカラー倍を，それぞれ
+  \begin{equation*}
+    A+B\coloneq(a_{jk}+b_{jk}),
+    \qquad
+    cA\coloneq(ca_{jk})
+  \end{equation*}
+  で定める．
+\end{defi}
+
+\begin{defi}[行列の積]
+  正の整数$m,n,p$に対し，$A=(a_{j\ell})\in\mathbb C^{m\times n}$，
+  $B=(b_{\ell k})\in\mathbb C^{n\times p}$とする．
+  行列$A$と$B$の\textbf{積}$AB$を，各成分が
+  \begin{equation*}
+    (AB)_{jk}\coloneq\sum_{\ell=1}^{n}a_{j\ell}b_{\ell k}
+    \qquad (j=1,\ldots,m,\ k=1,\ldots,p)
+  \end{equation*}
+  で与えられる$m$行$p$列の行列とする．
+\end{defi}
+
+\subsection{正方行列と対角行列}
+
+\begin{defi}[正方行列]
+  行数と列数が等しい行列を\textbf{正方行列}という．
+  特に，$n$行$n$列の行列を\textbf{$n$次正方行列}という．
+  $n$次の複素正方行列全体の集合を$M(n;\mathbb C)$と書く．
+\end{defi}
+
+\begin{defi}[対角行列]
+  $n$次正方行列$A=(a_{jk})\in\mathbb C^{n\times n}$を考える．
+  行番号と列番号が等しい成分$a_{11},\ldots,a_{nn}$を$A$の\textbf{対角成分}という．
+  対角成分以外がすべて$0$であるとき，$A$を\textbf{対角行列}という．
+  対角行列$A$は
+  \begin{equation*}
+    A=
+    \begin{pmatrix}
+      a_{11} & 0 & \cdots & 0\\
+      0 & a_{22} & \ddots & \vdots\\
+      \vdots & \ddots & \ddots & 0\\
+      0 & \cdots & 0 & a_{nn}
+    \end{pmatrix}
+  \end{equation*}
+  と表される．
+  このとき，$A$を$\operatorname{diag}(a_{11},\ldots,a_{nn})$と書く．
+\end{defi}
+
+\subsection{逆行列と正則行列}
+
+\begin{defi}[単位行列]
+  $n$次の対角行列$\operatorname{diag}(1,\ldots,1)$を\textbf{単位行列}といい，$I_n$と書く．
+\end{defi}
+
+\begin{defi}[逆行列]
+  $n$次正方行列$A\in\mathbb C^{n\times n}$を考える．
+  $n$次正方行列$B\in\mathbb C^{n\times n}$が
+  \begin{equation*}
+    AB=BA=I_n
+  \end{equation*}
+  を満たすとき，$B$を$A$の\textbf{逆行列}といい，$A^{-1}$と書く．
+\end{defi}
+
+\begin{defi}[正則行列]
+  逆行列をもつ正方行列を\textbf{正則行列}という．
+\end{defi}
+
+\begin{theo}[正則行列と基底]
+  \label{theo:invertible-column-basis}
+  $n$次正方行列$P=(p_{ij})\in\mathbb C^{n\times n}$に対し，
+  \begin{equation*}
+    \bm{p}_j\coloneq
+    \begin{pmatrix}
+      p_{1j}\\
+      \vdots\\
+      p_{nj}
+    \end{pmatrix}
+    \qquad (j=1,\ldots,n)
+  \end{equation*}
+  とおく．$P$が正則ならば，$\{\bm{p}_1,\ldots,\bm{p}_n\}$は$\mathbb C^n$の基底である．
+\end{theo}
+
+\begin{proof}
+  任意の$\bm{x}\in\mathbb C^n$に対して，その成分を$x_1,\ldots,x_n$とすると，行列の積の定義より
+  \begin{equation*}
+    P\bm{x}=\sum_{j=1}^{n}x_j\bm{p}_j
+  \end{equation*}
+  である．$P$が正則ならば，$P\bm{x}=\bm{0}$を満たす任意の$\bm{x}\in\mathbb C^n$に対して，
+  両辺に左から$P^{-1}$を掛けると，
+  \begin{equation*}
+    \bm{x}=P^{-1}\bm{0}=\bm{0}
+  \end{equation*}
+  となる．よって，$P\bm{x}=\bm{0}$を満たす解は$\bm{x}=\bm{0}$のみであり，$\bm{p}_1,\ldots,\bm{p}_n$は線形独立である．
+  また，任意の$\bm{y}\in\mathbb C^n$に対して，$P\bm{x}=\bm{y}$を満たす$\bm{x}\in\mathbb C^n$が存在する．
+  実際，$\bm{x}=P^{-1}\bm{y}$とおけばよい．したがって，$\{\bm{p}_1,\ldots,\bm{p}_n\}$は$\mathbb C^n$の基底である．
+\end{proof}
+
+\subsection{転置行列とエルミート行列}
+
+\begin{defi}[転置行列]
+  任意の正の整数$m,n$に対し，$m$行$n$列の行列$A=(a_{jk}) \in \mathbb{C}^{m\times n}$の行と列を入れ替えた
+  $n$行$m$列の行列を$A$の\textbf{転置行列}といい，$A^t$と書く．各成分を
+  \begin{equation*}
+    (A^t)_{jk}\coloneq a_{kj}
+    \qquad (j=1,\ldots,n,\ k=1,\ldots,m)
+  \end{equation*}
+  で定める．
+\end{defi}
+
+行列$A$の随伴行列は，転置行列を用いて$A^\dagger=\overline{A^t}$と書ける．
+
+\begin{defi}[エルミート行列]
+  $n$次正方行列$A\in\mathbb C^{n\times n}$が
+  \begin{equation*}
+    A^\dagger=A
+  \end{equation*}
+  を満たすとき，$A$を\textbf{エルミート行列}という．
+\end{defi}
+
+\subsection{正規行列とユニタリ行列}
+
+\begin{defi}[正規行列]
+  $n$次正方行列$A\in\mathbb C^{n\times n}$が
+  \begin{equation*}
+    AA^\dagger=A^\dagger A
+  \end{equation*}
+  を満たすとき，$A$を\textbf{正規行列}という．
+\end{defi}
+
+\begin{defi}[ユニタリ行列]
+  \label{def:unitary-matrix-map}
+  $n$次正方行列$U\in\mathbb C^{n\times n}$が
+  \begin{equation*}
+    U^\dagger U=UU^\dagger=I_n
+  \end{equation*}
+  を満たすとき，$U$を\textbf{ユニタリ行列}という．
+  このとき，逆行列の定義より$U^{-1}=U^\dagger$である．
+\end{defi}
+
+\subsection{ブラケット表記（ディラック表記）}
+
+量子計算において，ブラケット表記という記法がよく用いられる．以下ではその基本的な記法を示す．
+
+\begin{defi}[ケットベクトル・ブラベクトル]
+  任意の正の整数$d$に対し，ベクトル空間
+  $\mathcal H=\mathbb C^d$を考える．
+  $\mathcal H$のベクトルを
+  \begin{equation*}
+    \ket{a}
+    \coloneq
+    \begin{pmatrix}
+      a_0 \\a_1\\\vdots\\a_{d-1}
+    \end{pmatrix}
+  \end{equation*}
+  と書き，これを\textbf{ケット}または\textbf{ケットベクトル}という．
+  また，ケット$\ket{a}$の随伴行列$\ket{a}^{\dagger}$を$\bra{a}$と書き，\textbf{ブラ}または\textbf{ブラベクトル}という．
+
+  ベクトル$\ket{b}$と$\ket{a}$の内積を
+  ブラケット表記では$\braket{b|a}$と書く．すなわち，
+  \begin{equation*}
+    \braket{b|a}\coloneq\langle b,a\rangle
+    =\bra{b}\ket{a}
+    =\sum_{j=0}^{d-1}\overline{b_j}a_j
+  \end{equation*}
+  である．
+  このようなケットベクトルとブラベクトルを用いた表記の仕方を\textbf{ブラケット表記}または\textbf{ディラック表記}という．
+\end{defi}

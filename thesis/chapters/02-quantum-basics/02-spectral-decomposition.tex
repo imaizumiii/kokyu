@@ -1,0 +1,250 @@
+\section{スペクトル分解}
+
+\subsection{固有値と固有ベクトル}
+
+\begin{defi}[固有値・固有ベクトル・スペクトル集合]
+  正の整数$n$に対し，正方行列$A\in\mathbb C^{n\times n}$を考える．
+  複素数$\lambda\in\mathbb C$と零ベクトルでないベクトル$\ket{v}\in\mathbb C^n$が
+  \begin{equation*}
+    A\ket{v}=\lambda\ket{v}
+  \end{equation*}
+  を満たすとき，$\lambda$を$A$の\textbf{固有値}という．
+  また，$\ket{v}$を$A$の固有値$\lambda$に属する\textbf{固有ベクトル}という．
+  行列$A$の固有値全体の集合を$A$の\textbf{スペクトル集合}といい，$\operatorname{Spec}(A)$と書く．
+\end{defi}
+
+\subsection{行列の対角化}
+
+\begin{defi}[対角化可能行列]
+  正の整数$n$に対し，正方行列$A\in\mathbb C^{n\times n}$を考える．
+  正則行列$P\in\mathbb C^{n\times n}$と対角行列$D\in\mathbb C^{n\times n}$が存在して，
+  \begin{equation*}
+    P^{-1}AP=D
+  \end{equation*}
+  が成り立つとき，$A$を\textbf{対角化可能行列}という．
+\end{defi}
+
+\begin{theo}[対角化可能性]
+  \label{theo:diagonalizability}
+  $n$次正方行列$A\in\mathbb C^{n\times n}$が対角化可能ならば，
+  $A$は線形独立な$n$個の固有ベクトルをもつ．
+\end{theo}
+
+\begin{proof}
+  対角化可能な$n$次正方行列$A\in\mathbb C^{n\times n}$を任意に取る．
+  対角化可能行列の定義より，ある正則行列$P\in\mathbb C^{n\times n}$と対角行列$D\in\mathbb C^{n\times n}$が存在し，
+  $P^{-1}AP=D$を満たす．
+  $j=1,\ldots,n$について，$P$の第$j$列を$\ket{v_j}\in\mathbb C^n$，
+  $D$の$(j,j)$成分を$\lambda_j\in\mathbb C$とすると，
+  \begin{equation*}
+    P=\bigl(\ket{v_1}\ \cdots\ \ket{v_n}\bigr),
+    \qquad D=\operatorname{diag}(\lambda_1,\ldots,\lambda_n)
+  \end{equation*}
+  である．行列の積の定義より，
+  \begin{align*}
+    P^{-1}AP=D
+    &\quad\Longrightarrow\quad AP=PD\\
+    &\quad\Longrightarrow\quad
+      \bigl(A\ket{v_1}\ \cdots\ A\ket{v_n}\bigr)
+      =\bigl(\lambda_1\ket{v_1}\ \cdots\ \lambda_n\ket{v_n}\bigr)
+  \end{align*}
+  が成り立つ．よって，任意の$j\in\{1,\ldots,n\}$に対して，$A\ket{v_j}=\lambda_j\ket{v_j}$である．
+
+  $P$は正則であるから，定理\ref{theo:invertible-column-basis}より，$\{\ket{v_1},\ldots,\ket{v_n}\}$は$\mathbb C^n$の基底である．
+  この基底は線形独立なので，任意の$j\in\{1,\ldots,n\}$に対して$\ket{v_j}\ne0$であり，$\ket{v_j}$は固有値$\lambda_j$に属する固有ベクトルである．
+  よって，$A$には線形独立な$n$個の固有ベクトルが存在する．
+\end{proof}
+
+\subsection{グラムシュミットの正規直交化法}
+
+\begin{defi}[正規直交基底]
+  $\mathbb C^n$の基底$\{\ket{u_1},\ldots,\ket{u_n}\}$が，すべての$i,j=1,\ldots,n$について
+  \begin{equation*}
+    \braket{u_i|u_j}=\delta_{ij},
+    \qquad
+    \delta_{ij}\coloneq
+    \begin{cases}
+      1 & (i=j),\\
+      0 & (i\ne j)
+    \end{cases}
+  \end{equation*}
+  を満たすとき，この基底を\textbf{正規直交基底}という．
+\end{defi}
+
+$\mathbb C^n$の基底$\{\ket{v_1},\ldots,\ket{v_n}\}$を取り，まず
+\begin{equation*}
+  \ket{u_1}\coloneq\frac{\ket{v_1}}{\sqrt{\braket{v_1|v_1}}}
+\end{equation*}
+とおく．次に，$j=2,\ldots,n$の順に，$\ket{v_j}$からすでに得られた$\ket{u_1},\ldots,\ket{u_{j-1}}$の方向の成分を引き，
+\begin{equation*}
+  \ket{w_j}\coloneq\ket{v_j}-\sum_{k=1}^{j-1}\braket{u_k|v_j}\ket{u_k},
+  \qquad \ket{u_j}\coloneq\frac{\ket{w_j}}{\sqrt{\braket{w_j|w_j}}}
+\end{equation*}
+とおく．こうして得られる$\{\ket{u_1},\ldots,\ket{u_n}\}$は$\braket{u_i|u_j}=\delta_{ij}$を満たし，
+$\mathbb C^n$の正規直交基底となる．この方法を\textbf{グラムシュミットの正規直交化法}という．
+これにより，任意の基底から正規直交基底を構成することができる．
+
+\begin{theo}[ユニタリ行列と正規直交基底]
+  \label{theo:unitary-column-basis}
+  任意の正の整数$n$と任意の$n$次正方行列$U\in\mathbb C^{n\times n}$に対して，$U$の列ベクトルが$\mathbb C^n$の正規直交基底をなすとき，$U$はユニタリ行列である．
+\end{theo}
+
+\begin{proof}
+  行列$U$の列ベクトルを$\ket{u_1},\ldots,\ket{u_n}\in\mathbb C^n$とし，これらが$\mathbb C^n$の正規直交基底であるとする．
+  任意の$i,j\in\{1,\ldots,n\}$に対して，
+  \begin{equation*}
+    (U^\dagger U)_{ij}=\braket{u_i|u_j}=\delta_{ij}
+    \qquad (\because\, \text{列ベクトルの正規直交性})
+  \end{equation*}
+  なので，$U^\dagger U=I_n$である．
+  $U U^\dagger=I_n$も同様に成り立つので，$U$はユニタリ行列である．
+\end{proof}
+
+\begin{theo}[正規行列の対角化可能性]
+  \label{theo:normal-diagonalizability}
+  $n$次正方行列$A\in\mathbb C^{n\times n}$が正規行列ならば，$A$はユニタリ行列で対角化可能である．
+\end{theo}
+
+\begin{proof}
+  行列の次数$n$について数学的帰納法で示す．
+  $n=1$のときは，$U=I_1\in\mathbb C^{1\times1}$とすれば$U^\dagger AU=A$は対角行列である．
+
+  $n\geq2$のとき，任意の$(n-1)$次正規行列はユニタリ行列で対角化可能であると仮定する．
+  任意の$n$次正規行列$A\in\mathbb C^{n\times n}$に対して，ある固有値$\lambda_1\in\mathbb C$と
+  長さ$1$の固有ベクトル$\ket{\lambda_1}\in\mathbb C^n$が存在し，$A\ket{\lambda_1}=\lambda_1\ket{\lambda_1}$を満たす．
+  この$\ket{\lambda_1}$に$\ket{\lambda_2},\ldots,\ket{\lambda_n}\in\mathbb C^n$を補って正規直交基底を作り，
+  そのベクトルを列に並べた行列を
+  \begin{equation*}
+    U=\bigl(\ket{\lambda_1}\ \ket{\lambda_2}\ \cdots\ \ket{\lambda_n}\bigr)\in\mathbb C^{n\times n}
+  \end{equation*}
+  とおく．列ベクトルが正規直交しているので，$U$はユニタリ行列であり，$U^{-1}=U^\dagger$である．
+  行列$U^\dagger AU$の第$1$行のうち第$2$成分以降を$\bra{b}\in\mathbb C^{1\times(n-1)}$とし，
+  その共役転置を$\ket{b}\in\mathbb C^{n-1}$とする．
+  同じ行列から第$1$行と第$1$列を除いた部分を$A'\in\mathbb C^{(n-1)\times(n-1)}$とする．つまり
+  \begin{align*}
+    U^\dagger AU
+      &=\begin{pmatrix}
+          \bra{\lambda_1}\\ \bra{\lambda_2}\\ \vdots\\ \bra{\lambda_n}
+        \end{pmatrix}
+        \bigl(A\ket{\lambda_1}\ A\ket{\lambda_2}\ \cdots\ A\ket{\lambda_n}\bigr)\\
+      &=\begin{pmatrix}
+          \bra{\lambda_1}A\ket{\lambda_1} & \bra{b}\\
+          \bra{\lambda_2}A\ket{\lambda_1} &  \\
+          \vdots & A'\\
+          \bra{\lambda_n}A\ket{\lambda_1} &
+        \end{pmatrix}\\
+      &=\begin{pmatrix}
+        \lambda_1\braket{\lambda_1|\lambda_1} & \bra{b}\\
+          \lambda_1\braket{\lambda_2|\lambda_1} &  \\
+          \vdots & A'\\
+          \lambda_1\braket{\lambda_n|\lambda_1} &  \\
+        \end{pmatrix}\\
+      &=\begin{pmatrix}\lambda_1&\bra{b}\\\bm 0&A'\end{pmatrix}
+        \qquad (\because\, \braket{\lambda_i|\lambda_1}=\delta_{i1},\ i\in\{1,\ldots,n\})
+  \end{align*}
+  とする．両辺の共役転置をとる．
+  \begin{equation*}
+    U^\dagger A^\dagger U
+      =\begin{pmatrix}\overline{\lambda_1}&\bm 0^t\\\ket{b}&{A'}^\dagger\end{pmatrix}．
+  \end{equation*}
+  したがって，
+  \begin{align*}
+    U^\dagger AA^\dagger U
+      &=(U^\dagger AU)(U^\dagger A^\dagger U)
+        \qquad (\because\, UU^\dagger=I_n)\\
+      &=\begin{pmatrix}\lambda_1&\bra{b}\\\bm 0&A'\end{pmatrix}
+        \begin{pmatrix}\overline{\lambda_1}&\bm 0^t\\\ket{b}&{A'}^\dagger\end{pmatrix}\\
+      &=\begin{pmatrix}
+          |\lambda_1|^2+\braket{b|b} & \bra{b}{A'}^\dagger\\
+          A'\ket{b} & A'{A'}^\dagger
+        \end{pmatrix}．
+  \end{align*}
+  同様に，
+  \begin{equation*}
+    U^\dagger A^\dagger A U
+      =\begin{pmatrix}
+          |\lambda_1|^2 & \overline{\lambda_1}\bra{b}\\
+          \lambda_1\ket{b} & \ket{b}\bra{b}+{A'}^\dagger A'
+        \end{pmatrix}．
+  \end{equation*}
+  行列$A$は正規行列なので，これら二つの行列は等しい．
+  左上の成分を比べると$\braket{b|b}=0$であり，$\ket{b}=\bm 0$である．
+  このとき，右下のブロックを比べると$A'{A'}^\dagger={A'}^\dagger A'$となる．
+  したがって，$A'$は正規行列であり，
+  \begin{equation*}
+    U^\dagger AU=\begin{pmatrix}\lambda_1&\bm 0^t\\\bm 0&A'\end{pmatrix}
+  \end{equation*}
+  である．
+
+  帰納法の仮定より，あるユニタリ行列$U'\in\mathbb C^{(n-1)\times(n-1)}$と
+  対角行列$\Lambda'\in\mathbb C^{(n-1)\times(n-1)}$が存在し，
+  $(U')^\dagger A'U'=\Lambda'$を満たす．ユニタリ行列
+  \begin{equation*}
+    U''=\begin{pmatrix}1&\bm 0^t\\\bm 0&U'\end{pmatrix}\in\mathbb C^{n\times n}
+  \end{equation*}
+  を用いると，
+  \begin{align*}
+    (U'')^\dagger(U^\dagger AU)U''
+      &=\begin{pmatrix}\lambda_1&\bm 0^t\\\bm 0&(U')^\dagger A'U'\end{pmatrix}\\
+      &=\begin{pmatrix}\lambda_1&\bm 0^t\\\bm 0&\Lambda'\end{pmatrix}．
+  \end{align*}
+  行列$U'''=UU''\in\mathbb C^{n\times n}$はユニタリ行列の積なのでユニタリ行列である．
+  左辺は$(U''')^\dagger AU'''$に等しいので，$A$は$U'''$で対角化できる．
+\end{proof}
+
+\subsection{正規行列のスペクトル分解}
+
+\begin{theo}[正規行列の固有ベクトルの直交性]
+  \label{theo:normal-eigenvector-orthogonality}
+  任意の正の整数$n$と任意の$n$次正規行列$A\in\mathbb C^{n\times n}$に対し，
+  $A$の異なる二つの固有値$\lambda,\mu\in\mathbb C$を任意に取る．
+  それぞれの固有値に属する任意の固有ベクトル$\ket{u},\ket{v}\in\mathbb C^n$に対して，
+  \begin{equation*}
+    \braket{u|v}=0
+  \end{equation*}
+  が成り立つ．
+\end{theo}
+
+\begin{proof}
+  仮定を満たす$A,\lambda,\mu,\ket{u},\ket{v}$を任意に取る．
+  \begin{align*}
+    \bigl\|(A^\dagger-\overline{\lambda}I_n)\ket{u}\bigr\|^2
+      &=\bra{u}(A-\lambda I_n)(A^\dagger-\overline{\lambda}I_n)\ket{u}\\
+      &=\bra{u}(A^\dagger-\overline{\lambda}I_n)(A-\lambda I_n)\ket{u}
+        \qquad (\because\, AA^\dagger=A^\dagger A)\\
+      &=0 \qquad (\because\, A\ket{u}=\lambda\ket{u})．
+  \end{align*}
+  よって，$(A^\dagger-\overline{\lambda}I_n)\ket{u}=0$，すなわち
+  $A^\dagger\ket{u}=\overline{\lambda}\ket{u}$である．両辺の共役転置をとると
+  \begin{equation*}
+    \bra{u}A=\lambda\bra{u}
+  \end{equation*}
+  が得られる．
+  したがって，
+  \begin{align*}
+    \mu\braket{u|v}
+      &=\bra{u}A\ket{v} \qquad (\because\, A\ket{v}=\mu\ket{v})\\
+      &=\lambda\braket{u|v} \qquad (\because\, \bra{u}A=\lambda\bra{u})．
+  \end{align*}
+  ゆえに，$(\mu-\lambda)\braket{u|v}=0$である．仮定より$\mu\ne\lambda$なので，
+  \begin{equation*}
+    \braket{u|v}=0
+  \end{equation*}
+\end{proof}
+
+\begin{theo}[正規行列のスペクトル分解]
+  \label{theo:spectral-decomposition}
+  正規行列$A\in\mathbb C^{n\times n}$は正規直交基底をもつ．
+  その一つを$\{\ket{u_1},\ldots,\ket{u_n}\}$とし，$\ket{u_j}$に対応する固有値を$\lambda_j$とする．
+  このとき，
+  \begin{equation*}
+    A=\sum_{j=1}^{n}\lambda_j\ket{u_j}\bra{u_j}
+  \end{equation*}
+  と表せる．また，各固有値$\lambda$について$V_\lambda$への直交射影を$P_\lambda$とすると，
+  \begin{equation*}
+    P_\lambda=\sum_{j:\,\lambda_j=\lambda}\ket{u_j}\bra{u_j},
+    \qquad
+    A=\sum_{\lambda\in\operatorname{Spec}(A)}\lambda P_\lambda
+  \end{equation*}
+  となる．これを$A$の\textbf{スペクトル分解}という．
+\end{theo}
